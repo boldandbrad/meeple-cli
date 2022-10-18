@@ -10,4 +10,4 @@ def search(query: str):
     api_result = get_search(query)
     # api_result.sort(key=lambda x: x["id"])
     for item in api_result:
-        print(f"{item['id']}\t{item['name']}")
+        print(f"{item.id}\t{item.name}")

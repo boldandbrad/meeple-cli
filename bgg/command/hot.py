@@ -8,4 +8,4 @@ from bgg.util.api_util import get_hot
 def hot():
     api_result = get_hot()
     for item in api_result:
-        print(f"{item['id']}\t{item['name']}")
+        print(f"{item.id}\t{item.name}")

@@ -24,12 +24,12 @@ def update():
         api_result = get_items(board_game_ids)
         update_result = {"boardgames": [], "expansions": []}
         for item in api_result:
-            item_type = item["type"]
-            item.pop("type")
+            item_type = item.type
+            del item.type
             if item_type == BOARDGAME_TYPE:
-                update_result["boardgames"].append(item)
+                update_result["boardgames"].append(item.__dict__)
             if item_type == EXPANSION_TYPE:
-                update_result["expansions"].append(item)
+                update_result["expansions"].append(item.__dict__)
 
         # sort boardgames by rank and expansions by rating
         if update_result["boardgames"]:

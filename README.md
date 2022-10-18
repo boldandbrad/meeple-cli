@@ -42,7 +42,6 @@ bgg update | <collection> # update all collections or a specific one
 bgg search <query> # search bgg for a game or expansion
 bgg hot # get current bgg hotness list of games/expansion
 bgg open <bgg_id> # open a boardgame or expansion on boardgamegeek.com
-
 bgg get <bgg_id> # view details of a boardgame
 
 bgg new <collection> # create a new collection
