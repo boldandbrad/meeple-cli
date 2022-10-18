@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-# parse version number from makey/__init__.py:
+# parse version number from bgg/__init__.py:
 with open("bgg/__init__.py") as f:
     info = {}
     for line in f.readlines():
@@ -14,7 +14,7 @@ setup_info = dict(
     author="Bradley Wojcik",
     author_email="bradleycwojcik@gmail.com",
     license="MIT",
-    description="boardgamegeek cli",
+    description="local boardgamegeek collection manager",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://boldandbrad.github.io/bgg-cli/",
@@ -24,7 +24,7 @@ setup_info = dict(
     },
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["click>=8", "xmltodict>=0.12.0", "requests>=2"],
+    install_requires=["click>=8", "xmltodict>=0.12.0", "requests>=2", "pyyaml"],
     extras_require={
         "dev": [
             "black",
