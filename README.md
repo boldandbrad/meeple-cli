@@ -39,17 +39,20 @@ bgg
 
 <!-- ```zsh
 bgg update | <collection> # update all collections or a specific one
-bgg new <collection> # create a new collection
-bgg delete <collection> # delete a collection
 bgg search <query> # search bgg for a game or expansion
 bgg hot # get current bgg hotness list of games/expansion
+bgg open <bgg_id> # open a boardgame or expansion on boardgamegeek.com
+
+bgg get <bgg_id> # view details of a boardgame
+
+bgg new <collection> # create a new collection
+bgg delete <collection> # delete a collection
 bgg add <collection> <bgg_id> # add a boardgame or expansion to a collection
 bgg drop <collection> <bgg_id> # remove a boardgame or expansion from a collection
 bgg ls # list all collections
 bgg list <collection> # list all games and expansions in a collection
 bgg find <collection> # search for a game or expansion in a collection
 bgg export <collection> # export a collection to csv or another format
-bgg open <bgg_id> # open a boardgame or expansion on boardgamegeek.com
 bgg config # manage bgg-cli configs
 ``` -->
 

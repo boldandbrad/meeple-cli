@@ -6,8 +6,6 @@ from os.path import exists, join, splitext
 
 import yaml
 
-from bgg.util.api_util import API_Result
-
 
 IN_PATH = "./in"
 OUT_PATH = "./out"
@@ -50,7 +48,7 @@ def read_source(src: str) -> "list[int]":
             return None
 
 
-def write_results(src: str, result: API_Result) -> None:
+def write_results(src: str, result: dict) -> None:
     src_name = splitext(src)[0]
 
     today = date.today()
@@ -62,6 +60,6 @@ def write_results(src: str, result: API_Result) -> None:
         makedirs(path)
 
     with open(join(path, filename), "w") as f:
-        json.dump(result.__dict__, f, indent=4, ensure_ascii=False)
+        json.dump(result, f, indent=4, ensure_ascii=False)
 
     print(f"{src_name} results successfully written to {path}/{filename}")

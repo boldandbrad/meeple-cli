@@ -1,6 +1,8 @@
 import click
 
+from bgg.command.get import get
 from bgg.command.hot import hot
+from bgg.command.open import bgg_open
 from bgg.command.search import search
 from bgg.command.update import update
 
@@ -19,7 +21,9 @@ def cli():
     pass
 
 
+cli.add_command(get, "get")
 cli.add_command(hot, "hot")
+cli.add_command(bgg_open, "open")
 cli.add_command(search, "search")
 cli.add_command(update, "update")
 
