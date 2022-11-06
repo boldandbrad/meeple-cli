@@ -14,8 +14,8 @@ def bgg_open(id: str):
     if not api_result:
         print("invalid id given")
     item = api_result[0]
-    url = f"https://{BGG_DOMAIN}/{item['type']}/{id}"
-    name = item["name"]
+    url = f"https://{BGG_DOMAIN}/{item.type}/{id}"
+    name = item.name
     if bool_input(f"Open {name} on {BGG_DOMAIN}?"):
         print(f"\tOpening {name} on {BGG_DOMAIN} ...")
         webbrowser.open(url)

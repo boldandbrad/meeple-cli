@@ -1,7 +1,8 @@
 import click
 
 from bgg.util.api_util import get_items, BOARDGAME_TYPE, EXPANSION_TYPE
-from bgg.util.fs_util import get_sources, read_source, write_results
+from bgg.util.collection_util import get_collections, read_collection
+from bgg.util.data_util import write_results
 from bgg.util.sort_util import sortby_rank
 
 
@@ -10,13 +11,13 @@ from bgg.util.sort_util import sortby_rank
 def update():
     print("updating local data...")
     # process each data source file
-    sources = get_sources()
-    for src in sources:
+    collections = get_collections()
+    for collection in collections:
         # read board game ids from src file
-        board_game_ids = read_source(src)
+        board_game_ids = read_collection(collection)
         if not board_game_ids:
             print(
-                f"\tError: could not process '{src}' because it does not contain non-empty id list 'bgg-ids' at root"
+                f"\tError: could not process '{collection}' because it does not contain non-empty id list 'bgg-ids' at root"
             )
             continue
 
@@ -37,4 +38,4 @@ def update():
         if update_result["expansions"]:
             update_result["expansions"].sort(key=lambda x: x["rating"], reverse=True)
 
-        write_results(src, update_result)
+        write_results(collection, update_result)

@@ -1,5 +1,7 @@
 import click
 
+from bgg.command.add import add
+from bgg.command.collections import collections
 from bgg.command.get import get
 from bgg.command.hot import hot
 from bgg.command.open import bgg_open
@@ -21,6 +23,8 @@ def cli():
     pass
 
 
+cli.add_command(add, "add")
+cli.add_command(collections, "collections")
 cli.add_command(get, "get")
 cli.add_command(hot, "hot")
 cli.add_command(bgg_open, "open")
