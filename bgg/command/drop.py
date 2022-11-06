@@ -8,12 +8,12 @@ from bgg.util.collection_util import (
 )
 
 
-@click.command(help="Add a game/extension to a collection.")
+@click.command(help="Remove a game/extension from a collection.")
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.argument("id")
-def add(collection: str, id: int):
-    print(f"adding {id} to {collection}...")
+def drop(collection: str, id: int):
+    print(f"dropping {id} from {collection}...")
     if not id.isdigit():
         print("id must be an integer value.")
         return
@@ -22,13 +22,10 @@ def add(collection: str, id: int):
         print(f"{collection} is not a valid collection")
         return
 
-    # TODO: check if id is a valid boardgame/expansion
-
     bgg_ids = read_collection(collection)
-    if bgg_ids and int(id) in bgg_ids:
-        print(f"{id} already exists in {collection}.")
+    if int(id) not in bgg_ids:
+        print(f"{id} already doesn't exit exist in {collection}.")
         return
-    bgg_ids.append(int(id))
-    bgg_ids.sort()
+    bgg_ids.remove(int(id))
     update_collection(collection, bgg_ids)
-    print(f"{id} added to {collection}.")
+    print(f"{id} dropped from {collection}.")

@@ -37,18 +37,6 @@
             "maxplaytime": "90"
         },
         {
-            "id": 1234,
-            "name": "Once Upon a Time: The Storytelling Card Game",
-            "year": "1993",
-            "rating": 6.39,
-            "weight": 1.37,
-            "rank": "1905",
-            "minplayers": "2",
-            "maxplayers": "6",
-            "minplaytime": "30",
-            "maxplaytime": "30"
-        },
-        {
             "id": 334065,
             "name": "Verdant",
             "year": "2022",
@@ -143,18 +131,6 @@
             "maxplayers": "6",
             "minplaytime": "60",
             "maxplaytime": "120"
-        },
-        {
-            "id": 12345,
-            "name": "Lifestyles of the Rich and Famous: The Game",
-            "year": "1987",
-            "rating": 5.0,
-            "weight": 1.5,
-            "rank": "NA",
-            "minplayers": "2",
-            "maxplayers": "6",
-            "minplaytime": "0",
-            "maxplaytime": "0"
         },
         {
             "id": 330786,

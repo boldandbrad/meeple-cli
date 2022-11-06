@@ -44,17 +44,21 @@ bgg hot # get current bgg hotness list of games/expansion
 bgg open <bgg_id> # open a boardgame or expansion on boardgamegeek.com
 bgg get <bgg_id> # view details of a boardgame
 bgg collections # list all collections
-
-bgg new <collection> # create a new collection
-bgg delete <collection> # delete a collection
 bgg add <collection> <bgg_id> # add a boardgame or expansion to a collection
 bgg drop <collection> <bgg_id> # remove a boardgame or expansion from a collection
-bgg move <collection> <collection> <bgg_id> # move a boardgame or expansion from one collection to another
 bgg list <collection> # list all games and expansions in a collection
+bgg new <collection> # create a new collection
+bgg delete <collection> # delete a collection
+
+bgg info <collection> # print out information about a collection
+bgg copy <collection> # duplicate a collection
+bgg move <collection> <collection> <bgg_id> # move a boardgame or expansion from one collection to another
 bgg find <collection> # search for a game or expansion in a collection
 bgg export <collection> # export a collection to csv or another format
 bgg config # manage bgg-cli configs
 ``` -->
+
+<!-- TODO: use local data stored when listing games with stats -->
 
 ## License
 
