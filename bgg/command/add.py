@@ -19,7 +19,7 @@ def add(collection: str, id: int):
         return
 
     if not is_collection(collection):
-        print(f"{collection} is not a valid collection")
+        print(f"{collection} is not a valid collection.")
         return
 
     # TODO: check if id is a valid boardgame/expansion

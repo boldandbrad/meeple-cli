@@ -4,6 +4,7 @@ from os.path import exists, join, splitext
 
 import yaml
 
+# TODO: replace with platform specific location in users home dir
 IN_PATH = "./in"
 
 

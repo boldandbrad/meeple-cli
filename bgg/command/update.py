@@ -1,17 +1,24 @@
 import click
 
 from bgg.util.api_util import get_items, BOARDGAME_TYPE, EXPANSION_TYPE
-from bgg.util.collection_util import get_collections, read_collection
-from bgg.util.data_util import write_results
+from bgg.util.collection_util import get_collections, read_collection, is_collection
+from bgg.util.data_util import write_data
 from bgg.util.sort_util import sortby_rank
 
 
-@click.command(help="Update local bgg database.")
+@click.command(help="Update local collection data.")
 @click.help_option("-h", "--help")
-def update():
+@click.argument("collection", required=False)
+def update(collection: str):
     print("updating local data...")
-    # process each data source file
-    collections = get_collections()
+    # update only a specific collection, if provided
+    if collection:
+        if not is_collection(collection):
+            print(f"{collection} is not a valid collection.")
+            return
+        collections = [collection]
+    else:
+        collections = get_collections()
     for collection in collections:
         # read board game ids from src file
         board_game_ids = read_collection(collection)
@@ -38,4 +45,4 @@ def update():
         if update_result["expansions"]:
             update_result["expansions"].sort(key=lambda x: x["rating"], reverse=True)
 
-        write_results(collection, update_result)
+        write_data(collection, update_result)

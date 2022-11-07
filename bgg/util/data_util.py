@@ -1,23 +1,55 @@
 import json
 from datetime import date
-from os import makedirs
+from os import makedirs, walk
 from os.path import exists, join, splitext
+import shutil
 
+# TODO: replace with platform specific location in users home dir
 OUT_PATH = "./out"
 
 
-def write_results(src: str, result: dict) -> None:
-    src_name = splitext(src)[0]
+def _collection_data_dir(collection_name: str) -> str:
+    return join(OUT_PATH, collection_name)
 
+
+def _latest_data_file(collection_name: str) -> str:
+    # find latest data dump file path for collection
+    data_dir = _collection_data_dir(collection_name)
+    if not exists(data_dir):
+        return None
+    month_dirs = next(walk(data_dir))[1]
+    month_dirs.sort()
+    latest_month_dir = join(data_dir, month_dirs[-1])
+    latest_data_files = next(walk(latest_month_dir))[2]
+    latest_data_files.sort()
+    return join(latest_month_dir, latest_data_files[-1])
+
+
+def get_data(collection_name: str) -> dict:
+    data_path = _latest_data_file(collection_name)
+    if not data_path:
+        return {}
+
+    with open(data_path, "r") as f:
+        data = json.load(f)
+    # TODO: serialize json into objects instead of dict
+    return data
+
+
+def write_data(collection_name: str, result: dict) -> None:
     today = date.today()
-    path = f"{OUT_PATH}/{src_name}/{today.strftime('%Y-%m')}"
+    data_path = f"{_collection_data_dir(collection_name)}/{today.strftime('%Y-%m')}"
     filename = f"{today}.json"
 
     # create out dirs if they do not exist
-    if not exists(path):
-        makedirs(path)
+    if not exists(data_path):
+        makedirs(data_path)
 
-    with open(join(path, filename), "w") as f:
+    with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
 
-    print(f"{src_name} results successfully written to {path}/{filename}")
+    print(f"{collection_name} results successfully written to {data_path}/{filename}")
+
+
+def delete_data(collection_name: str) -> None:
+    shutil.rmtree(_collection_data_dir(collection_name))
