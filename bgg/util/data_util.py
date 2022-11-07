@@ -1,7 +1,7 @@
 import json
 from datetime import date
 from os import makedirs, walk
-from os.path import exists, join, splitext
+from os.path import exists, join, splitext, basename
 import shutil
 
 # TODO: replace with platform specific location in users home dir
@@ -25,10 +25,18 @@ def _latest_data_file(collection_name: str) -> str:
     return join(latest_month_dir, latest_data_files[-1])
 
 
+def last_updated(collection_name: str) -> str:
+    latest_data_file = _latest_data_file(collection_name)
+    if not latest_data_file:
+        return "NA"
+    date = splitext(basename(latest_data_file))[0]
+    return date
+
+
 def get_data(collection_name: str) -> dict:
     data_path = _latest_data_file(collection_name)
     if not data_path:
-        return {}
+        return {"boardgames": [], "expansions": []}
 
     with open(data_path, "r") as f:
         data = json.load(f)

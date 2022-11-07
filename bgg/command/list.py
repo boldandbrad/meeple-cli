@@ -1,8 +1,8 @@
 import click
 
-from bgg.util.collection_util import is_collection, read_collection
+from bgg.util.collection_util import is_collection
 from bgg.util.data_util import get_data
-from bgg.util.api_util import get_items
+from bgg.util.output_util import color_weight, color_rating, table
 
 
 @click.command(help="List all games/extensions in a collection.")
@@ -10,8 +10,12 @@ from bgg.util.api_util import get_items
 @click.argument("collection")
 @click.option("-b", "--boardgames", "type", is_flag=True, flag_value="b")
 @click.option("-e", "--expansions", "type", is_flag=True, flag_value="e")
+@click.option("-v", "--verbose", is_flag=True)
+# TODO: add option to sort the list by a particular field
 # TODO: add option to run update on the collection prior to list
-def list_collection(collection: str, type: str):
+# TODO: add option to show grid lines or not in the table
+# TODO: implement paging/scrolling for long lists? not sure how tabulate will like that
+def list_collection(collection: str, type: str, verbose: bool):
     if not is_collection(collection):
         print(f"{collection} is not a valid collection")
         return
@@ -22,7 +26,7 @@ def list_collection(collection: str, type: str):
             f"local data not found for {collection}. update with `bgg update {collection}`"
         )
         return
-
+    # add error/better handling for when a collection has no data files and/or is empty
     boardgames = item_dict["boardgames"]
     expansions = item_dict["expansions"]
 
@@ -33,5 +37,21 @@ def list_collection(collection: str, type: str):
     else:
         out_list = boardgames + expansions
 
+    headers = ["ID", "Name", "Year", "Rank", "Rating", "Weight", "Players", "Time"]
+    rows = []
     for item in out_list:
-        print(f"{str(item['id'])}\t{item['name']}")
+        cols = []
+        cols.append(item["id"])
+        cols.append(item["name"])
+        if verbose:
+            cols.append(item["year"])
+            cols.append(item["rank"])
+            # TODO: format with 2 decimal points always
+            cols.append(color_rating(item["rating"]))
+            cols.append(color_weight(item["weight"]))
+            cols.append(f"{item['minplayers']}-{item['maxplayers']}")
+            cols.append(f"{item['minplaytime']}-{item['maxplaytime']}")
+        rows.append(cols)
+
+    # TODO: add "Showing all ___ in ___ collection." printout about table
+    print(table(headers, rows))

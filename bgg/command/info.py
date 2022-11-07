@@ -1,13 +1,13 @@
 import click
 
-from bgg.util.api_util import get_items, BGG_DOMAIN
+from bgg.util.api_util import get_items
 from bgg.util.output_util import color_weight, color_rating
 
 
 @click.command(help="Print out the details of a boardgame or expansion.")
 @click.help_option("-h", "--help")
 @click.argument("id")
-def get(id: str):
+def info(id: str):
     api_result = get_items([id])
     if not api_result:
         print("invalid id given")

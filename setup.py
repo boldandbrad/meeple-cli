@@ -24,7 +24,13 @@ setup_info = dict(
     },
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["click>=8", "xmltodict>=0.12.0", "requests>=2", "pyyaml"],
+    install_requires=[
+        "click>=8",
+        "tabulate>=0.9.0",
+        "xmltodict>=0.12.0",
+        "requests>=2",
+        "pyyaml",
+    ],
     extras_require={
         "dev": [
             "black",

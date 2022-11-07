@@ -1,4 +1,5 @@
 import click
+from tabulate import tabulate
 
 
 def color_weight(weight: float) -> str:
@@ -18,3 +19,10 @@ def color_rating(rating: float) -> str:
         return click.style(rating, fg="blue")
     if rating > 6:
         return click.style(rating, fg="magenta")
+    return click.style(rating, fg="red")
+
+
+# TODO: handle column overflow/widths
+# TODO: handle show grid lines or not
+def table(headers: list, rows: [list]) -> str:
+    return tabulate(rows, headers=headers, tablefmt="rounded_outline")

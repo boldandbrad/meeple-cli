@@ -50,10 +50,11 @@ bgg list <collection> # list all games and expansions in a collection
 bgg new <collection> # create a new collection
 bgg delete <collection> # delete a collection
 
-bgg info <collection> # print out information about a collection
+bgg stats <collection> # print out information about a collection
+bgg find <collection> # search for a game or expansion in a collection
+
 bgg copy <collection> # duplicate a collection
 bgg move <collection> <collection> <bgg_id> # move a boardgame or expansion from one collection to another
-bgg find <collection> # search for a game or expansion in a collection
 bgg export <collection> # export a collection to csv or another format
 bgg config # manage bgg-cli configs
 ``` -->
