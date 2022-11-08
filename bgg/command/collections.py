@@ -9,7 +9,7 @@ from bgg.util.output_util import table
 
 @click.command(help="List all local collections.")
 @click.help_option("-h", "--help")
-@click.option("-v", "--verbose", is_flag=True)
+@click.option("-v", "--verbose", is_flag=True, help="Display additional information.")
 # TODO: add option to sort list by different columns
 def collections(verbose: bool):
     # process each data source file
@@ -21,9 +21,15 @@ def collections(verbose: bool):
         cols = []
         cols.append(collection)
         if verbose:
-            cols.append(len(data["boardgames"]))
-            cols.append(len(data["expansions"]))
-            cols.append(last_updated(collection))
+            if data:
+                cols.append(len(data["boardgames"]))
+                cols.append(len(data["expansions"]))
+                cols.append(last_updated(collection))
+            else:
+                cols.append(0)
+                cols.append(0)
+                cols.append("Never")
+
         rows.append(cols)
 
     print(table(headers, rows))

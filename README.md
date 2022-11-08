@@ -8,9 +8,11 @@
 
 > search [BoardGameGeek](https://boardgamegeek.com) and manage local board game collections from your terminal.
 
-<!-- ## Install
+## Install
 
-```zsh
+> Coming soon.
+
+<!-- ```zsh
 brew tap boldandbrad/homebrew-tap
 brew install bgg-cli
 ```
@@ -27,7 +29,7 @@ or
 pip install bgg-cli
 ``` -->
 
-<!-- > For more details, read the **bgg-cli** [install guide](https://boldandbrad.github.io/bgg-cli/#/install).
+<!-- > For more details, read the **bgg-cli** [install guide](https://boldandbrad.github.io/bgg-cli/#/install). -->
 
 ## Usage
 
@@ -35,31 +37,40 @@ pip install bgg-cli
 bgg
 ```
 
-> For more usage details, read the **bgg-cli** [usage guide](https://boldandbrad.github.io/bgg-cli/#/usage). -->
+<!-- > For more usage details, read the **bgg-cli** [usage guide](https://boldandbrad.github.io/bgg-cli/#/usage). -->
 
-<!-- ```zsh
-bgg update | <collection> # update all collections data or a specific one
-bgg search <query> # search bgg for a game or expansion
-bgg hot # get current bgg hotness list of games/expansion
-bgg open <bgg_id> # open a boardgame or expansion on boardgamegeek.com
-bgg get <bgg_id> # view details of a boardgame
-bgg collections # list all collections
-bgg add <collection> <bgg_id> # add a boardgame or expansion to a collection
-bgg drop <collection> <bgg_id> # remove a boardgame or expansion from a collection
-bgg list <collection> # list all games and expansions in a collection
-bgg new <collection> # create a new collection
-bgg delete <collection> # delete a collection
+## Roadmap
 
-bgg stats <collection> # print out information about a collection
-bgg find <collection> # search for a game or expansion in a collection
+### Features
 
-bgg copy <collection> # duplicate a collection
-bgg move <collection> <collection> <bgg_id> # move a boardgame or expansion from one collection to another
-bgg export <collection> # export a collection to csv or another format
-bgg config # manage bgg-cli configs
-``` -->
+- [x] Search boardgamegeek for a game or expansion -> `bgg search`
+- [x] Get and display detailed info for a boardgame or expansion -> `bgg info`
+- [x] Open a game or expansion on boardgamegeek.com in browser -> `bgg open`
+- [x] Display current boardgamegeek hotness list -> `bgg hot`
+- [x] Create a new local collection -> `bgg new`
+- [x] Add a game/expansion to a local collection -> `bgg add`
+- [x] List all local collections -> `bgg collections`
+- [x] List all games/expansions in a local collection -> `bgg list`
+- [x] Drop a game/expansion from a local collection -> `bgg drop`
+- [x] Delete a local collection -> `bgg delete`
+- [x] Update local collection data with snapshot from bgg -> `bgg update`
+- [ ] (In Progress) Display average game stats for a collection -> `bgg stats`
+- [ ] Store local collection data in user's home directory
+- [ ] Find a game/expansion in a collection by attributes -> `bgg find`
+- [ ] Rename a local collection -> `bgg rename`
+- [ ] Copy a local collection -> `bgg copy`
+- [ ] Move a game/expansion from one local collection to another -> `bgg move`
+- [ ] Export a local collection to csv or another format -> `bgg export`
+- [ ] Manage user preferences/configs -> `bgg config`
 
-<!-- TODO: use local data stored when listing games with stats -->
+### Technical
+
+- [ ] Implement logging for debugging
+- [ ] Unit tests
+- [ ] Documentation site
+- [ ] CI/CD pipeline
+- [ ] Deployed to pypi
+- [ ] Homebrew formula (will be available [here](https://github.com/boldandbrad/homebrew-tap))
 
 ## License
 

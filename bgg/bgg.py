@@ -1,17 +1,19 @@
 import click
 
-from bgg.command.add import add
-from bgg.command.collections import collections
-from bgg.command.delete import delete
-from bgg.command.drop import drop
-from bgg.command.info import info
-from bgg.command.hot import hot
-from bgg.command.list import list_collection
-from bgg.command.new import new
-from bgg.command.open import bgg_open
-from bgg.command.search import search
-from bgg.command.stats import stats
-from bgg.command.update import update
+from bgg.command import (
+    add,
+    collections,
+    delete,
+    drop,
+    hot,
+    info,
+    list_collection,
+    new,
+    open_on_bgg,
+    search,
+    stats,
+    update,
+)
 
 
 @click.group(help="Local BoardGameGeek collection manager.")
@@ -36,7 +38,7 @@ cli.add_command(info, "info")
 cli.add_command(hot, "hot")
 cli.add_command(list_collection, "list")
 cli.add_command(new, "new")
-cli.add_command(bgg_open, "open")
+cli.add_command(open_on_bgg, "open")
 cli.add_command(search, "search")
 cli.add_command(stats, "stats")
 cli.add_command(update, "update")

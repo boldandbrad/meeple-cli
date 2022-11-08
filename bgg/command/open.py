@@ -9,7 +9,7 @@ from bgg.util.input_util import bool_input
 @click.command(help="Open a boardgame or expansion on the bgg website.")
 @click.help_option("-h", "--help")
 @click.argument("id")
-def bgg_open(id: str):
+def open_on_bgg(id: str):
     api_result = get_items([id])
     if not api_result:
         print("invalid id given")

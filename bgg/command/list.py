@@ -8,9 +8,23 @@ from bgg.util.output_util import color_weight, color_rating, table
 @click.command(help="List all games/extensions in a collection.")
 @click.help_option("-h", "--help")
 @click.argument("collection")
-@click.option("-b", "--boardgames", "type", is_flag=True, flag_value="b")
-@click.option("-e", "--expansions", "type", is_flag=True, flag_value="e")
-@click.option("-v", "--verbose", is_flag=True)
+@click.option(
+    "-b",
+    "--boardgames",
+    "type",
+    is_flag=True,
+    flag_value="b",
+    help="Include only boardgames in output.",
+)
+@click.option(
+    "-e",
+    "--expansions",
+    "type",
+    is_flag=True,
+    flag_value="e",
+    help="Include only expansions in output.",
+)
+@click.option("-v", "--verbose", is_flag=True, help="Display additional information.")
 # TODO: add option to sort the list by a particular field
 # TODO: add option to run update on the collection prior to list
 # TODO: add option to show grid lines or not in the table

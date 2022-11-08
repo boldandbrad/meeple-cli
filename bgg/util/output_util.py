@@ -23,6 +23,8 @@ def color_rating(rating: float) -> str:
 
 
 # TODO: handle column overflow/widths
-# TODO: handle show grid lines or not
-def table(headers: list, rows: [list]) -> str:
-    return tabulate(rows, headers=headers, tablefmt="rounded_outline")
+def table(headers: list, rows: [list], grid: bool = False) -> str:
+    fmt = "rounded_outline"
+    if grid:
+        fmt = "rounded_grid"
+    return tabulate(rows, headers=headers, tablefmt=fmt)

@@ -8,8 +8,22 @@ from bgg.util.output_util import color_weight, color_rating
 @click.command(help="Print out the details of a local collection.")
 @click.help_option("-h", "--help")
 @click.argument("collection")
-@click.option("-b", "--boardgames", "type", is_flag=True, flag_value="b")
-@click.option("-e", "--expansions", "type", is_flag=True, flag_value="e")
+@click.option(
+    "-b",
+    "--boardgames",
+    "type",
+    is_flag=True,
+    flag_value="b",
+    help="Include only boardgames in output.",
+)
+@click.option(
+    "-e",
+    "--expansions",
+    "type",
+    is_flag=True,
+    flag_value="e",
+    help="Include only expansions in output.",
+)
 def stats(collection: str, type: str):
     if not is_collection(collection):
         print(f"{collection} is not a valid collection")

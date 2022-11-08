@@ -36,7 +36,7 @@ def last_updated(collection_name: str) -> str:
 def get_data(collection_name: str) -> dict:
     data_path = _latest_data_file(collection_name)
     if not data_path:
-        return {"boardgames": [], "expansions": []}
+        return None
 
     with open(data_path, "r") as f:
         data = json.load(f)
