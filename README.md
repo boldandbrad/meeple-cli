@@ -63,6 +63,7 @@ bgg
 - [ ] Export a local collection to csv or another format -> `bgg export`
 - [ ] Ability to sort listed outputs by a particular column
 - [ ] Manage user preferences/configs -> `bgg config`
+- [ ] Show elegant data diffs on `bgg update` (individual game stat changes/collection stat changes)
 
 ### Technical
 
