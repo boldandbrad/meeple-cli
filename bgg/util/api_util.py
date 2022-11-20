@@ -44,6 +44,8 @@ def get_hot() -> dict:
     return result
 
 
+# TODO: figure out how to allow user to only search for boardgames or expansions
+# current api returns both as boardgame type for some reason
 def get_search(query: str):
     url = f"{API2_BASE_URL}/search?type={BOARDGAME_TYPE}&query={query}"
     resp_list = _api_get(url)

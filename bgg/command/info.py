@@ -12,6 +12,7 @@ def info(id: str):
     if not api_result:
         print("invalid id given")
     item = api_result[0]
+    # TODO: find a way to nicely tabulate this data
     print("────────────────────────────────────────────────")
     print(f"{item.name} ({item.year})")
     print("────────────────────────────────────────────────")

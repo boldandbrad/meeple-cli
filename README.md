@@ -54,18 +54,19 @@ bgg
 - [x] Drop a game/expansion from a local collection -> `bgg drop`
 - [x] Delete a local collection -> `bgg delete`
 - [x] Update local collection data with snapshot from bgg -> `bgg update`
-- [ ] (In Progress) Display average game stats for a collection -> `bgg stats`
+- [x] Display average game stats for a collection -> `bgg stats`
 - [ ] Store local collection data in user's home directory
 - [ ] Find a game/expansion in a collection by attributes -> `bgg find`
 - [ ] Rename a local collection -> `bgg rename`
 - [ ] Copy a local collection -> `bgg copy`
 - [ ] Move a game/expansion from one local collection to another -> `bgg move`
 - [ ] Export a local collection to csv or another format -> `bgg export`
+- [ ] Ability to sort listed outputs by a particular column
 - [ ] Manage user preferences/configs -> `bgg config`
 
 ### Technical
 
-- [ ] Implement logging for debugging
+- [ ] Implement simple logging for debugging (local, not telemetry)
 - [ ] Unit tests
 - [ ] Documentation site
 - [ ] CI/CD pipeline
@@ -74,5 +75,5 @@ bgg
 
 ## License
 
-Copyright (c) 2021 Bradley Wojcik. Released under the MIT License. See
+Copyright (c) 2022 Bradley Wojcik. Released under the MIT License. See
 [LICENSE](LICENSE) for details.

@@ -1,8 +1,9 @@
 import click
+from tabulate import SEPARATING_LINE
 
 from bgg.util.collection_util import is_collection
 from bgg.util.data_util import get_data
-from bgg.util.output_util import color_weight, color_rating
+from bgg.util.output_util import color_weight, color_rating, table
 
 
 @click.command(help="Print out the details of a local collection.")
@@ -46,12 +47,7 @@ def stats(collection: str, type: str):
     else:
         out_list = boardgames + expansions
 
-    sum_ratings = 0
-    sum_rank = 0
-    num_ranked = 0
-    sum_weight = 0
-    num_weighted = 0
-    sum_players = 0
+    sum_ratings = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
     for item in out_list:
         sum_ratings += item["rating"]
@@ -71,8 +67,16 @@ def stats(collection: str, type: str):
     avg_weight = round(sum_weight / num_weighted, 2)
     avg_max_players = round(sum_players / len(out_list), 2)
 
+    # TODO: find a way to nicely tabulate this data
     print("────────────────────────────────────────────────")
-    print(f"{collection} ({len(boardgames)} Boardgames | {len(expansions)} Expansions)")
+    if type == "b":
+        print(f"{collection} ({len(boardgames)} Boardgames)")
+    elif type == "e":
+        print(f"{collection} ({len(expansions)} Expansions)")
+    else:
+        print(
+            f"{collection} ({len(boardgames)} Boardgames | {len(expansions)} Expansions)"
+        )
     print("────────────────────────────────────────────────")
     print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank}\t")
     print(
