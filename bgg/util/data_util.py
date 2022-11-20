@@ -4,8 +4,9 @@ from os import makedirs, walk
 from os.path import exists, join, splitext, basename
 import shutil
 
-# TODO: replace with platform specific location in users home dir
-OUT_PATH = "./out"
+from bgg.util.fs_util import get_data_dir
+
+OUT_PATH = get_data_dir()
 
 
 def _collection_data_dir(collection_name: str) -> str:

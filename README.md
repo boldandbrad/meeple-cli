@@ -55,7 +55,7 @@ bgg
 - [x] Delete a local collection -> `bgg delete`
 - [x] Update local collection data with snapshot from bgg -> `bgg update`
 - [x] Display average game stats for a collection -> `bgg stats`
-- [ ] Store local collection data in user's home directory
+- [x] Store local collection data in user's home directory
 - [ ] Find a game/expansion in a collection by attributes -> `bgg find`
 - [ ] Rename a local collection -> `bgg rename`
 - [ ] Copy a local collection -> `bgg copy`

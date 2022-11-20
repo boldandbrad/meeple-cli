@@ -1,7 +1,6 @@
 import click
 
 from bgg.util.collection_util import (
-    get_collections,
     is_collection,
     read_collection,
     update_collection,

@@ -4,8 +4,9 @@ from os.path import exists, join, splitext
 
 import yaml
 
-# TODO: replace with platform specific location in users home dir
-IN_PATH = "./in"
+from bgg.util.fs_util import get_collection_dir
+
+IN_PATH = get_collection_dir()
 
 
 def _collection_file(collection_name: str):
@@ -16,7 +17,6 @@ def get_collections() -> list[str]:
     # create in_path dir and exit if it does not exist
     if not exists(IN_PATH):
         makedirs(IN_PATH)
-        sys.exit(f"Created src directory {IN_PATH}. Add '.yaml' files to it and rerun")
 
     # retrieve collection source files from in_path
     collection_files = next(walk(IN_PATH))[2]
@@ -25,10 +25,6 @@ def get_collections() -> list[str]:
         collection, ext = splitext(collection_file)
         if ext == ".yml":
             collections.append(collection)
-
-    # quit if no valid source files are found
-    if not collections:
-        sys.exit("Error: no valid source files exist in the 'in' directory")
     return collections
 
 

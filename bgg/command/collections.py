@@ -1,6 +1,7 @@
 import click
 
 from os.path import splitext
+import sys
 
 from bgg.util.collection_util import get_collections
 from bgg.util.data_util import get_data, last_updated
@@ -14,6 +15,8 @@ from bgg.util.output_util import table
 def collections(verbose: bool):
     # process each data source file
     collections = get_collections()
+    if not collections:
+        sys.exit("No collections yet exist. Create a new one with `bgg new`")
     headers = ["Collection", "Boardgames", "Expansions", "Last Updated"]
     rows = []
     for collection in collections:

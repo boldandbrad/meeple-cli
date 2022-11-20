@@ -1,5 +1,7 @@
 import click
 
+import sys
+
 from bgg.util.api_util import get_items, BOARDGAME_TYPE, EXPANSION_TYPE
 from bgg.util.collection_util import get_collections, read_collection, is_collection
 from bgg.util.data_util import write_data
@@ -19,12 +21,14 @@ def update(collection: str):
         collections = [collection]
     else:
         collections = get_collections()
+    if not collections:
+        sys.exit("No collections yet exist. Create a new one with `bgg new`")
     for collection in collections:
         # read board game ids from src file
         board_game_ids = read_collection(collection)
         if not board_game_ids:
             print(
-                f"\tError: could not process '{collection}' because it does not contain non-empty id list 'bgg-ids' at root"
+                f"\tCould not update '{collection}' because it is empty. Add to it with `bgg add`"
             )
             continue
 
