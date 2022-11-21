@@ -1,5 +1,6 @@
 from os import makedirs, remove, walk
 from os.path import exists, join, splitext
+from typing import List
 
 import yaml
 
@@ -12,7 +13,7 @@ def _collection_file(collection_name: str):
     return join(IN_PATH, f"{collection_name}.yml")
 
 
-def get_collections() -> list[str]:
+def get_collections() -> List[str]:
     # create in_path dir and exit if it does not exist
     if not exists(IN_PATH):
         makedirs(IN_PATH)
@@ -31,7 +32,7 @@ def is_collection(name: str) -> bool:
     return name in get_collections()
 
 
-def read_collection(name: str) -> "list[int]":
+def read_collection(name: str) -> List[int]:
     with open(_collection_file(name), "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
         if data and "bgg-ids" in data:

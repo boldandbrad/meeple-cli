@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 import requests
 import xmltodict
@@ -25,7 +25,7 @@ def _api_get(url: str) -> dict:
     sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 
-def get_items(ids: "list[int]") -> list:
+def get_items(ids: List[int]) -> List:
     ids_str = ",".join(map(str, ids))
     url = f"{API2_BASE_URL}/thing?id={ids_str}&type={BOARDGAME_TYPE},{EXPANSION_TYPE}&stats=1"
     resp_list = _api_get(url)
