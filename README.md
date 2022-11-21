@@ -1,6 +1,7 @@
 # bgg-cli
 
 [![Build Status](https://api.travis-ci.com/boldandbrad/bgg-cli.svg?branch=main)](https://travis-ci.com/github/boldandbrad/bgg-cli)
+
 <!-- [![codecov](https://codecov.io/gh/boldandbrad/bgg-cli/branch/main/graph/badge.svg)](https://codecov.io/gh/boldandbrad/bgg-cli) -->
 <!-- [![Docs](https://img.shields.io/website?down_message=down&label=docs&up_message=online&url=https%3A%2F%2Fboldandbrad.github.io%2Fbgg-cli%2F)](https://boldandbrad.github.io/bgg-cli/) -->
 <!-- [![PyPI](https://img.shields.io/pypi/v/bgg-cli)](https://pypi.org/project/bgg-cli/) -->
@@ -61,9 +62,21 @@ bgg
 - [ ] Copy a local collection -> `bgg copy`
 - [ ] Move a game/expansion from one local collection to another -> `bgg move`
 - [ ] Export a local collection to csv or another format -> `bgg export`
+- [ ] Import a local collection from a variety of formats -> `bgg import`
 - [ ] Ability to sort listed outputs by a particular column
-- [ ] Manage user preferences/configs -> `bgg config`
+- [ ] Ability to display only a given number of rows
+- [ ] Manage user preferences/configs -> `bgg config` stored at `~/.bgg/config.json` or something
 - [ ] Show elegant data diffs on `bgg update` (individual game stat changes/collection stat changes)
+- [ ] Output pagination for long lists?
+- [ ] Identify when changes have been made to a collection and an update has not occurred yet
+
+#### Long Shot Ideas (May or may not happen)
+
+- [ ] Ability to assign and manage personal ratings to games/expansions
+- [ ] Ability to record and manage plays of games - would be nuts.
+  - [ ] Ability to calculate and surface play statistics for a game
+- [ ] Ability to interact with discord services to show that you are currently playing a boardgame?
+- [ ] Ability to actually interact with BGG.com user profile/settings/collections (not all currently possible via the API)
 
 ### Technical
 

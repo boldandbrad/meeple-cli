@@ -1,7 +1,6 @@
-import click
-
-from os.path import splitext
 import sys
+
+import click
 
 from bgg.util.collection_util import get_collections
 from bgg.util.data_util import get_data, last_updated

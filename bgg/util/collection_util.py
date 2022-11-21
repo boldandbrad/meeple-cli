@@ -1,5 +1,4 @@
-import sys
-from os import makedirs, walk, remove
+from os import makedirs, remove, walk
 from os.path import exists, join, splitext
 
 import yaml

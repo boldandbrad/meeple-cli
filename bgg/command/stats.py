@@ -1,9 +1,8 @@
 import click
-from tabulate import SEPARATING_LINE
 
 from bgg.util.collection_util import is_collection
 from bgg.util.data_util import get_data
-from bgg.util.output_util import color_weight, color_rating, table
+from bgg.util.output_util import color_rating, color_weight
 
 
 @click.command(help="Print out the details of a local collection.")
@@ -78,7 +77,7 @@ def stats(collection: str, type: str):
             f"{collection} ({len(boardgames)} Boardgames | {len(expansions)} Expansions)"
         )
     print("────────────────────────────────────────────────")
-    print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank}\t")
+    print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
     print(
         f"{avg_max_players} Avg. Max Players\tAvg. Weight: {color_weight(avg_weight)}/5"
     )

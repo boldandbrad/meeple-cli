@@ -3,7 +3,7 @@
 venv:
     . .venv/bin/activate
 
-# install makey-cli
+# install bgg-cli
 install:
     pip install .
 
@@ -19,13 +19,21 @@ build:
 brew: install
     poet -f bgg-cli >> formula.rb
 
+# lint and format
+lint:
+    trunk check
+
+# check code and deps for vulns
+deps:
+    snyk test --file=setup.py
+
 # run all tests
 test: install
     pytest
 
 # run all tests with coverage
 test-cov: install
-    pytest --cov-report=xml --cov=./makey/
+    pytest --cov-report=xml --cov=./bgg/
 
 # remove artifacts
 cleanup:
