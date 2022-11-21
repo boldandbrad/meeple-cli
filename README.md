@@ -42,6 +42,8 @@ bgg
 
 ## Roadmap
 
+<!-- TODO: add link to changelog here -->
+
 ### Features
 
 - [x] Search boardgamegeek for a game or expansion -> `bgg search`
@@ -80,11 +82,13 @@ bgg
 
 ### Technical
 
-- [ ] Implement simple logging for debugging (local, not telemetry)
+- [ ] Implement simple logging for debugging (local, not telemetry) (via loguru?)
 - [ ] Unit tests
-- [ ] Documentation site
-- [ ] CI/CD pipeline
+- [ ] Documentation site (via vitepress?)
+- [x] Linting (via [trunk](trunk.io))
+- [ ] CI/CD pipeline (via [travis](travis-ci.com))
 - [ ] Deployed to pypi
+- [ ] Pre-releases deployed to pypi-test
 - [ ] Homebrew formula (will be available [here](https://github.com/boldandbrad/homebrew-tap))
 
 ## License
