@@ -19,14 +19,14 @@ def open_on_bgg(id: str):
     # check that the given id is a valid BGG ID
     api_result = get_items([id])
     if not api_result:
-        sys.exit("Error: '{id}' is not a valid BGG ID.")
+        sys.exit(f"Error: '{id}' is not a valid BGG ID.")
 
     # confirm the user wants to open the game/expansion on BGG website
     item = api_result[0]
     url = f"https://{BGG_DOMAIN}/{item.type}/{id}"
     name = item.name
-    if bool_input(f"Open {name} on {BGG_DOMAIN}?"):
-        print(f"\tOpening {name} on {BGG_DOMAIN} ...")
+    if bool_input(f"Open '{name}' on {BGG_DOMAIN}?"):
+        print(f"\tOpening '{name}' on {BGG_DOMAIN} ...")
         webbrowser.open(url)
     else:
-        print(f"\tView {name} at {url}")
+        print(f"\tView '{name}' at {url}")

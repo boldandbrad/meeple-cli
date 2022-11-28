@@ -32,4 +32,4 @@ def delete(collection: str, yes: bool):
         data = get_data(collection)
         if data:
             delete_data(collection)
-        print(f"'{collection}' collection has been deleted.")
+        print(f"Successfully deleted collection '{collection}'.")

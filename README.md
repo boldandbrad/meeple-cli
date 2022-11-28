@@ -59,7 +59,7 @@ bgg
 - [x] Update local collection data with snapshot from bgg -> `bgg update`
 - [x] Display average game stats for a collection -> `bgg stats`
 - [x] Store local collection data in user's home directory
-- [ ] Find a game/expansion in a collection by attributes -> `bgg find`
+- [ ] Find games/expansions across local collections by attributes -> `bgg find`
 - [ ] Rename a local collection -> `bgg rename`
 - [ ] Copy a local collection -> `bgg copy`
 - [x] Move a game/expansion from one local collection to another -> `bgg move`
@@ -68,6 +68,9 @@ bgg
 - [ ] Ability to sort listed outputs by a particular column
 - [ ] Ability to display only a given number of rows
 - [ ] Manage user preferences/configs -> `bgg config` stored at `~/.bgg/config.json` or something
+  - [ ] Toggle colorized output
+  - [ ] Set custom default output sorts
+  - [ ] Set custom data location
 - [ ] Show elegant data diffs on `bgg update` (individual game stat changes/collection stat changes)
 - [ ] Output pagination for long lists?
 - [ ] Identify when changes have been made to a collection and an update has not occurred yet

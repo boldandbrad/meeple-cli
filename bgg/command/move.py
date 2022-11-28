@@ -19,7 +19,6 @@ def move(from_collection: str, to_collection: str, id: int):
 
     - ID is the BGG ID of the game/expansion to be moved.
     """
-    print(f"moving {id} from {from_collection} to {to_collection}...")
     # check that the given id is an integer
     if not id.isdigit():
         sys.exit("Error: ID must be an integer value.")
@@ -38,19 +37,19 @@ def move(from_collection: str, to_collection: str, id: int):
     from_bgg_ids = read_collection(from_collection)
     if int(id) not in from_bgg_ids:
         # TODO: ask if they want to add it to the to collection anyway
-        print(f"{id} already doesn't exist in {from_collection}.")
-        return
+        sys.exit(f"Error: '{id}' already doesn't exist in '{from_collection}'.")
+
     from_bgg_ids.remove(int(id))
 
     # add the id to the destination collection
     to_bgg_ids = read_collection(to_collection)
     if to_bgg_ids and int(id) in to_bgg_ids:
-        print(f"{id} already exists in {to_collection}.")
-        return
+        sys.exit(f"Error: '{id}' already exists in '{to_collection}'.")
+
     to_bgg_ids.append(int(id))
     to_bgg_ids.sort()
 
     # save changes
     update_collection(from_collection, from_bgg_ids)
     update_collection(to_collection, to_bgg_ids)
-    print(f"{id} moved from {from_collection} to {to_collection}.")
+    print(f"Successfully moved '{id}' from '{from_collection}' to '{to_collection}'.")

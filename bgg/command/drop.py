@@ -16,7 +16,6 @@ def drop(collection: str, id: int):
 
     - ID is the BGG ID of the game/expansion to be removed.
     """
-    print(f"dropping {id} from {collection}...")
     # check that the given ID is an integer
     if not id.isdigit():
         sys.exit("Error: ID must be an integer value.")
@@ -28,9 +27,9 @@ def drop(collection: str, id: int):
     bgg_ids = read_collection(collection)
     # check that the given id already does not exist in the given collection
     if int(id) not in bgg_ids:
-        sys.exit(f"{id} already doesn't exist in '{collection}'.")
+        sys.exit(f"Error: '{id}' already doesn't exist in '{collection}'.")
 
     # remove the id from the collection and save
     bgg_ids.remove(int(id))
     update_collection(collection, bgg_ids)
-    print(f"{id} dropped from '{collection}'.")
+    print(f"Successfully dropped '{id}' from '{collection}'.")

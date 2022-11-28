@@ -16,7 +16,7 @@ def update(collection: str):
 
     - COLLECTION (optional) is the name of the collection to be updated. If not provided, update all collections.
     """
-    print("updating local data...")
+    print("Updating local data...")
     # update only a specific collection, if given
     if collection:
         # check that the given collection is a valid collection
@@ -38,7 +38,7 @@ def update(collection: str):
         board_game_ids = read_collection(collection)
         if not board_game_ids:
             print(
-                f"\tCould not update '{collection}' because it is empty. Add to it with `bgg add`"
+                f"\tWarning: Could not update collection '{collection}' because it is empty. Add to it with `bgg add`"
             )
             continue
 
@@ -61,3 +61,5 @@ def update(collection: str):
 
         # save results
         write_data(collection, update_result)
+
+    print("Successfully updated local data.")

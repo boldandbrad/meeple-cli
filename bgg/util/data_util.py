@@ -1,8 +1,8 @@
 import json
+import shutil
 from datetime import date
 from os import makedirs, walk
-from os.path import exists, join, splitext, basename
-import shutil
+from os.path import basename, exists, join, splitext
 
 from bgg.util.fs_util import get_data_dir
 
@@ -57,7 +57,7 @@ def write_data(collection_name: str, result: dict) -> None:
     with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
 
-    print(f"{collection_name} results successfully written to {data_path}/{filename}")
+    print(f"\tSuccessfully updated collection '{collection_name}'.")
 
 
 def delete_data(collection_name: str) -> None:

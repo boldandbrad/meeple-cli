@@ -17,7 +17,6 @@ def add(collection: str, id: int):
 
     - ID is the BGG ID of the game/expansion to be added.
     """
-    print(f"adding {id} to {collection}...")
     # check that the given id is an integer
     if not id.isdigit():
         sys.exit("Error: ID must be an integer value.")
@@ -25,7 +24,7 @@ def add(collection: str, id: int):
     # check that the given id is a valid BGG ID
     api_result = get_items([id])
     if not api_result:
-        sys.exit("Error: '{id}' is not a valid BGG ID.")
+        sys.exit(f"Error: '{id}' is not a valid BGG ID.")
 
     # check that the given collection is a valid collection
     if not is_collection(collection):
@@ -34,10 +33,10 @@ def add(collection: str, id: int):
     bgg_ids = read_collection(collection)
     # check that the given id does not already exist in the given collection
     if bgg_ids and int(id) in bgg_ids:
-        sys.exit(f"{id} already exists in '{collection}'.")
+        sys.exit(f"Error: '{id}' already exists in '{collection}'.")
 
     # add the id to the collection and save
     bgg_ids.append(int(id))
     bgg_ids.sort()
     update_collection(collection, bgg_ids)
-    print(f"{id} added to '{collection}'.")
+    print(f"Successfully added '{id}' to '{collection}'.")

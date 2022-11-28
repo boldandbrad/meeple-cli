@@ -21,7 +21,7 @@ def info(id: str):
     # check that the given id is a valid one
     api_result = get_items([id])
     if not api_result:
-        sys.exit("Error: '{id}' is not a valid BGG ID.")
+        sys.exit(f"Error: '{id}' is not a valid BGG ID.")
 
     item = api_result[0]
     # TODO: find a way to nicely tabulate this data

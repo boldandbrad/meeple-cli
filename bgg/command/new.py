@@ -19,4 +19,4 @@ def new(collection: str):
 
     # create new collection
     create_collection(collection)
-    print(f"{collection} collection created.")
+    print(f"Successfully created new collection '{collection}'.")
