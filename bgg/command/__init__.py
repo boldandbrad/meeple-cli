@@ -5,6 +5,7 @@ from .drop import drop
 from .hot import hot
 from .info import info
 from .list import list_collection
+from .move import move
 from .new import new
 from .open import open_on_bgg
 from .search import search

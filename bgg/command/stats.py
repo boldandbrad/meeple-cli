@@ -1,3 +1,5 @@
+import sys
+
 import click
 
 from bgg.util.collection_util import is_collection
@@ -5,7 +7,7 @@ from bgg.util.data_util import get_data
 from bgg.util.output_util import color_rating, color_weight
 
 
-@click.command(help="Print out the details of a local collection.")
+@click.command()
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option(
@@ -25,20 +27,26 @@ from bgg.util.output_util import color_rating, color_weight
     help="Include only expansions in output.",
 )
 def stats(collection: str, type: str):
+    """Print out the details of a local collection.
+
+    - COLLECTION is the name of the collection to be detailed.
+    """
+    # check that the given collection is a valid collection
     if not is_collection(collection):
-        print(f"{collection} is not a valid collection")
-        return
+        sys.exit(f"Error: '{collection}' is not a valid collection.")
 
     item_dict = get_data(collection)
+    # check that local data exists for the given collection
+    # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
-        print(
-            f"local data not found for {collection}. update with `bgg update {collection}`"
+        sys.exit(
+            f"Warning: local data not found for '{collection}'. update with `bgg update {collection}`"
         )
-        return
 
     boardgames = item_dict["boardgames"]
     expansions = item_dict["expansions"]
 
+    # determine what to include in results depending on given flags
     if type == "b":
         out_list = boardgames
     elif type == "e":
@@ -46,6 +54,7 @@ def stats(collection: str, type: str):
     else:
         out_list = boardgames + expansions
 
+    # calculate stats
     sum_ratings = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
     for item in out_list:

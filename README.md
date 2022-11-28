@@ -86,6 +86,7 @@ bgg
 - [ ] Unit tests
 - [ ] Documentation site (via vitepress?)
 - [x] Linting (via [trunk](trunk.io))
+- [ ] Convert to pyproject.toml build system (via flit?)
 - [ ] CI/CD pipeline (via [travis](travis-ci.com))
 - [ ] Deployed to pypi
 - [ ] Pre-releases deployed to pypi-test

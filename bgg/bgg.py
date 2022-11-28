@@ -8,6 +8,7 @@ from bgg.command import (
     hot,
     info,
     list_collection,
+    move,
     new,
     open_on_bgg,
     search,
@@ -37,6 +38,7 @@ cli.add_command(drop, "drop")
 cli.add_command(info, "info")
 cli.add_command(hot, "hot")
 cli.add_command(list_collection, "list")
+cli.add_command(move, "move")
 cli.add_command(new, "new")
 cli.add_command(open_on_bgg, "open")
 cli.add_command(search, "search")

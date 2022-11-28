@@ -1,28 +1,38 @@
-import click
-
 import sys
 
-from bgg.util.api_util import get_items, BOARDGAME_TYPE, EXPANSION_TYPE
-from bgg.util.collection_util import get_collections, read_collection, is_collection
+import click
+
+from bgg.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_items
+from bgg.util.collection_util import get_collections, is_collection, read_collection
 from bgg.util.data_util import write_data
 from bgg.util.sort_util import sortby_rank
 
 
-@click.command(help="Update local collection data.")
+@click.command()
 @click.help_option("-h", "--help")
 @click.argument("collection", required=False)
 def update(collection: str):
+    """Update local collection data.
+
+    - COLLECTION (optional) is the name of the collection to be updated. If not provided, update all collections.
+    """
     print("updating local data...")
-    # update only a specific collection, if provided
+    # update only a specific collection, if given
     if collection:
+        # check that the given collection is a valid collection
         if not is_collection(collection):
-            print(f"{collection} is not a valid collection.")
-            return
+            sys.exit(f"Error: '{collection}' is not a valid collection.")
         collections = [collection]
     else:
         collections = get_collections()
+
+    # check that local collections exist
     if not collections:
-        sys.exit("No collections yet exist. Create a new one with `bgg new`")
+        sys.exit(
+            "Warning: No local collections yet exist. Create a new one with `bgg new`"
+        )
+
+    # update collection data
     for collection in collections:
         # read board game ids from src file
         board_game_ids = read_collection(collection)
@@ -49,4 +59,5 @@ def update(collection: str):
         if update_result["expansions"]:
             update_result["expansions"].sort(key=lambda x: x["rating"], reverse=True)
 
+        # save results
         write_data(collection, update_result)

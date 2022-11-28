@@ -1,25 +1,35 @@
+import sys
+
 import click
 
-from bgg.util.collection_util import is_collection, delete_collection
-from bgg.util.data_util import get_data, delete_data
+from bgg.util.collection_util import delete_collection, is_collection
+from bgg.util.data_util import delete_data, get_data
 from bgg.util.input_util import bool_input
 
 
-@click.command(help="Delete a local collection.")
+@click.command()
 @click.help_option("-h", "--help")
-@click.argument("name")
+@click.argument("collection")
 @click.option("-y", "--yes", is_flag=True, help="Dangerous - Bypass confirmation.")
-def delete(name: str, yes: bool):
-    if not is_collection(name):
-        print(f"collection {name} does not exist.")
-        return
+def delete(collection: str, yes: bool):
+    """Delete a local collection.
+
+    - COLLECTION is the name of the collection to be deleted.
+    """
+    # check that the given collection exists
+    if not is_collection(collection):
+        sys.exit(f"Error: '{collection}' already does not exist.")
+
+    # ask for confirmation or not depending on presence of flag
     if not yes:
-        confirmation = bool_input(f"Are you sure you want to delete {name}?")
+        confirmation = bool_input(f"Are you sure you want to delete '{collection}'?")
     else:
         confirmation = True
+
+    # delete collection and its data if confirmation succeeded
     if confirmation:
-        delete_collection(name)
-        data = get_data(name)
+        delete_collection(collection)
+        data = get_data(collection)
         if data:
-            delete_data(name)
-        print(f"{name} collection has been deleted.")
+            delete_data(collection)
+        print(f"'{collection}' collection has been deleted.")

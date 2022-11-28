@@ -7,21 +7,30 @@ from bgg.util.data_util import get_data, last_updated
 from bgg.util.output_util import table
 
 
-@click.command(help="List all local collections.")
+@click.command()
 @click.help_option("-h", "--help")
 @click.option("-v", "--verbose", is_flag=True, help="Display additional information.")
 # TODO: add option to sort list by different columns
 def collections(verbose: bool):
-    # process each data source file
+    """List all local collections."""
+    # attempt to retrieve collections
     collections = get_collections()
+
+    # check that local collections exist
     if not collections:
-        sys.exit("No collections yet exist. Create a new one with `bgg new`")
+        sys.exit(
+            "Warning: No local collections yet exist. Create a new one with `bgg new`"
+        )
+
+    # prepare table data
     headers = ["Collection", "Boardgames", "Expansions", "Last Updated"]
     rows = []
     for collection in collections:
         data = get_data(collection)
         cols = []
         cols.append(collection)
+
+        # include additional data if the user choose verbose output
         if verbose:
             if data:
                 cols.append(len(data["boardgames"]))

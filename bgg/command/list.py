@@ -1,3 +1,5 @@
+import sys
+
 import click
 
 from bgg.util.collection_util import is_collection
@@ -5,7 +7,7 @@ from bgg.util.data_util import get_data
 from bgg.util.output_util import color_rating, color_weight, table
 
 
-@click.command(help="List all games/extensions in a collection.")
+@click.command()
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option(
@@ -30,20 +32,26 @@ from bgg.util.output_util import color_rating, color_weight, table
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how tabulate will like that
 def list_collection(collection: str, only_include: str, verbose: bool):
+    """List all games/extensions in a collection.
+
+    - COLLECTION is the name of the collection to be listed.
+    """
+    # check that the given collection is a valid collection
     if not is_collection(collection):
-        print(f"{collection} is not a valid collection")
-        return
+        sys.exit(f"Error: '{collection}' is not a valid collection.")
 
     item_dict = get_data(collection)
+    # check that local data exists for the given collection
+    # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
-        print(
-            f"local data not found for {collection}. update with `bgg update {collection}`"
+        sys.exit(
+            f"Warning: local data not found for '{collection}'. update with `bgg update {collection}`"
         )
-        return
-    # add error/better handling for when a collection has no data files and/or is empty
+
     boardgames = item_dict["boardgames"]
     expansions = item_dict["expansions"]
 
+    # determine what to include in results depending on given flags
     if only_include == "bg":
         out_list = boardgames
     elif only_include == "ex":
@@ -51,6 +59,7 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     else:
         out_list = boardgames + expansions
 
+    # prepare table data
     headers = ["ID", "Name", "Year", "Rank", "Rating", "Weight", "Players", "Time"]
     rows = []
     for item in out_list:
@@ -67,5 +76,5 @@ def list_collection(collection: str, only_include: str, verbose: bool):
             cols.append(f"{item['minplaytime']}-{item['maxplaytime']}")
         rows.append(cols)
 
-    # TODO: add "Showing all ___ in ___ collection." printout about table
+    # TODO: add "Showing all ___ in ___ collection." printout above table?
     print(table(headers, rows))
