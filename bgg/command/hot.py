@@ -1,11 +1,12 @@
 import click
 
 from bgg.util.api_util import get_hot
-from bgg.util.output_util import color_rating, color_weight, table
+from bgg.util.output_util import table
 
 
 @click.command()
 @click.help_option("-h", "--help")
+# TODO: add verbosity flag to show more details for each item
 def hot():
     """Retrieve the current bgg hotness list."""
     # retrieve hotness data from BGG
