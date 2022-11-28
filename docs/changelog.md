@@ -28,3 +28,4 @@ and this project adheres to
 - Drop a game/expansion from a local collection via `bgg drop`
 - Display average game stats for a collection via `bgg stats`
 - Update local collection data with snapshot from bgg via `bgg update`
+- Move a game/expansion from one collection to another via `bgg move`

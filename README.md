@@ -62,7 +62,7 @@ bgg
 - [ ] Find a game/expansion in a collection by attributes -> `bgg find`
 - [ ] Rename a local collection -> `bgg rename`
 - [ ] Copy a local collection -> `bgg copy`
-- [ ] Move a game/expansion from one local collection to another -> `bgg move`
+- [x] Move a game/expansion from one local collection to another -> `bgg move`
 - [ ] Export a local collection to csv or another format -> `bgg export`
 - [ ] Import a local collection from a variety of formats -> `bgg import`
 - [ ] Ability to sort listed outputs by a particular column
