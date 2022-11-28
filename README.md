@@ -1,13 +1,13 @@
 # bgg-cli
 
 [![Build Status](https://api.travis-ci.com/boldandbrad/bgg-cli.svg?branch=main)](https://travis-ci.com/github/boldandbrad/bgg-cli)
+[![codecov](https://codecov.io/gh/boldandbrad/bgg-cli/branch/main/graph/badge.svg)](https://codecov.io/gh/boldandbrad/bgg-cli)
 
-<!-- [![codecov](https://codecov.io/gh/boldandbrad/bgg-cli/branch/main/graph/badge.svg)](https://codecov.io/gh/boldandbrad/bgg-cli) -->
 <!-- [![Docs](https://img.shields.io/website?down_message=down&label=docs&up_message=online&url=https%3A%2F%2Fboldandbrad.github.io%2Fbgg-cli%2F)](https://boldandbrad.github.io/bgg-cli/) -->
 <!-- [![PyPI](https://img.shields.io/pypi/v/bgg-cli)](https://pypi.org/project/bgg-cli/) -->
 <!-- ![PyPI - Downloads](https://img.shields.io/pypi/dm/bgg-cli) -->
 
-> search [BoardGameGeek](https://boardgamegeek.com) and manage local board game collections from your terminal.
+> search [BoardGameGeek](https://boardgamegeek.com) and manage **local** board game collections from your terminal.
 
 ## Install
 

@@ -1,2 +1,4 @@
+"""local boardgamegeek collection manager"""
+
 # release version
-version = "0.2.0"
+__version__ = "0.2.0"
