@@ -89,10 +89,10 @@ bgg
 - [ ] Unit tests
 - [ ] Documentation site (via vitepress?)
 - [x] Linting (via [trunk](trunk.io))
-- [ ] Convert to pyproject.toml build system (via flit?)
+- [x] Convert to pyproject.toml build system (via [flit](flit.pypa.io))
 - [ ] CI/CD pipeline (via [travis](travis-ci.com))
-- [ ] Deployed to pypi
-- [ ] Pre-releases deployed to pypi-test
+- [ ] Pre-releases deployed to test pypi
+- [ ] Deploy v1.0.0 to pypi
 - [ ] Homebrew formula (will be available [here](https://github.com/boldandbrad/homebrew-tap))
 
 ## License
