@@ -23,7 +23,7 @@ from bgg.command import (
     None,  # use version auto discovery via setuptools
     "-v",
     "--version",
-    package_name="bgg-cli",
+    package_name="meeple-cli",
     message="%(prog)s-cli, v%(version)s",
 )
 def cli():
