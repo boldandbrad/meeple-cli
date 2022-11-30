@@ -14,7 +14,7 @@ matrix:
 install:
   - pip install flit
   - flit install
-  - flit build
+  - flit build --setup-py
 
 script:
   - pytest --cov-report=xml --cov=./bgg/

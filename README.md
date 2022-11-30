@@ -7,7 +7,7 @@
 <!-- [![PyPI](https://img.shields.io/pypi/v/bgg-cli)](https://pypi.org/project/bgg-cli/) -->
 <!-- ![PyPI - Downloads](https://img.shields.io/pypi/dm/bgg-cli) -->
 
-> search [BoardGameGeek](https://boardgamegeek.com) and manage **local** board game collections from your terminal.
+> manage your boardgame collection(s) from your terminal. powered by [BoardGameGeek](https://boardgamegeek.com).
 
 ## Install
 
@@ -99,3 +99,6 @@ bgg
 
 Copyright (c) 2022 Bradley Wojcik. Released under the MIT License. See
 [LICENSE](LICENSE) for details.
+
+bggeek
+meeple
