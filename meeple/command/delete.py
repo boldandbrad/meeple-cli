@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from bgg.util.collection_util import delete_collection, is_collection
-from bgg.util.data_util import delete_data, get_data
-from bgg.util.input_util import bool_input
+from meeple.util.collection_util import delete_collection, is_collection
+from meeple.util.data_util import delete_data, get_data
+from meeple.util.input_util import bool_input
 
 
 @click.command()

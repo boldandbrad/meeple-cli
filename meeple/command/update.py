@@ -2,10 +2,10 @@ import sys
 
 import click
 
-from bgg.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_items
-from bgg.util.collection_util import get_collections, is_collection, read_collection
-from bgg.util.data_util import write_data
-from bgg.util.sort_util import sortby_rank
+from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_items
+from meeple.util.collection_util import get_collections, is_collection, read_collection
+from meeple.util.data_util import write_data
+from meeple.util.sort_util import sortby_rank
 
 
 @click.command()
@@ -29,7 +29,7 @@ def update(collection: str):
     # check that local collections exist
     if not collections:
         sys.exit(
-            "Warning: No local collections yet exist. Create a new one with `bgg new`"
+            "Warning: No local collections yet exist. Create a new one with `meeple new`"
         )
 
     # update collection data
@@ -38,7 +38,7 @@ def update(collection: str):
         board_game_ids = read_collection(collection)
         if not board_game_ids:
             print(
-                f"\tWarning: Could not update collection '{collection}' because it is empty. Add to it with `bgg add`"
+                f"\tWarning: Could not update collection '{collection}' because it is empty. Add to it with `meeple add`"
             )
             continue
 

@@ -2,8 +2,12 @@ import sys
 
 import click
 
-from bgg.util.api_util import get_items
-from bgg.util.collection_util import is_collection, read_collection, update_collection
+from meeple.util.api_util import get_items
+from meeple.util.collection_util import (
+    is_collection,
+    read_collection,
+    update_collection,
+)
 
 
 @click.command()

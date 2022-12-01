@@ -1,14 +1,14 @@
 import click
 
-from bgg.util.api_util import get_hot
-from bgg.util.output_util import table
+from meeple.util.api_util import get_hot
+from meeple.util.output_util import table
 
 
 @click.command()
 @click.help_option("-h", "--help")
 # TODO: add verbosity flag to show more details for each item
 def hot():
-    """Retrieve the current bgg hotness list."""
+    """Retrieve the current boardgamegeek hotness list."""
     # retrieve hotness data from BGG
     api_result = get_hot()
 

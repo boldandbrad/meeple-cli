@@ -2,8 +2,8 @@ import sys
 
 import click
 
-from bgg.util.api_util import get_items
-from bgg.util.output_util import color_rating, color_weight
+from meeple.util.api_util import get_items
+from meeple.util.output_util import color_rating, color_weight
 
 
 @click.command()

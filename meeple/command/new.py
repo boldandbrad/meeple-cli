@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from bgg.util.collection_util import create_collection, is_collection
+from meeple.util.collection_util import create_collection, is_collection
 
 
 @click.command()

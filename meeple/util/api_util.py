@@ -4,12 +4,12 @@ from typing import List
 import requests
 import xmltodict
 
-from bgg.type.item import Item
+from meeple.type.item import Item
 
 BGG_DOMAIN = "boardgamegeek.com"
 API2_BASE_URL = f"https://{BGG_DOMAIN}/xmlapi2"
 
-# bgg item types
+# boardgamegeek item types
 BOARDGAME_TYPE = "boardgame"
 EXPANSION_TYPE = "boardgameexpansion"
 

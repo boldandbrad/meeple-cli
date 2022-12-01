@@ -1,6 +1,6 @@
 import click
 
-from bgg.util.api_util import get_search
+from meeple.util.api_util import get_search
 
 
 @click.command()
@@ -9,7 +9,7 @@ from bgg.util.api_util import get_search
 # TODO: add option to sort output by different columns
 # TODO: add verbosity flag to show more info about each result
 def search(query: str):
-    """Search bgg for a boardgame or expansion.
+    """Search boardgamegeek for a boardgame or expansion.
 
     - QUERY is the text to be searched for on BGG. If searching multiple words, surround with quotes.
     """

@@ -4,7 +4,7 @@ from typing import List
 
 import yaml
 
-from bgg.util.fs_util import get_collection_dir
+from meeple.util.fs_util import get_collection_dir
 
 IN_PATH = get_collection_dir()
 

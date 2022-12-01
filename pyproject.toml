@@ -19,13 +19,13 @@ dependencies = [
 ]
 
 [tool.flit.module]
-name = "bgg"
+name = "meeple"
 
 [project.urls]
-Home = "https://github.com/boldandbrad/bgg-cli"
+Home = "https://github.com/boldandbrad/meeple-cli"
 
 [project.scripts]
-bgg = "bgg.bgg:cli"
+meeple = "meeple.root:cli"
 
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov", "pytest-mock", "codecov", "homebrew-pypi-poet"]

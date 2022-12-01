@@ -1,6 +1,6 @@
 from click.testing import CliRunner
 
-from bgg.bgg import cli
+from meeple.root import cli
 
 
 def test_version():

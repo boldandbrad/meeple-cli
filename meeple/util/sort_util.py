@@ -1,6 +1,6 @@
 from typing import Any
 
-from bgg.type.item import Item
+from meeple.type.item import Item
 
 
 def sortby_rank(x: Item) -> Any:

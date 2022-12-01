@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from bgg.util.collection_util import is_collection
-from bgg.util.data_util import get_data
-from bgg.util.output_util import color_rating, color_weight
+from meeple.util.collection_util import is_collection
+from meeple.util.data_util import get_data
+from meeple.util.output_util import color_rating, color_weight
 
 
 @click.command()
@@ -40,7 +40,7 @@ def stats(collection: str, type: str):
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `bgg update {collection}`"
+            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
         )
 
     boardgames = item_dict["boardgames"]

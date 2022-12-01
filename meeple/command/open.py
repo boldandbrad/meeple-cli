@@ -3,8 +3,8 @@ import webbrowser
 
 import click
 
-from bgg.util.api_util import BGG_DOMAIN, get_items
-from bgg.util.input_util import bool_input
+from meeple.util.api_util import BGG_DOMAIN, get_items
+from meeple.util.input_util import bool_input
 
 
 @click.command()
@@ -12,7 +12,7 @@ from bgg.util.input_util import bool_input
 @click.argument("id")
 # TODO: add -y option to automatically confirm opening on browser
 def open_on_bgg(id: str):
-    """Open a boardgame or expansion on the bgg website.
+    """Open a boardgame or expansion on the boardgamegeek website.
 
     - ID is the BGG ID of the game/expansion to be opened on boardgamegeek.com.
     """
