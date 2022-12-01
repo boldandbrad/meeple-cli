@@ -42,7 +42,7 @@ def update(collection: str):
             )
             continue
 
-        # get items from BGG
+        # get items from BoardGameGeek
         api_result = get_items(board_game_ids)
         update_result = {"boardgames": [], "expansions": []}
         for item in api_result:
@@ -53,7 +53,7 @@ def update(collection: str):
             if item_type == EXPANSION_TYPE:
                 update_result["expansions"].append(item.__dict__)
 
-        # sort boardgames by rank and expansions by rating
+        # sort board games by rank and expansions by rating
         if update_result["boardgames"]:
             update_result["boardgames"].sort(key=sortby_rank)
         if update_result["expansions"]:

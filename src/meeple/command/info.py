@@ -10,9 +10,9 @@ from meeple.util.output_util import color_rating, color_weight
 @click.help_option("-h", "--help")
 @click.argument("id")
 def info(id: str):
-    """Print out the details of a boardgame or expansion.
+    """Print out the details of a board game or expansion.
 
-    - ID is the BGG ID of the game/expansion to be detailed.
+    - ID is the BoardGameGeek ID of the board game/expansion to be detailed.
     """
     # check that the given id is an integer
     if not id.isdigit():
@@ -21,7 +21,7 @@ def info(id: str):
     # check that the given id is a valid one
     api_result = get_items([id])
     if not api_result:
-        sys.exit(f"Error: '{id}' is not a valid BGG ID.")
+        sys.exit(f"Error: '{id}' is not a valid BoardGameGeek ID.")
 
     item = api_result[0]
     # TODO: find a way to nicely tabulate this data

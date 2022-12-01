@@ -18,15 +18,25 @@ dependencies = [
   "pyyaml >=6",
 ]
 
-[tool.flit.module]
-name = "meeple"
+[project.scripts]
+meeple = "meeple.root:cli"
 
 [project.urls]
 Home = "https://github.com/boldandbrad/meeple-cli"
 
-[project.scripts]
-meeple = "meeple.root:cli"
-
 [project.optional-dependencies]
-test = ["pytest", "pytest-cov", "pytest-mock", "codecov", "homebrew-pypi-poet"]
+test = [
+  "pytest >=6",
+  "pytest-cov",
+  "pytest-mock",
+  "codecov",
+  "homebrew-pypi-poet",
+]
 dev = ["black", "flit"]
+
+[tool.flit.module]
+name = "meeple"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]

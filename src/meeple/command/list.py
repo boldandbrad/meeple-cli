@@ -16,7 +16,7 @@ from meeple.util.output_util import color_rating, color_weight, table
     "only_include",
     is_flag=True,
     flag_value="bg",
-    help="Include only boardgames in output.",
+    help="Include only board games in output.",
 )
 @click.option(
     "-e",
@@ -32,7 +32,7 @@ from meeple.util.output_util import color_rating, color_weight, table
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how tabulate will like that
 def list_collection(collection: str, only_include: str, verbose: bool):
-    """List all games/extensions in a collection.
+    """List all board games/extensions in a collection.
 
     - COLLECTION is the name of the collection to be listed.
     """

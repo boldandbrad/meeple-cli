@@ -22,18 +22,18 @@ test: install
 
 # run all tests with coverage
 test-cov: install
-    pytest --cov-report=xml --cov=./meeple/
+    pytest --cov-report=xml --cov=./src/meeple/
 
 # build dist
 build:
     flit build
 
-# deploy to test pypi
-# test-deploy:
+# publish to test pypi
+# test-publish:
 #     flit publish
 
-# deploy to pypi
-# deploy:
+# publish to pypi
+# publish:
 #     flit publish
 
 # generate homebrew formula
@@ -46,6 +46,7 @@ brew: install
 #     snyk test --file=pyproject.toml
 
 # remove artifacts
+# TODO: remove __pycache__ dirs from src/ and tests/
 cleanup:
     rm -f .coverage
     rm -f coverage.xml
@@ -54,5 +55,3 @@ cleanup:
     rm -rf build
     rm -rf dist
     rm -rf *.egg-info
-    rm -rf meeple/__pycache__
-    rm -rf tests/__pycache__

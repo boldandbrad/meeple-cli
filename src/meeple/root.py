@@ -17,10 +17,10 @@ from meeple.command import (
 )
 
 
-@click.group(help="Local board game collection manager. powered by boardgamegeek.")
+@click.group(help="Local board game collection manager. Powered by BoardGameGeek.")
 @click.help_option("-h", "--help")
 @click.version_option(
-    None,  # use version auto discovery via setuptools
+    None,  # use version auto discovery
     "-v",
     "--version",
     package_name="meeple-cli",

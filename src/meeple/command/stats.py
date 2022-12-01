@@ -16,7 +16,7 @@ from meeple.util.output_util import color_rating, color_weight
     "type",
     is_flag=True,
     flag_value="b",
-    help="Include only boardgames in output.",
+    help="Include only board games in output.",
 )
 @click.option(
     "-e",
@@ -83,7 +83,7 @@ def stats(collection: str, type: str):
         print(f"{collection} ({len(expansions)} Expansions)")
     else:
         print(
-            f"{collection} ({len(boardgames)} Boardgames | {len(expansions)} Expansions)"
+            f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
         )
     print("────────────────────────────────────────────────")
     print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")

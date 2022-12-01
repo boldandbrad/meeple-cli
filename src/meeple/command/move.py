@@ -15,13 +15,13 @@ from meeple.util.collection_util import (
 @click.argument("to_collection")
 @click.argument("id")
 def move(from_collection: str, to_collection: str, id: int):
-    """Move a game/extension from one collection to another.
+    """Move a board game/extension from one collection to another.
 
     - FROM_COLLECTION is the name of the intended source collection.
 
     - TO_COLLECTION is the name of the intended destination collection.
 
-    - ID is the BGG ID of the game/expansion to be moved.
+    - ID is the BoardGameGeek ID of the board game/expansion to be moved.
     """
     # check that the given id is an integer
     if not id.isdigit():

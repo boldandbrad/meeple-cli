@@ -14,11 +14,11 @@ from meeple.util.collection_util import (
 @click.argument("collection")
 @click.argument("id")
 def drop(collection: str, id: int):
-    """Remove a game/extension from a collection.
+    """Remove a board game/extension from a collection.
 
     - COLLECTION is the name of the collection to be modified.
 
-    - ID is the BGG ID of the game/expansion to be removed.
+    - ID is the BoardGameGeek ID of the board game/expansion to be removed.
     """
     # check that the given ID is an integer
     if not id.isdigit():

@@ -13,19 +13,19 @@ and this project adheres to
 
 #### Boardgamegeek.com
 
-- Search boardgamegeek for a game or expansion via `meeple search`
-- Get and display detailed info for a boardgame or expansion via `meeple info`
-- Open a game or expansion on boardgamegeek.com in browser via `meeple open`
-- Get and display the current boardgamegeek hotness list via `meeple hot`
+- Search BoardGameGeek for a board game or expansion via `meeple search`
+- Get and display detailed info for a board game or expansion via `meeple info`
+- Open a board game or expansion on BoardGameGeek in browser via `meeple open`
+- Get and display the current BoardGameGeek hotness list via `meeple hot`
 
 #### Local Collection Management
 
 - Create a new local collection via `meeple new`
 - List all local collections via `meeple collections`
 - Delete a local collection via `meeple delete`
-- Add a game/expansion to a local collection via `meeple add`
-- List all games/expansions in a local collection via `meeple list`
-- Drop a game/expansion from a local collection via `meeple drop`
-- Display average game stats for a collection via `meeple stats`
-- Update local collection data with snapshot from boardgamegeek via `meeple update`
-- Move a game/expansion from one collection to another via `meeple move`
+- Add a board game/expansion to a local collection via `meeple add`
+- List all board games/expansions in a local collection via `meeple list`
+- Drop a board game/expansion from a local collection via `meeple drop`
+- Display average board game stats for a collection via `meeple stats`
+- Update local collection data with snapshot from BoardGameGeek via `meeple update`
+- Move a board game/expansion from one collection to another via `meeple move`

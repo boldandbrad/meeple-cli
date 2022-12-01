@@ -15,20 +15,20 @@ from meeple.util.collection_util import (
 @click.argument("collection")
 @click.argument("id")
 def add(collection: str, id: int):
-    """Add a game/extension to a collection.
+    """Add a board game/extension to a collection.
 
     - COLLECTION is the name of the intended destination collection.
 
-    - ID is the BGG ID of the game/expansion to be added.
+    - ID is the BoardGameGeek ID of the board game/expansion to be added.
     """
     # check that the given id is an integer
     if not id.isdigit():
         sys.exit("Error: ID must be an integer value.")
 
-    # check that the given id is a valid BGG ID
+    # check that the given id is a valid BoardGameGeek ID
     api_result = get_items([id])
     if not api_result:
-        sys.exit(f"Error: '{id}' is not a valid BGG ID.")
+        sys.exit(f"Error: '{id}' is not a valid BoardGameGeek ID.")
 
     # check that the given collection is a valid collection
     if not is_collection(collection):
