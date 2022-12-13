@@ -82,11 +82,13 @@ See a list of already implemented features/changes in the [Changelog](docs/chang
 
 - [ ] Service or job that runs once a day to automatically update local data
   - [ ] Ability to output graphs/visuals to show change in collections over time
+  - [ ] Ability to output graphs/visuals to show a board game's changes on BoardGameGeek over time
 - [ ] Ability to assign and manage personal ratings to board games/expansions
 - [ ] Ability to record and manage plays of board games - would be nuts.
   - [ ] Ability to calculate and surface play statistics for a board game
 - [ ] Ability to interact with discord services to show that you are currently playing a board game?
 - [ ] Ability to actually interact with BoardGameGeek user profile/settings/collections (not all currently possible via the API)
+- [ ] Shell completions for common shells? For finding/searching.
 
 ### Technical
 

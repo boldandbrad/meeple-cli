@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.api_util import get_hot
-from meeple.util.output_util import table
+from meeple.util.output_util import to_table
 
 
 @click.command()
@@ -22,4 +22,4 @@ def hot():
         cols.append(item.name)
         rows.append(cols)
 
-    print(table(headers, rows))
+    print(to_table(headers, rows))

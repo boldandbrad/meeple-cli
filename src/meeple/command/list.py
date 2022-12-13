@@ -4,7 +4,7 @@ import click
 
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
-from meeple.util.output_util import color_rating, color_weight, table
+from meeple.util.output_util import fmt_rating, fmt_weight, to_table
 
 
 @click.command()
@@ -70,11 +70,11 @@ def list_collection(collection: str, only_include: str, verbose: bool):
             cols.append(item["year"])
             cols.append(item["rank"])
             # TODO: format with 2 decimal points always
-            cols.append(color_rating(item["rating"]))
-            cols.append(color_weight(item["weight"]))
+            cols.append(fmt_rating(item["rating"]))
+            cols.append(fmt_weight(item["weight"]))
             cols.append(f"{item['minplayers']}-{item['maxplayers']}")
             cols.append(f"{item['minplaytime']}-{item['maxplaytime']}")
         rows.append(cols)
 
     # TODO: add "Showing all ___ in ___ collection." printout above table?
-    print(table(headers, rows))
+    print(to_table(headers, rows))
