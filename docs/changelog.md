@@ -15,6 +15,14 @@ and this project adheres to
 
 - Rename a local collection via `meeple rename`
 
+### Changed
+
+- Most commands now output tabulated data and info
+- `meeple search` now includes year published in output
+- `meeple search` results are now sorted by ID by default
+- `meeple info` now includes min age in output
+- Replaced tabulate dependency with rich
+
 ## [v0.1.0-beta-1] - 2023-03-26
 
 ### Added
