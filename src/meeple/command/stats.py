@@ -4,7 +4,7 @@ import click
 
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
-from meeple.util.output_util import color_rating, color_weight
+from meeple.util.output_util import fmt_rating, fmt_weight
 
 
 @click.command()
@@ -86,8 +86,8 @@ def stats(collection: str, type: str):
             f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
         )
     print("────────────────────────────────────────────────")
-    print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
+    print(f"{fmt_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
     print(
-        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {color_weight(avg_weight)}/5"
+        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {fmt_weight(avg_weight)}/5"
     )
     print("────────────────────────────────────────────────")

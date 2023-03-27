@@ -4,7 +4,7 @@ import click
 
 from meeple.util.collection_util import get_collections
 from meeple.util.data_util import get_data, last_updated
-from meeple.util.output_util import table
+from meeple.util.output_util import to_table
 
 
 @click.command()
@@ -43,4 +43,4 @@ def collections(verbose: bool):
 
         rows.append(cols)
 
-    print(table(headers, rows))
+    print(to_table(headers, rows))

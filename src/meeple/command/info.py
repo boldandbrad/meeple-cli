@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.api_util import get_items
-from meeple.util.output_util import color_rating, color_weight
+from meeple.util.output_util import fmt_rating, fmt_weight
 
 
 @click.command()
@@ -28,8 +28,8 @@ def info(id: str):
     print("────────────────────────────────────────────────")
     print(f"{item.name} ({item.year})")
     print("────────────────────────────────────────────────")
-    print(f"{color_rating(item.rating)} Rating\tRank: {item.rank}\tID: {item.id}")
+    print(f"{fmt_rating(item.rating)} Rating\tRank: {item.rank}\tID: {item.id}")
     print(
-        f"{item.minplayers}-{item.maxplayers} Players\t{item.minplaytime}-{item.maxplaytime} Min\tWeight: {color_weight(item.weight)}/5"
+        f"{item.minplayers}-{item.maxplayers} Players\t{item.minplaytime}-{item.maxplaytime} Min\tWeight: {fmt_weight(item.weight)}/5"
     )
     print("────────────────────────────────────────────────")
