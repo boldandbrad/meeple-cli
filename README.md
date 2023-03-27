@@ -56,6 +56,7 @@ Commands:
   move         Move a board game/extension from one collection to another.
   new          Create a new local collection.
   open         Open a board game or expansion on the BoardGameGeek website.
+  rename       Rename a local collection.
   search       Search BoardGameGeek for a board game or expansion.
   stats        Print out the details of a local collection.
   update       Update local collection data.
@@ -70,7 +71,6 @@ See a list of already implemented features/changes in the [Changelog](docs/chang
 ### Planned Features
 
 - [ ] Find board games/expansions across local collections by attributes -> `meeple find`
-- [ ] Rename a local collection -> `meeple rename`
 - [ ] Copy a local collection -> `meeple copy`
 - [ ] Export a local collection to csv or another format -> `meeple export`
 - [ ] Import a local collection from a variety of formats -> `meeple import`

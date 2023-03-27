@@ -7,7 +7,15 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html "Semantic Versioning").
 
-## [v0.1.0-beta-1] - TBD
+## [Unreleased] - TBD
+
+### Added
+
+#### Collection Management
+
+- Rename a local collection via `meeple rename`
+
+## [v0.1.0-beta-1] - 2023-03-26
 
 ### Added
 
@@ -18,7 +26,7 @@ and this project adheres to
 - Open a board game or expansion on BoardGameGeek in browser via `meeple open`
 - Get and display the current BoardGameGeek hotness list via `meeple hot`
 
-#### Local Collection Management
+#### Collection Management
 
 - Create a new local collection via `meeple new`
 - List all local collections via `meeple collections`

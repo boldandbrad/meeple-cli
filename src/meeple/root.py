@@ -11,6 +11,7 @@ from meeple.command import (
     move,
     new,
     open_on_bgg,
+    rename,
     search,
     stats,
     update,
@@ -41,6 +42,7 @@ cli.add_command(list_collection, "list")
 cli.add_command(move, "move")
 cli.add_command(new, "new")
 cli.add_command(open_on_bgg, "open")
+cli.add_command(rename, "rename")
 cli.add_command(search, "search")
 cli.add_command(stats, "stats")
 cli.add_command(update, "update")
