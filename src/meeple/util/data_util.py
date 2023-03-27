@@ -1,7 +1,7 @@
 import json
 import shutil
 from datetime import date
-from os import makedirs, walk
+from os import makedirs, rename, walk
 from os.path import basename, exists, join, splitext
 
 from meeple.util.fs_util import get_data_dir
@@ -24,6 +24,11 @@ def _latest_data_file(collection_name: str) -> str:
     latest_data_files = next(walk(latest_month_dir))[2]
     latest_data_files.sort()
     return join(latest_month_dir, latest_data_files[-1])
+
+
+def rename_collection_data_dir(current_name: str, new_name: str) -> None:
+    if exists(_collection_data_dir(current_name)):
+        rename(_collection_data_dir(current_name), join(OUT_PATH, new_name))
 
 
 def last_updated(collection_name: str) -> str:

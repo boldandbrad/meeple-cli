@@ -1,4 +1,4 @@
-from os import makedirs, remove, walk
+from os import makedirs, remove, rename, walk
 from os.path import exists, join, splitext
 from typing import List
 
@@ -59,6 +59,10 @@ def update_collection(name: str, ids: list) -> None:
     data = {"bgg-ids": ids}
     with open(_collection_file(name), "w") as f:
         yaml.dump(data, f)
+
+
+def rename_collection(current_name: str, new_name: str):
+    rename(_collection_file(current_name), join(IN_PATH, f"{new_name}.yml"))
 
 
 def delete_collection(name: str) -> None:
