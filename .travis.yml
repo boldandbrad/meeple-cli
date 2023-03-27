@@ -24,16 +24,16 @@ after_success:
 
 deploy:
   # deploy develop branch to test pypi
-  - provider: pypi
-    server: https://test.pypi.org/legacy/
-    username: __token__
-    password: $PYPI_TEST_TOKEN
-    skip_cleanup: true
-    skip_existing: true
-    distributions: sdist bdist_wheel
-    on:
-      branch: staging
-      python: "3.9"
+  # - provider: pypi
+  #   server: https://test.pypi.org/legacy/
+  #   username: __token__
+  #   password: $PYPI_TEST_TOKEN
+  #   skip_cleanup: true
+  #   skip_existing: true
+  #   distributions: sdist bdist_wheel
+  #   on:
+  #     branch: staging
+  #     python: "3.9"
 
   # deploy releases to pypi
   - provider: pypi
