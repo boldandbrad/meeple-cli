@@ -32,7 +32,7 @@ deploy:
     skip_existing: true
     distributions: sdist bdist_wheel
     on:
-      branch: develop
+      branch: staging
       python: "3.9"
 
   # deploy releases to pypi
