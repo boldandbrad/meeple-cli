@@ -7,7 +7,7 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html "Semantic Versioning").
 
-## [v0.1.0] - TBD
+## [v0.1.0-beta-1] - TBD
 
 ### Added
 
