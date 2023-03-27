@@ -43,3 +43,5 @@ class Item:
             self.minplaytime = item_dict["minplaytime"]["@value"]
         if item_dict.get("maxplaytime"):
             self.maxplaytime = item_dict["maxplaytime"]["@value"]
+        if item_dict.get("minage"):
+            self.minage = item_dict["minage"]["@value"]

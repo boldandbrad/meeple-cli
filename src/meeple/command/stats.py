@@ -4,7 +4,13 @@ import click
 
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
-from meeple.util.output_util import fmt_rating, fmt_weight
+from meeple.util.output_util import (
+    fmt_rating,
+    fmt_weight,
+    print_error,
+    print_info,
+    print_table,
+)
 
 
 @click.command()
@@ -33,14 +39,16 @@ def stats(collection: str, type: str):
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(f"Error: '{collection}' is not a valid collection.")
+        sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
     item_dict = get_data(collection)
     # check that local data exists for the given collection
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
+            print_warning(
+                f"local data not found for '{collection}'. update with `meeple update {collection}`"
+            )
         )
 
     boardgames = item_dict["boardgames"]
@@ -75,19 +83,24 @@ def stats(collection: str, type: str):
     avg_weight = round(sum_weight / num_weighted, 2)
     avg_max_players = round(sum_players / len(out_list), 2)
 
-    # TODO: find a way to nicely tabulate this data
-    print("────────────────────────────────────────────────")
     if type == "b":
-        print(f"{collection} ({len(boardgames)} Boardgames)")
+        header = f"{collection} ({len(boardgames)} Boardgames)"
     elif type == "e":
-        print(f"{collection} ({len(expansions)} Expansions)")
+        header = f"{collection} ({len(expansions)} Expansions)"
     else:
-        print(
-            f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
-        )
-    print("────────────────────────────────────────────────")
-    print(f"{fmt_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
-    print(
-        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {fmt_weight(avg_weight)}/5"
+        header = f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
+
+    print_info(header)
+    print_table(
+        [
+            [
+                f"Avg. Rating: {fmt_rating(avg_rating)}",
+                f"Avg. Max Players: {avg_max_players}",
+            ],
+            [
+                f"Avg. Rank: {avg_rank:.2f}\t",
+                f"Avg. Weight: {fmt_weight(avg_weight)} / 5",
+            ],
+        ],
+        lines=True,
     )
-    print("────────────────────────────────────────────────")

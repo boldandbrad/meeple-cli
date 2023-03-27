@@ -5,6 +5,7 @@ import click
 
 from meeple.util.api_util import BGG_DOMAIN, get_items
 from meeple.util.input_util import bool_input
+from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
@@ -19,7 +20,7 @@ def open_on_bgg(id: str):
     # check that the given id is a valid BoardGameGeek ID
     api_result = get_items([id])
     if not api_result:
-        sys.exit(f"Error: '{id}' is not a valid BoardGameGeek ID.")
+        sys.exit(print_error(f"Provided '{id}' is not a valid BoardGameGeek ID"))
 
     # confirm the user wants to open the board game/expansion on BoardGameGeek website
     item = api_result[0]
@@ -29,4 +30,4 @@ def open_on_bgg(id: str):
         print(f"\tOpening '{name}' on {BGG_DOMAIN} ...")
         webbrowser.open(url)
     else:
-        print(f"\tView '{name}' at {url}")
+        print_info(f"View '{name}' at {url}")

@@ -62,7 +62,7 @@ def write_data(collection_name: str, result: dict) -> None:
     with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
 
-    print(f"\tSuccessfully updated collection '{collection_name}'.")
+    print(f"\tUpdated collection '{collection_name}'.")
 
 
 def delete_data(collection_name: str) -> None:

@@ -4,7 +4,13 @@ import click
 
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
-from meeple.util.output_util import fmt_rating, fmt_weight, to_table
+from meeple.util.output_util import (
+    fmt_rating,
+    fmt_weight,
+    print_error,
+    print_table,
+    print_warning,
+)
 
 
 @click.command()
@@ -30,7 +36,7 @@ from meeple.util.output_util import fmt_rating, fmt_weight, to_table
 # TODO: add option to sort the list by a particular field
 # TODO: add option to run update on the collection prior to list
 # TODO: add option to show grid lines or not in the table
-# TODO: implement paging/scrolling for long lists? not sure how tabulate will like that
+# TODO: implement paging/scrolling for long lists? not sure how rich will like that
 def list_collection(collection: str, only_include: str, verbose: bool):
     """List all board games/extensions in a collection.
 
@@ -38,14 +44,16 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(f"Error: '{collection}' is not a valid collection.")
+        sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
     item_dict = get_data(collection)
     # check that local data exists for the given collection
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
+            print_warning(
+                f"local data not found for '{collection}'. update with `meeple update {collection}`"
+            )
         )
 
     boardgames = item_dict["boardgames"]
@@ -60,15 +68,18 @@ def list_collection(collection: str, only_include: str, verbose: bool):
         out_list = boardgames + expansions
 
     # prepare table data
-    headers = ["ID", "Name", "Year", "Rank", "Rating", "Weight", "Players", "Time"]
+    headers = ["ID", "Name"]
+    if verbose:
+        headers = ["ID", "Name", "Year", "Rank", "Rating", "Weight", "Players", "Time"]
+
     rows = []
     for item in out_list:
         cols = []
-        cols.append(item["id"])
+        cols.append(str(item["id"]))
         cols.append(item["name"])
         if verbose:
-            cols.append(item["year"])
-            cols.append(item["rank"])
+            cols.append(str(item["year"]))
+            cols.append(str(item["rank"]))
             # TODO: format with 2 decimal points always
             cols.append(fmt_rating(item["rating"]))
             cols.append(fmt_weight(item["weight"]))
@@ -77,4 +88,4 @@ def list_collection(collection: str, only_include: str, verbose: bool):
         rows.append(cols)
 
     # TODO: add "Showing all ___ in ___ collection." printout above table?
-    print(to_table(headers, rows))
+    print_table(rows, headers)
