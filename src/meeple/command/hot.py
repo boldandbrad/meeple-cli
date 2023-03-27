@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.api_util import get_hot
-from meeple.util.output_util import to_table
+from meeple.util.output_util import print_table
 
 
 @click.command()
@@ -17,9 +17,9 @@ def hot():
     rows = []
     for idx, item in enumerate(api_result):
         cols = []
-        cols.append(idx + 1)
-        cols.append(item.id)
+        cols.append(str(idx + 1))
+        cols.append(str(item.id))
         cols.append(item.name)
         rows.append(cols)
 
-    print(to_table(headers, rows))
+    print_table(rows, headers)

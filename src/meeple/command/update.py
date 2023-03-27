@@ -5,6 +5,7 @@ import click
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_items
 from meeple.util.collection_util import get_collections, is_collection, read_collection
 from meeple.util.data_util import write_data
+from meeple.util.output_util import print_error, print_info, print_warning
 from meeple.util.sort_util import sortby_rank
 
 
@@ -21,7 +22,7 @@ def update(collection: str):
     if collection:
         # check that the given collection is a valid collection
         if not is_collection(collection):
-            sys.exit(f"Error: '{collection}' is not a valid collection.")
+            sys.exit(print_error(f"'{collection}' is not a valid collection"))
         collections = [collection]
     else:
         collections = get_collections()
@@ -29,7 +30,9 @@ def update(collection: str):
     # check that local collections exist
     if not collections:
         sys.exit(
-            "Warning: No local collections yet exist. Create a new one with `meeple new`"
+            print_warning(
+                "No local collections yet exist. Create a new one with `meeple new`"
+            )
         )
 
     # update collection data
@@ -62,4 +65,4 @@ def update(collection: str):
         # save results
         write_data(collection, update_result)
 
-    print("Successfully updated local data.")
+    print_info("Updated local data")

@@ -26,7 +26,7 @@ def _api_get(url: str) -> dict:
     sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 
-def get_items(ids: List[int]) -> List:
+def get_items(ids: List[int]) -> List[Item]:
     ids_str = ",".join(map(str, ids))
     url = f"{API2_BASE_URL}/thing?id={ids_str}&type={BOARDGAME_TYPE},{EXPANSION_TYPE}&stats=1"
     resp_list = _api_get(url)
@@ -34,6 +34,13 @@ def get_items(ids: List[int]) -> List:
     for item_dict in resp_list:
         result.append(Item(item_dict))
     return result
+
+
+def get_item(id: int) -> Item:
+    bgg_items = get_items([id])
+    if bgg_items:
+        return bgg_items[0]
+    return None
 
 
 def get_hot() -> dict:

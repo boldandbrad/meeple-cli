@@ -2,8 +2,8 @@ import sys
 
 import click
 
-from meeple.util.api_util import get_items
-from meeple.util.output_util import fmt_rating, fmt_weight
+from meeple.util.api_util import get_item
+from meeple.util.output_util import fmt_rating, fmt_weight, print_table
 
 
 @click.command()
@@ -16,20 +16,24 @@ def info(id: str):
     """
     # check that the given id is an integer
     if not id.isdigit():
-        sys.exit("Error: ID must be an integer value.")
+        sys.exit(print_error("Provided ID must be an integer value"))
 
     # check that the given id is a valid one
-    api_result = get_items([id])
-    if not api_result:
-        sys.exit(f"Error: '{id}' is not a valid BoardGameGeek ID.")
+    bgg_item = get_item(id)
+    if not bgg_item:
+        sys.exit(print_error(f"'{id}' is not a valid BoardGameGeek ID"))
 
-    item = api_result[0]
-    # TODO: find a way to nicely tabulate this data
-    print("────────────────────────────────────────────────")
-    print(f"{item.name} ({item.year})")
-    print("────────────────────────────────────────────────")
-    print(f"{fmt_rating(item.rating)} Rating\tRank: {item.rank}\tID: {item.id}")
-    print(
-        f"{item.minplayers}-{item.maxplayers} Players\t{item.minplaytime}-{item.maxplaytime} Min\tWeight: {fmt_weight(item.weight)}/5"
-    )
-    print("────────────────────────────────────────────────")
+    info_rows = [
+        [
+            f"Rating: {fmt_rating(bgg_item.rating)}",
+            f"Players: {bgg_item.minplayers}-{bgg_item.maxplayers}",
+            f"Min Age: {bgg_item.minage}",
+        ],
+        [
+            f"Rank: {bgg_item.rank}",
+            f"Time: {bgg_item.minplaytime}-{bgg_item.maxplaytime} Min",
+            f"Weight: {fmt_weight(bgg_item.weight)}",
+        ],
+    ]
+    print_table([[f"{bgg_item.id}", f"{bgg_item.name} ({bgg_item.year})"]])
+    print_table(info_rows, lines=True)

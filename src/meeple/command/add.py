@@ -2,12 +2,13 @@ import sys
 
 import click
 
-from meeple.util.api_util import get_items
+from meeple.util.api_util import get_item
 from meeple.util.collection_util import (
     is_collection,
     read_collection,
     update_collection,
 )
+from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
@@ -23,24 +24,24 @@ def add(collection: str, id: int):
     """
     # check that the given id is an integer
     if not id.isdigit():
-        sys.exit("Error: ID must be an integer value.")
+        sys.exit(print_error("Provided ID must be an integer value"))
 
     # check that the given id is a valid BoardGameGeek ID
-    api_result = get_items([id])
-    if not api_result:
-        sys.exit(f"Error: '{id}' is not a valid BoardGameGeek ID.")
+    bgg_item = get_item(id)
+    if not bgg_item:
+        sys.exit(print_error(f"'{id}' is not a valid BoardGameGeek ID"))
 
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(f"Error: '{collection}' is not a valid collection.")
+        sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
     bgg_ids = read_collection(collection)
     # check that the given id does not already exist in the given collection
     if bgg_ids and int(id) in bgg_ids:
-        sys.exit(f"Error: '{id}' already exists in '{collection}'.")
+        sys.exit(print_error(f"'{id}' already exists in '{collection}'"))
 
     # add the id to the collection and save
     bgg_ids.append(int(id))
     bgg_ids.sort()
     update_collection(collection, bgg_ids)
-    print(f"Successfully added '{id}' to '{collection}'.")
+    print_info(f"Added '{bgg_item.name}' to '{collection}'")
