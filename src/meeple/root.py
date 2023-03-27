@@ -1,6 +1,6 @@
 import click
 
-from bgg.command import (
+from meeple.command import (
     add,
     collections,
     delete,
@@ -17,17 +17,17 @@ from bgg.command import (
 )
 
 
-@click.group(help="Local BoardGameGeek collection manager.")
+@click.group(help="Local board game collection manager. Powered by BoardGameGeek.")
 @click.help_option("-h", "--help")
 @click.version_option(
-    None,  # use version auto discovery via setuptools
+    None,  # use version auto discovery
     "-v",
     "--version",
-    package_name="bgg-cli",
+    package_name="meeple-cli",
     message="%(prog)s-cli, v%(version)s",
 )
 def cli():
-    """Main 'bgg' command."""
+    """Main 'meeple' command."""
     pass
 
 

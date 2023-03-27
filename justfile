@@ -3,29 +3,18 @@
 venv:
     . .venv/bin/activate
 
-# install bgg-cli
+# install meeple-cli
 install:
-    pip install .
+    pip install flit
+    flit install
 
 # install editable
-dev:
+dev-install:
     pip install -e .
-
-# build dist
-build:
-    python setup.py sdist bdist_wheel
-
-# generate homebrew formula
-brew: install
-    poet -f bgg-cli >> formula.rb
 
 # lint and format
 lint:
     trunk check
-
-# check code and deps for vulns
-deps:
-    snyk test --file=setup.py
 
 # run all tests
 test: install
@@ -33,9 +22,31 @@ test: install
 
 # run all tests with coverage
 test-cov: install
-    pytest --cov-report=xml --cov=./bgg/
+    pytest --cov-report=xml --cov=./src/meeple/
+
+# build dist
+build:
+    flit build
+
+# publish to test pypi
+# test-publish:
+#     flit publish
+
+# publish to pypi
+# publish:
+#     flit publish
+
+# generate homebrew formula
+brew: install
+    poet -f meeple-cli >> formula.rb
+
+# check code and deps for vulns
+# snyk doesn't currently support flit project with pyproject.toml
+# deps:
+#     snyk test --file=pyproject.toml
 
 # remove artifacts
+# TODO: remove __pycache__ dirs from src/ and tests/
 cleanup:
     rm -f .coverage
     rm -f coverage.xml
@@ -44,5 +55,3 @@ cleanup:
     rm -rf build
     rm -rf dist
     rm -rf *.egg-info
-    rm -rf bgg/__pycache__
-    rm -rf tests/__pycache__

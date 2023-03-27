@@ -4,7 +4,7 @@ from datetime import date
 from os import makedirs, walk
 from os.path import basename, exists, join, splitext
 
-from bgg.util.fs_util import get_data_dir
+from meeple.util.fs_util import get_data_dir
 
 OUT_PATH = get_data_dir()
 

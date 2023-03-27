@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from bgg.util.collection_util import get_collections
-from bgg.util.data_util import get_data, last_updated
-from bgg.util.output_util import table
+from meeple.util.collection_util import get_collections
+from meeple.util.data_util import get_data, last_updated
+from meeple.util.output_util import to_table
 
 
 @click.command()
@@ -19,7 +19,7 @@ def collections(verbose: bool):
     # check that local collections exist
     if not collections:
         sys.exit(
-            "Warning: No local collections yet exist. Create a new one with `bgg new`"
+            "Warning: No local collections yet exist. Create a new one with `meeple new`"
         )
 
     # prepare table data
@@ -43,4 +43,4 @@ def collections(verbose: bool):
 
         rows.append(cols)
 
-    print(table(headers, rows))
+    print(to_table(headers, rows))

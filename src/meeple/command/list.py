@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from bgg.util.collection_util import is_collection
-from bgg.util.data_util import get_data
-from bgg.util.output_util import color_rating, color_weight, table
+from meeple.util.collection_util import is_collection
+from meeple.util.data_util import get_data
+from meeple.util.output_util import fmt_rating, fmt_weight, to_table
 
 
 @click.command()
@@ -16,7 +16,7 @@ from bgg.util.output_util import color_rating, color_weight, table
     "only_include",
     is_flag=True,
     flag_value="bg",
-    help="Include only boardgames in output.",
+    help="Include only board games in output.",
 )
 @click.option(
     "-e",
@@ -32,7 +32,7 @@ from bgg.util.output_util import color_rating, color_weight, table
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how tabulate will like that
 def list_collection(collection: str, only_include: str, verbose: bool):
-    """List all games/extensions in a collection.
+    """List all board games/extensions in a collection.
 
     - COLLECTION is the name of the collection to be listed.
     """
@@ -45,7 +45,7 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `bgg update {collection}`"
+            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
         )
 
     boardgames = item_dict["boardgames"]
@@ -70,11 +70,11 @@ def list_collection(collection: str, only_include: str, verbose: bool):
             cols.append(item["year"])
             cols.append(item["rank"])
             # TODO: format with 2 decimal points always
-            cols.append(color_rating(item["rating"]))
-            cols.append(color_weight(item["weight"]))
+            cols.append(fmt_rating(item["rating"]))
+            cols.append(fmt_weight(item["weight"]))
             cols.append(f"{item['minplayers']}-{item['maxplayers']}")
             cols.append(f"{item['minplaytime']}-{item['maxplaytime']}")
         rows.append(cols)
 
     # TODO: add "Showing all ___ in ___ collection." printout above table?
-    print(table(headers, rows))
+    print(to_table(headers, rows))

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "meeple-cli"
+authors = [{ name = "Bradley Wojcik", email = "bradleycwojcik@gmail.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires-python = ">=3.8"
+dynamic = ["version", "description"]
+dependencies = [
+  "click >=8",
+  "tabulate >=0.9.0",
+  "xmltodict >=0.12.0",
+  "requests >=2",
+  "pyyaml >=6",
+]
+
+[project.scripts]
+meeple = "meeple.root:cli"
+
+[project.urls]
+Home = "https://github.com/boldandbrad/meeple-cli"
+
+[project.optional-dependencies]
+test = [
+  "pytest >=6",
+  "pytest-cov",
+  "pytest-mock",
+  "codecov",
+  "homebrew-pypi-poet",
+]
+dev = ["black", "flit"]
+
+[tool.flit.module]
+name = "meeple"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]

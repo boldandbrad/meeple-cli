@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from bgg.util.collection_util import is_collection
-from bgg.util.data_util import get_data
-from bgg.util.output_util import color_rating, color_weight
+from meeple.util.collection_util import is_collection
+from meeple.util.data_util import get_data
+from meeple.util.output_util import fmt_rating, fmt_weight
 
 
 @click.command()
@@ -16,7 +16,7 @@ from bgg.util.output_util import color_rating, color_weight
     "type",
     is_flag=True,
     flag_value="b",
-    help="Include only boardgames in output.",
+    help="Include only board games in output.",
 )
 @click.option(
     "-e",
@@ -40,7 +40,7 @@ def stats(collection: str, type: str):
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `bgg update {collection}`"
+            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
         )
 
     boardgames = item_dict["boardgames"]
@@ -83,11 +83,11 @@ def stats(collection: str, type: str):
         print(f"{collection} ({len(expansions)} Expansions)")
     else:
         print(
-            f"{collection} ({len(boardgames)} Boardgames | {len(expansions)} Expansions)"
+            f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
         )
     print("────────────────────────────────────────────────")
-    print(f"{color_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
+    print(f"{fmt_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
     print(
-        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {color_weight(avg_weight)}/5"
+        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {fmt_weight(avg_weight)}/5"
     )
     print("────────────────────────────────────────────────")

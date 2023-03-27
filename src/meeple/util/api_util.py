@@ -4,12 +4,12 @@ from typing import List
 import requests
 import xmltodict
 
-from bgg.type.item import Item
+from meeple.type.item import Item
 
 BGG_DOMAIN = "boardgamegeek.com"
 API2_BASE_URL = f"https://{BGG_DOMAIN}/xmlapi2"
 
-# bgg item types
+# BoardGameGeek item types
 BOARDGAME_TYPE = "boardgame"
 EXPANSION_TYPE = "boardgameexpansion"
 
@@ -45,8 +45,8 @@ def get_hot() -> dict:
     return result
 
 
-# TODO: figure out how to allow user to only search for boardgames or expansions
-# current api returns both as boardgame type for some reason
+# TODO: figure out how to allow user to only search for board games or expansions
+# current api returns both as board game type for some reason
 def get_search(query: str):
     url = f"{API2_BASE_URL}/search?type={BOARDGAME_TYPE}&query={query}"
     resp_list = _api_get(url)
