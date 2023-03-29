@@ -5,6 +5,7 @@ import click
 from meeple.util.collection_util import delete_collection, is_collection
 from meeple.util.data_util import delete_data, get_data
 from meeple.util.input_util import bool_input
+from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
@@ -18,7 +19,7 @@ def delete(collection: str, yes: bool):
     """
     # check that the given collection exists
     if not is_collection(collection):
-        sys.exit(f"Error: '{collection}' already does not exist.")
+        sys.exit(print_error(f"'{collection}' already does not exist"))
 
     # ask for confirmation or not depending on presence of flag
     if not yes:
@@ -32,4 +33,4 @@ def delete(collection: str, yes: bool):
         data = get_data(collection)
         if data:
             delete_data(collection)
-        print(f"Successfully deleted collection '{collection}'.")
+        print_info(f"Deleted collection '{collection}'")

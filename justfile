@@ -28,14 +28,6 @@ test-cov: install
 build:
     flit build
 
-# publish to test pypi
-# test-publish:
-#     flit publish
-
-# publish to pypi
-# publish:
-#     flit publish
-
 # generate homebrew formula
 brew: install
     poet -f meeple-cli >> formula.rb

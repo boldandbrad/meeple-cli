@@ -1,6 +1,7 @@
 import click
 
 from meeple.util.api_util import get_search
+from meeple.util.output_util import print_table
 
 
 @click.command()
@@ -15,7 +16,16 @@ def search(query: str):
     """
     # search BoardGameGeek with user provided query
     api_result = get_search(query)
-    # api_result.sort(key=lambda x: x["id"])
-    # TODO: tabulate output
+    api_result.sort(key=lambda x: x.id)
+
+    # prepare table data
+    headers = ["ID", "Name", "Year"]
+    rows = []
     for item in api_result:
-        print(f"{item.id}\t{item.name}")
+        cols = []
+        cols.append(str(item.id))
+        cols.append(item.name)
+        cols.append(str(item.year))
+        rows.append(cols)
+
+    print_table(rows, headers)

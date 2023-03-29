@@ -4,7 +4,15 @@ import click
 
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
-from meeple.util.output_util import fmt_rating, fmt_weight
+from meeple.util.output_util import (
+    fmt_rank,
+    fmt_rating,
+    fmt_weight,
+    print_error,
+    print_info,
+    print_table,
+    print_warning,
+)
 
 
 @click.command()
@@ -33,14 +41,16 @@ def stats(collection: str, type: str):
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(f"Error: '{collection}' is not a valid collection.")
+        sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
     item_dict = get_data(collection)
     # check that local data exists for the given collection
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not item_dict:
         sys.exit(
-            f"Warning: local data not found for '{collection}'. update with `meeple update {collection}`"
+            print_warning(
+                f"local data not found for '{collection}'. update with `meeple update {collection}`"
+            )
         )
 
     boardgames = item_dict["boardgames"]
@@ -55,10 +65,14 @@ def stats(collection: str, type: str):
         out_list = boardgames + expansions
 
     # calculate stats
-    sum_ratings = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
+    sum_ratings = (
+        num_rated
+    ) = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
     for item in out_list:
-        sum_ratings += item["rating"]
+        if item["rating"] > 0:
+            num_rated += 1
+            sum_ratings += item["rating"]
         if item["rank"].isdigit():
             num_ranked += 1
             sum_rank += int(item["rank"])
@@ -67,27 +81,38 @@ def stats(collection: str, type: str):
             sum_weight += item["weight"]
         sum_players += int(item["maxplayers"])
 
-    avg_rating = round(sum_ratings / len(out_list), 2)
+    if num_rated > 0:
+        avg_rating = round(sum_ratings / len(out_list), 2)
+    else:
+        avg_rating = 0
     if num_ranked > 0:
         avg_rank = round(sum_rank / num_ranked, 2)
     else:
-        avg_rank = "NA"
-    avg_weight = round(sum_weight / num_weighted, 2)
+        avg_rank = 0
+    if num_weighted > 0:
+        avg_weight = round(sum_weight / num_weighted, 2)
+    else:
+        avg_weight = 0
     avg_max_players = round(sum_players / len(out_list), 2)
 
-    # TODO: find a way to nicely tabulate this data
-    print("────────────────────────────────────────────────")
     if type == "b":
-        print(f"{collection} ({len(boardgames)} Boardgames)")
+        header = f"{collection} ({len(boardgames)} Boardgames)"
     elif type == "e":
-        print(f"{collection} ({len(expansions)} Expansions)")
+        header = f"{collection} ({len(expansions)} Expansions)"
     else:
-        print(
-            f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
-        )
-    print("────────────────────────────────────────────────")
-    print(f"{fmt_rating(avg_rating)} Avg. Rating\tAvg. Rank: {avg_rank:.2f}\t")
-    print(
-        f"{avg_max_players} Avg. Max Players\tAvg. Weight: {fmt_weight(avg_weight)}/5"
+        header = f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
+
+    print_info(header)
+    print_table(
+        [
+            [
+                f"Avg. Rating: {fmt_rating(avg_rating)}",
+                f"Avg. Max Players: {avg_max_players}",
+            ],
+            [
+                f"Avg. Rank: {fmt_rank(avg_rank)}",
+                f"Avg. Weight: {fmt_weight(avg_weight)} / 5",
+            ],
+        ],
+        lines=True,
     )
-    print("────────────────────────────────────────────────")

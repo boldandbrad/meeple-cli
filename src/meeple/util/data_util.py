@@ -1,7 +1,7 @@
 import json
 import shutil
 from datetime import date
-from os import makedirs, walk
+from os import makedirs, rename, walk
 from os.path import basename, exists, join, splitext
 
 from meeple.util.fs_util import get_data_dir
@@ -26,6 +26,11 @@ def _latest_data_file(collection_name: str) -> str:
     return join(latest_month_dir, latest_data_files[-1])
 
 
+def rename_collection_data_dir(current_name: str, new_name: str) -> None:
+    if exists(_collection_data_dir(current_name)):
+        rename(_collection_data_dir(current_name), join(OUT_PATH, new_name))
+
+
 def last_updated(collection_name: str) -> str:
     latest_data_file = _latest_data_file(collection_name)
     if not latest_data_file:
@@ -41,7 +46,7 @@ def get_data(collection_name: str) -> dict:
 
     with open(data_path, "r") as f:
         data = json.load(f)
-    # TODO: serialize json into objects instead of dict
+    # TODO: deserialize json into objects instead of dict
     return data
 
 
@@ -57,7 +62,7 @@ def write_data(collection_name: str, result: dict) -> None:
     with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
 
-    print(f"\tSuccessfully updated collection '{collection_name}'.")
+    print(f"\tUpdated collection '{collection_name}'.")
 
 
 def delete_data(collection_name: str) -> None:
