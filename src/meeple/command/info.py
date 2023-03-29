@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.api_util import get_item
-from meeple.util.output_util import fmt_rating, fmt_weight, print_table
+from meeple.util.output_util import fmt_rank, fmt_rating, fmt_weight, print_table
 
 
 @click.command()
@@ -30,7 +30,7 @@ def info(id: str):
             f"Min Age: {bgg_item.minage}",
         ],
         [
-            f"Rank: {bgg_item.rank}",
+            f"Rank: {fmt_rank(bgg_item.rank)}",
             f"Time: {bgg_item.minplaytime}-{bgg_item.maxplaytime} Min",
             f"Weight: {fmt_weight(bgg_item.weight)}",
         ],

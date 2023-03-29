@@ -5,11 +5,13 @@ import click
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_data
 from meeple.util.output_util import (
+    fmt_rank,
     fmt_rating,
     fmt_weight,
     print_error,
     print_info,
     print_table,
+    print_warning,
 )
 
 
@@ -63,10 +65,14 @@ def stats(collection: str, type: str):
         out_list = boardgames + expansions
 
     # calculate stats
-    sum_ratings = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
+    sum_ratings = (
+        num_rated
+    ) = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
     for item in out_list:
-        sum_ratings += item["rating"]
+        if item["rating"] > 0:
+            num_rated += 1
+            sum_ratings += item["rating"]
         if item["rank"].isdigit():
             num_ranked += 1
             sum_rank += int(item["rank"])
@@ -75,12 +81,18 @@ def stats(collection: str, type: str):
             sum_weight += item["weight"]
         sum_players += int(item["maxplayers"])
 
-    avg_rating = round(sum_ratings / len(out_list), 2)
+    if num_rated > 0:
+        avg_rating = round(sum_ratings / len(out_list), 2)
+    else:
+        avg_rating = 0
     if num_ranked > 0:
         avg_rank = round(sum_rank / num_ranked, 2)
     else:
-        avg_rank = "NA"
-    avg_weight = round(sum_weight / num_weighted, 2)
+        avg_rank = 0
+    if num_weighted > 0:
+        avg_weight = round(sum_weight / num_weighted, 2)
+    else:
+        avg_weight = 0
     avg_max_players = round(sum_players / len(out_list), 2)
 
     if type == "b":
@@ -98,7 +110,7 @@ def stats(collection: str, type: str):
                 f"Avg. Max Players: {avg_max_players}",
             ],
             [
-                f"Avg. Rank: {avg_rank:.2f}\t",
+                f"Avg. Rank: {fmt_rank(avg_rank)}",
                 f"Avg. Weight: {fmt_weight(avg_weight)} / 5",
             ],
         ],

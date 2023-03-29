@@ -46,7 +46,7 @@ def get_data(collection_name: str) -> dict:
 
     with open(data_path, "r") as f:
         data = json.load(f)
-    # TODO: serialize json into objects instead of dict
+    # TODO: deserialize json into objects instead of dict
     return data
 
 

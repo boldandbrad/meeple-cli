@@ -23,6 +23,11 @@ and this project adheres to
 - `meeple info` now includes min age in output
 - Replaced tabulate dependency with rich
 
+### Fixed
+
+- `meeple stats` no longer crashes when the collection only contains unrated,
+  unranked, or un_weighted items
+
 ## [v0.1.0-beta-1] - 2023-03-26
 
 ### Added
