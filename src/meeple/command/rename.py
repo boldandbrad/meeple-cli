@@ -28,4 +28,4 @@ def rename(collection: str, new_name: str):
     # create new collection
     rename_collection(collection, new_name)
     rename_collection_data_dir(collection, new_name)
-    print_info(f"Renamed collection '{collection}' to '{new_name}")
+    print_info(f"Renamed collection '{collection}' to '{new_name}'")
