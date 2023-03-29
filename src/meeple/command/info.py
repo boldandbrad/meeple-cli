@@ -3,7 +3,13 @@ import sys
 import click
 
 from meeple.util.api_util import get_item
-from meeple.util.output_util import fmt_rank, fmt_rating, fmt_weight, print_table
+from meeple.util.output_util import (
+    fmt_rank,
+    fmt_rating,
+    fmt_weight,
+    print_error,
+    print_table,
+)
 
 
 @click.command()
