@@ -6,7 +6,10 @@ from rich.text import Text
 
 
 def fmt_rank(rank: int) -> str:
-    pass
+    if rank == 0 or not rank.isdigit():
+        return "[bright_black]NA[/bright_black]"
+    rank_str = f"{rank:.2f}"
+    return rank_str
 
 
 def fmt_rating(rating: float) -> Text:
@@ -17,6 +20,8 @@ def fmt_rating(rating: float) -> Text:
         return f"[blue]{rating_str}[/blue]"
     if rating > 6:
         return f"[magenta]{rating_str}[/magenta]"
+    if rating == 0:
+        return "[bright_black]NA[/bright_black]"
     return f"[red]{rating_str}[/red]"
 
 
