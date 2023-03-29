@@ -30,13 +30,26 @@ test = [
   "pytest-cov",
   "pytest-mock",
   "codecov",
+]
+dev = [
+  "black",
+  "flake8",
+  "flit",
+  "isort",
+  "pre-commit",
   "homebrew-pypi-poet",
 ]
-dev = ["black", "flit"]
 
 [tool.flit.module]
 name = "meeple"
 
+[tool.isort]
+profile = "black"
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = ["tests"]
+
+[tool.ruff]
+# Never enforce `E501` (line length violations).
+ignore = ["E501"]
