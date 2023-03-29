@@ -14,7 +14,7 @@ dev-install:
 
 # lint and format
 lint:
-    trunk check
+    pre-commit run --all-files
 
 # run all tests
 test: install
@@ -47,3 +47,4 @@ cleanup:
     rm -rf build
     rm -rf dist
     rm -rf *.egg-info
+    rm -rf .ruff_cache

@@ -1,6 +1,7 @@
 # meeple-cli
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/boldandbrad/meeple-cli/python-test.yml?branch=main)](https://github.com/boldandbrad/meeple-cli/actions/workflows/python-test.yml?query=branch%3Amain)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![PyPI](https://img.shields.io/pypi/v/meeple-cli)](https://pypi.org/project/meeple-cli/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/meeple-cli)
 
