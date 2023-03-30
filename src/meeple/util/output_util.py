@@ -1,3 +1,5 @@
+import numbers
+
 from rich import box
 from rich.console import Console
 from rich.table import Table
@@ -5,7 +7,7 @@ from rich.text import Text
 
 
 def fmt_rank(rank: int) -> str:
-    if rank == 0 or not rank.isdigit():
+    if rank == 0 or not isinstance(rank, numbers.Number):
         return "[bright_black]NA[/bright_black]"
     rank_str = f"{rank:.2f}"
     return rank_str

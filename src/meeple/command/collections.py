@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import get_collections
-from meeple.util.data_util import get_data, last_updated
+from meeple.util.data_util import get_collection_data, last_updated
 from meeple.util.output_util import print_table, print_warning
 
 
@@ -32,20 +32,13 @@ def collections(verbose: bool):
         headers.append("Last Updated")
     rows = []
     for collection in collections:
-        data = get_data(collection)
-        cols = []
-        cols.append(collection)
-
+        boardgames, expansions = get_collection_data(collection)
+        cols = [collection]
         # include additional data if the user choose verbose output
         if verbose:
-            if data:
-                cols.append(str(len(data["boardgames"])))
-                cols.append(str(len(data["expansions"])))
-                cols.append(last_updated(collection))
-            else:
-                cols.append("0")
-                cols.append("0")
-                cols.append("Never")
+            cols.append(str(len(boardgames)))
+            cols.append(str(len(expansions)))
+            cols.append(last_updated(collection))
 
         rows.append(cols)
 
