@@ -7,6 +7,7 @@ import yaml
 from meeple.util.fs_util import get_collection_dir
 
 IN_PATH = get_collection_dir()
+ID_LIST_KEY = "bgg-ids"
 
 
 def _collection_file(collection_name: str):
@@ -35,8 +36,8 @@ def is_collection(name: str) -> bool:
 def read_collection(name: str) -> List[int]:
     with open(_collection_file(name), "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
-        if data and "bgg-ids" in data:
-            ids = data["bgg-ids"]
+        if data and ID_LIST_KEY in data:
+            ids = data[ID_LIST_KEY]
             if not ids:
                 return []
 
@@ -50,13 +51,13 @@ def read_collection(name: str) -> List[int]:
 
 
 def create_collection(name: str):
-    data = {"bgg-ids": []}
+    data = {ID_LIST_KEY: []}
     with open(_collection_file(name), "w") as f:
         yaml.dump(data, f)
 
 
 def update_collection(name: str, ids: list) -> None:
-    data = {"bgg-ids": ids}
+    data = {ID_LIST_KEY: ids}
     with open(_collection_file(name), "w") as f:
         yaml.dump(data, f)
 

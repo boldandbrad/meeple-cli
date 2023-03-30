@@ -14,7 +14,7 @@ BOARDGAME_TYPE = "boardgame"
 EXPANSION_TYPE = "boardgameexpansion"
 
 
-def _api_get(url: str) -> dict:
+def _bgg_api_get(url: str) -> dict:
     response = requests.get(url)
     if response.status_code == 200:
         resp_dict = xmltodict.parse(response.content)
@@ -26,38 +26,38 @@ def _api_get(url: str) -> dict:
     sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 
-def get_items(ids: List[int]) -> List[Item]:
+def get_bgg_items(ids: List[int]) -> List[Item]:
     ids_str = ",".join(map(str, ids))
     url = f"{API2_BASE_URL}/thing?id={ids_str}&type={BOARDGAME_TYPE},{EXPANSION_TYPE}&stats=1"
-    resp_list = _api_get(url)
+    resp_list = _bgg_api_get(url)
     result = []
-    for item_dict in resp_list:
-        result.append(Item(item_dict))
+    for bgg_dict in resp_list:
+        result.append(Item.from_bgg_dict(bgg_dict))
     return result
 
 
-def get_item(id: int) -> Item:
-    bgg_items = get_items([id])
+def get_bgg_item(id: int) -> Item:
+    bgg_items = get_bgg_items([id])
     if bgg_items:
         return bgg_items[0]
     return None
 
 
-def get_hot() -> dict:
+def get_bgg_hot() -> dict:
     url = f"{API2_BASE_URL}/hot?type={BOARDGAME_TYPE}"
-    resp_list = _api_get(url)
+    resp_list = _bgg_api_get(url)
     result = []
-    for item_dict in resp_list:
-        result.append(Item(item_dict))
+    for bgg_dict in resp_list:
+        result.append(Item.from_bgg_dict(bgg_dict))
     return result
 
 
 # TODO: figure out how to allow user to only search for board games or expansions
 # current api returns both as board game type for some reason
-def get_search(query: str):
+def search_bgg(query: str):
     url = f"{API2_BASE_URL}/search?type={BOARDGAME_TYPE}&query={query}"
-    resp_list = _api_get(url)
+    resp_list = _bgg_api_get(url)
     result = []
-    for item_dict in resp_list:
-        result.append(Item(item_dict))
+    for bgg_dict in resp_list:
+        result.append(Item.from_bgg_dict(bgg_dict))
     return result

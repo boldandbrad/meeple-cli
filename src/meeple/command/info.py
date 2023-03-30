@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from meeple.util.api_util import get_item
+from meeple.util.api_util import get_bgg_item
 from meeple.util.output_util import (
     fmt_rank,
     fmt_rating,
@@ -25,7 +25,7 @@ def info(id: str):
         sys.exit(print_error("Provided ID must be an integer value"))
 
     # check that the given id is a valid one
-    bgg_item = get_item(id)
+    bgg_item = get_bgg_item(id)
     if not bgg_item:
         sys.exit(print_error(f"'{id}' is not a valid BoardGameGeek ID"))
 

@@ -3,7 +3,9 @@ import shutil
 from datetime import date
 from os import makedirs, rename, walk
 from os.path import basename, exists, join, splitext
+from typing import List
 
+from meeple.type.item import Item
 from meeple.util.fs_util import get_data_dir
 
 OUT_PATH = get_data_dir()
@@ -39,18 +41,26 @@ def last_updated(collection_name: str) -> str:
     return date
 
 
-def get_data(collection_name: str) -> dict:
+def get_collection_data(collection_name: str) -> (List[Item], List[Item]):
     data_path = _latest_data_file(collection_name)
+    boardgames = []
+    expansions = []
     if not data_path:
-        return None
+        return boardgames, expansions
 
     with open(data_path, "r") as f:
         data = json.load(f)
-    # TODO: deserialize json into objects instead of dict
-    return data
+
+    for dict_item in data["boardgames"]:
+        item = json.loads(json.dumps(dict_item), object_hook=Item.from_json)
+        boardgames.append(item)
+    for dict_item in data["expansions"]:
+        item = json.loads(json.dumps(dict_item), object_hook=Item.from_json)
+        expansions.append(item)
+    return boardgames, expansions
 
 
-def write_data(collection_name: str, result: dict) -> None:
+def write_collection_data(collection_name: str, result: dict) -> None:
     today = date.today()
     data_path = f"{_collection_data_dir(collection_name)}/{today.strftime('%Y-%m')}"
     filename = f"{today}.json"
@@ -65,5 +75,5 @@ def write_data(collection_name: str, result: dict) -> None:
     print(f"\tUpdated collection '{collection_name}'.")
 
 
-def delete_data(collection_name: str) -> None:
+def delete_collection_data(collection_name: str) -> None:
     shutil.rmtree(_collection_data_dir(collection_name))

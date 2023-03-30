@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import delete_collection, is_collection
-from meeple.util.data_util import delete_data, get_data
+from meeple.util.data_util import delete_collection_data, get_collection_data
 from meeple.util.input_util import bool_input
 from meeple.util.output_util import print_error, print_info
 
@@ -30,7 +30,7 @@ def delete(collection: str, yes: bool):
     # delete collection and its data if confirmation succeeded
     if confirmation:
         delete_collection(collection)
-        data = get_data(collection)
-        if data:
-            delete_data(collection)
+        boardgames, expansions = get_collection_data(collection)
+        if boardgames or expansions:
+            delete_collection_data(collection)
         print_info(f"Deleted collection '{collection}'")
