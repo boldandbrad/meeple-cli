@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import is_collection
-from meeple.util.data_util import get_data
+from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
     fmt_rating,
     fmt_weight,
@@ -46,18 +46,15 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     if not is_collection(collection):
         sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
-    item_dict = get_data(collection)
+    boardgames, expansions = get_collection_data(collection)
     # check that local data exists for the given collection
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
-    if not item_dict:
+    if not boardgames and not expansions:
         sys.exit(
             print_warning(
                 f"local data not found for '{collection}'. update with `meeple update {collection}`"
             )
         )
-
-    boardgames = item_dict["boardgames"]
-    expansions = item_dict["expansions"]
 
     # determine what to include in results depending on given flags
     if only_include == "bg":
@@ -75,16 +72,16 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     rows = []
     for item in out_list:
         cols = []
-        cols.append(str(item["id"]))
-        cols.append(item["name"])
+        cols.append(str(item.id))
+        cols.append(item.name)
         if verbose:
-            cols.append(str(item["year"]))
-            cols.append(str(item["rank"]))
+            cols.append(str(item.year))
+            cols.append(str(item.rank))
             # TODO: format with 2 decimal points always
-            cols.append(fmt_rating(item["rating"]))
-            cols.append(fmt_weight(item["weight"]))
-            cols.append(f"{item['minplayers']}-{item['maxplayers']}")
-            cols.append(f"{item['minplaytime']}-{item['maxplaytime']}")
+            cols.append(fmt_rating(item.rating))
+            cols.append(fmt_weight(item.weight))
+            cols.append(f"{item.minplayers}-{item.maxplayers}")
+            cols.append(f"{item.minplaytime}-{item.maxplaytime}")
         rows.append(cols)
 
     # TODO: add "Showing all ___ in ___ collection." printout above table?

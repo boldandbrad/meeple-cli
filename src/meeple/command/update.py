@@ -2,9 +2,9 @@ import sys
 
 import click
 
-from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_items
+from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_bgg_items
 from meeple.util.collection_util import get_collections, is_collection, read_collection
-from meeple.util.data_util import write_data
+from meeple.util.data_util import write_collection_data
 from meeple.util.output_util import print_error, print_info, print_warning
 from meeple.util.sort_util import sortby_rank
 
@@ -46,11 +46,10 @@ def update(collection: str):
             continue
 
         # get items from BoardGameGeek
-        api_result = get_items(board_game_ids)
+        api_result = get_bgg_items(board_game_ids)
         update_result = {"boardgames": [], "expansions": []}
         for item in api_result:
             item_type = item.type
-            del item.type
             if item_type == BOARDGAME_TYPE:
                 update_result["boardgames"].append(item.__dict__)
             if item_type == EXPANSION_TYPE:
@@ -63,6 +62,6 @@ def update(collection: str):
             update_result["expansions"].sort(key=lambda x: x["rating"], reverse=True)
 
         # save results
-        write_data(collection, update_result)
+        write_collection_data(collection, update_result)
 
     print_info("Updated local data")

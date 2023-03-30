@@ -1,6 +1,6 @@
 import click
 
-from meeple.util.api_util import get_hot
+from meeple.util.api_util import get_bgg_hot
 from meeple.util.output_util import print_table
 
 
@@ -10,7 +10,7 @@ from meeple.util.output_util import print_table
 def hot():
     """Retrieve the current BoardGameGeek hotness list."""
     # retrieve hotness data from BoardGameGeek
-    api_result = get_hot()
+    api_result = get_bgg_hot()
 
     # prepare table data
     headers = ["#", "ID", "Name"]

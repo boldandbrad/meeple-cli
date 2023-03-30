@@ -3,7 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import is_collection
-from meeple.util.data_util import get_data
+from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
     fmt_rank,
     fmt_rating,
@@ -43,18 +43,15 @@ def stats(collection: str, type: str):
     if not is_collection(collection):
         sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
-    item_dict = get_data(collection)
+    boardgames, expansions = get_collection_data(collection)
     # check that local data exists for the given collection
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
-    if not item_dict:
+    if not boardgames and not expansions:
         sys.exit(
             print_warning(
                 f"local data not found for '{collection}'. update with `meeple update {collection}`"
             )
         )
-
-    boardgames = item_dict["boardgames"]
-    expansions = item_dict["expansions"]
 
     # determine what to include in results depending on given flags
     if type == "b":
@@ -70,16 +67,16 @@ def stats(collection: str, type: str):
     ) = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
     for item in out_list:
-        if item["rating"] > 0:
+        if item.rating > 0:
             num_rated += 1
-            sum_ratings += item["rating"]
-        if item["rank"].isdigit():
+            sum_ratings += item.rating
+        if item.rank.isdigit():
             num_ranked += 1
-            sum_rank += int(item["rank"])
-        if item["weight"] > 0:
+            sum_rank += int(item.rank)
+        if item.weight > 0:
             num_weighted += 1
-            sum_weight += item["weight"]
-        sum_players += int(item["maxplayers"])
+            sum_weight += item.weight
+        sum_players += int(item.maxplayers)
 
     if num_rated > 0:
         avg_rating = round(sum_ratings / len(out_list), 2)

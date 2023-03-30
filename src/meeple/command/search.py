@@ -1,6 +1,6 @@
 import click
 
-from meeple.util.api_util import get_search
+from meeple.util.api_util import search_bgg
 from meeple.util.output_util import print_table
 
 
@@ -15,7 +15,7 @@ def search(query: str):
     - QUERY is the text to be searched for on BoardGameGeek. If searching multiple words, surround with quotes.
     """
     # search BoardGameGeek with user provided query
-    api_result = get_search(query)
+    api_result = search_bgg(query)
     api_result.sort(key=lambda x: x.id)
 
     # prepare table data

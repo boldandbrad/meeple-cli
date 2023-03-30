@@ -3,7 +3,7 @@ import webbrowser
 
 import click
 
-from meeple.util.api_util import BGG_DOMAIN, get_items
+from meeple.util.api_util import BGG_DOMAIN, get_bgg_items
 from meeple.util.input_util import bool_input
 from meeple.util.output_util import print_error, print_info
 
@@ -18,7 +18,7 @@ def open_on_bgg(id: str):
     - ID is the BoardGameGeek ID of the board game/expansion to be opened on boardgamegeek.com.
     """
     # check that the given id is a valid BoardGameGeek ID
-    api_result = get_items([id])
+    api_result = get_bgg_items([id])
     if not api_result:
         sys.exit(print_error(f"Provided '{id}' is not a valid BoardGameGeek ID"))
 
