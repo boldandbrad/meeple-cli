@@ -14,6 +14,7 @@ and this project adheres to
 - Play times now always display with their appropriate unit (`Min`)
 - Weights no longer display with `/ 5`
 - Slightly updated the output format of `meeple update`
+- Updated the minimum supported python version from `3.8` to `3.10`
 - Backend code improvements
 
 ## [v0.1.0-beta-2] - 2023-03-28
