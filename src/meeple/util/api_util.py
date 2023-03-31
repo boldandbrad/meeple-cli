@@ -14,50 +14,38 @@ BOARDGAME_TYPE = "boardgame"
 EXPANSION_TYPE = "boardgameexpansion"
 
 
-def _bgg_api_get(url: str) -> dict:
+def _bgg_api_get_items(url: str) -> List[Item]:
     response = requests.get(url)
     if response.status_code == 200:
         resp_dict = xmltodict.parse(response.content)
-        items = resp_dict["items"].get("item", [])
-        if not isinstance(items, list):
-            return [items]
-        return items
+        resp_list = resp_dict["items"].get("item", [])
+        if not isinstance(resp_list, list):
+            resp_list = [resp_list]
+        return [Item.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
     # TODO: provide better error handling and logging for bad requests
     sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 
-def get_bgg_items(ids: List[int]) -> List[Item]:
-    ids_str = ",".join(map(str, ids))
+def get_bgg_items(bgg_ids: List[int]) -> List[Item]:
+    ids_str = ",".join(map(str, bgg_ids))
     url = f"{API2_BASE_URL}/thing?id={ids_str}&type={BOARDGAME_TYPE},{EXPANSION_TYPE}&stats=1"
-    resp_list = _bgg_api_get(url)
-    result = []
-    for bgg_dict in resp_list:
-        result.append(Item.from_bgg_dict(bgg_dict))
-    return result
+    return _bgg_api_get_items(url)
 
 
-def get_bgg_item(id: int) -> Item:
-    bgg_items = get_bgg_items([id])
+def get_bgg_item(bgg_id: int) -> Item:
+    bgg_items = get_bgg_items([bgg_id])
     if bgg_items:
         return bgg_items[0]
     return None
 
 
-def get_bgg_hot() -> dict:
+def get_bgg_hot() -> List[Item]:
     url = f"{API2_BASE_URL}/hot?type={BOARDGAME_TYPE}"
-    resp_list = _bgg_api_get(url)
-    result = []
-    for bgg_dict in resp_list:
-        result.append(Item.from_bgg_dict(bgg_dict))
-    return result
+    return _bgg_api_get_items(url)
 
 
 # TODO: figure out how to allow user to only search for board games or expansions
 # current api returns both as board game type for some reason
-def search_bgg(query: str):
+def search_bgg(query: str) -> List[Item]:
     url = f"{API2_BASE_URL}/search?type={BOARDGAME_TYPE}&query={query}"
-    resp_list = _bgg_api_get(url)
-    result = []
-    for bgg_dict in resp_list:
-        result.append(Item.from_bgg_dict(bgg_dict))
-    return result
+    return _bgg_api_get_items(url)

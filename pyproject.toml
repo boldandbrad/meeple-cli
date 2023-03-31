@@ -38,6 +38,7 @@ dev = [
   "isort",
   "pre-commit",
   "homebrew-pypi-poet",
+  "refurb",
 ]
 
 [tool.flit.module]

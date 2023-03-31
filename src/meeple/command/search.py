@@ -9,7 +9,7 @@ from meeple.util.output_util import print_table
 @click.argument("query")
 # TODO: add option to sort output by different columns
 # TODO: add verbosity flag to show more info about each result
-def search(query: str):
+def search(query: str) -> None:
     """Search BoardGameGeek for a board game or expansion.
 
     - QUERY is the text to be searched for on BoardGameGeek. If searching multiple words, surround with quotes.
@@ -23,9 +23,13 @@ def search(query: str):
     rows = []
     for item in api_result:
         cols = []
-        cols.append(str(item.id))
-        cols.append(item.name)
-        cols.append(str(item.year))
+        cols.extend(
+            [
+                str(item.id),
+                item.name,
+                str(item.year),
+            ]
+        )
         rows.append(cols)
 
     print_table(rows, headers)

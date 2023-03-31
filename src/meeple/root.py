@@ -27,7 +27,7 @@ from meeple.command import (
     package_name="meeple-cli",
     message="%(prog)s-cli, v%(version)s",
 )
-def cli():
+def cli() -> None:
     """Main 'meeple' command."""
     pass
 
