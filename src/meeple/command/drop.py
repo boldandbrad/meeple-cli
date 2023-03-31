@@ -15,7 +15,7 @@ from meeple.util.output_util import print_error, print_info
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.argument("id")
-def drop(collection: str, id: int):
+def drop(collection: str, id: str) -> None:
     """Remove a board game/extension from a collection.
 
     - COLLECTION is the name of the collection to be modified.
@@ -25,11 +25,12 @@ def drop(collection: str, id: int):
     # check that the given ID is an integer
     if not id.isdigit():
         sys.exit(print_error("Provided ID must be an integer value"))
+    bgg_id = int(id)
 
     # check that the given id is a valid BoardGameGeek ID
-    bgg_item = get_bgg_item(id)
+    bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
-        sys.exit(print_error(f"'{id}' is not a valid BoardGameGeek ID"))
+        sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))
 
     # check that the given collection is a valid collection
     if not is_collection(collection):
@@ -37,10 +38,10 @@ def drop(collection: str, id: int):
 
     bgg_ids = read_collection(collection)
     # check that the given id already does not exist in the given collection
-    if int(id) not in bgg_ids:
-        sys.exit(print_error(f"'{id}' already doesn't exist in '{collection}'"))
+    if bgg_id not in bgg_ids:
+        sys.exit(print_error(f"'{bgg_id}' already doesn't exist in '{collection}'"))
 
     # remove the id from the collection and save
-    bgg_ids.remove(int(id))
+    bgg_ids.remove(bgg_id)
     update_collection(collection, bgg_ids)
     print_info(f"Dropped '{bgg_item.name}' from '{collection}'")

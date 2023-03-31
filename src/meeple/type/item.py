@@ -1,5 +1,4 @@
 import json
-from typing import Any
 
 
 def _grab_first(key_dict: dict) -> str:
@@ -8,14 +7,14 @@ def _grab_first(key_dict: dict) -> str:
     return key_dict["@value"]
 
 
-def _parse_item_float_val(key_dict: dict) -> Any:
+def _parse_item_float_val(key_dict: dict) -> float:
     value = key_dict["@value"]
     if value != "":
         return float(value)
     return 0.0
 
 
-def _parse_item_rank(ranks_dict: dict) -> Any:
+def _parse_item_rank(ranks_dict: dict) -> str:
     if isinstance(ranks_dict, dict):
         rank = _grab_first(ranks_dict["rank"])
         if rank.isdigit():
@@ -68,10 +67,10 @@ class Item:
             "minage": self.minage,
         }.items()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return json.dumps(dict(self), ensure_ascii=False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
     @staticmethod

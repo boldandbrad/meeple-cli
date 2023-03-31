@@ -7,6 +7,15 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html "Semantic Versioning").
 
+## [Unreleased]
+
+### Changed
+
+- Play times now always display with their appropriate unit (`Min`)
+- Weights no longer display with `/ 5`
+- Slightly updated the output format of `meeple update`
+- Backend code improvements
+
 ## [v0.1.0-beta-2] - 2023-03-28
 
 ### Added

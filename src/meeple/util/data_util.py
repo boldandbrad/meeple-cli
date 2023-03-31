@@ -1,8 +1,9 @@
 import json
 import shutil
 from datetime import date
-from os import makedirs, rename, walk
-from os.path import basename, exists, join, splitext
+from os import rename, walk
+from os.path import basename, join, splitext
+from pathlib import Path
 from typing import List
 
 from meeple.type.item import Item
@@ -18,7 +19,7 @@ def _collection_data_dir(collection_name: str) -> str:
 def _latest_data_file(collection_name: str) -> str:
     # find latest data dump file path for collection
     data_dir = _collection_data_dir(collection_name)
-    if not exists(data_dir):
+    if not Path(data_dir).exists():
         return None
     month_dirs = next(walk(data_dir))[1]
     month_dirs.sort()
@@ -29,7 +30,7 @@ def _latest_data_file(collection_name: str) -> str:
 
 
 def rename_collection_data_dir(current_name: str, new_name: str) -> None:
-    if exists(_collection_data_dir(current_name)):
+    if Path(_collection_data_dir(current_name)).exists():
         rename(_collection_data_dir(current_name), join(OUT_PATH, new_name))
 
 
@@ -66,12 +67,12 @@ def write_collection_data(collection_name: str, result: dict) -> None:
     filename = f"{today}.json"
 
     # create out dirs if they do not exist
-    if not exists(data_path):
-        makedirs(data_path)
+    if not Path(data_path).exists():
+        Path(data_path).mkdir(parents=True)
 
     with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
-
+    # TODO: find a more elegant way to print this out
     print(f"\tUpdated collection '{collection_name}'.")
 
 

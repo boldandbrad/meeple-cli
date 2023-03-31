@@ -7,7 +7,7 @@ from meeple.util.output_util import print_table
 @click.command()
 @click.help_option("-h", "--help")
 # TODO: add verbosity flag to show more details for each item
-def hot():
+def hot() -> None:
     """Retrieve the current BoardGameGeek hotness list."""
     # retrieve hotness data from BoardGameGeek
     api_result = get_bgg_hot()
@@ -17,9 +17,7 @@ def hot():
     rows = []
     for idx, item in enumerate(api_result):
         cols = []
-        cols.append(str(idx + 1))
-        cols.append(str(item.id))
-        cols.append(item.name)
+        cols.extend([str(idx + 1), str(item.id), item.name])
         rows.append(cols)
 
     print_table(rows, headers)

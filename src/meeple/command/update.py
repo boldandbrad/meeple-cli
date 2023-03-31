@@ -12,12 +12,12 @@ from meeple.util.sort_util import sortby_rank
 @click.command()
 @click.help_option("-h", "--help")
 @click.argument("collection", required=False)
-def update(collection: str):
+def update(collection: str) -> None:
     """Update local collection data.
 
     - COLLECTION (optional) is the name of the collection to be updated. If not provided, update all collections.
     """
-    print("Updating local data...")
+    print_info("Updating local data...")
     # update only a specific collection, if given
     if collection:
         # check that the given collection is a valid collection
