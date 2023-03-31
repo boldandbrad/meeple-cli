@@ -34,7 +34,7 @@ from meeple.util.output_util import (
     flag_value="e",
     help="Include only expansions in output.",
 )
-def stats(collection: str, type: str):
+def stats(collection: str, type: str) -> None:
     """Print out the details of a local collection.
 
     - COLLECTION is the name of the collection to be detailed.
@@ -108,7 +108,7 @@ def stats(collection: str, type: str):
             ],
             [
                 f"Avg. Rank: {fmt_rank(avg_rank)}",
-                f"Avg. Weight: {fmt_weight(avg_weight)} / 5",
+                f"Avg. Weight: {fmt_weight(avg_weight)}",
             ],
         ],
         lines=True,

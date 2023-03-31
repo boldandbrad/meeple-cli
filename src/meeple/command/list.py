@@ -5,6 +5,8 @@ import click
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
+    fmt_players,
+    fmt_playtime,
     fmt_rating,
     fmt_weight,
     print_error,
@@ -37,7 +39,7 @@ from meeple.util.output_util import (
 # TODO: add option to run update on the collection prior to list
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how rich will like that
-def list_collection(collection: str, only_include: str, verbose: bool):
+def list_collection(collection: str, only_include: str, verbose: bool) -> None:
     """List all board games/extensions in a collection.
 
     - COLLECTION is the name of the collection to be listed.
@@ -72,16 +74,18 @@ def list_collection(collection: str, only_include: str, verbose: bool):
     rows = []
     for item in out_list:
         cols = []
-        cols.append(str(item.id))
-        cols.append(item.name)
+        cols.extend([str(item.id), item.name])
         if verbose:
-            cols.append(str(item.year))
-            cols.append(str(item.rank))
-            # TODO: format with 2 decimal points always
-            cols.append(fmt_rating(item.rating))
-            cols.append(fmt_weight(item.weight))
-            cols.append(f"{item.minplayers}-{item.maxplayers}")
-            cols.append(f"{item.minplaytime}-{item.maxplaytime}")
+            cols.extend(
+                [
+                    str(item.year),
+                    str(item.rank),
+                    fmt_rating(item.rating),
+                    fmt_weight(item.weight),
+                    fmt_players(item.minplayers, item.maxplayers),
+                    fmt_playtime(item.minplaytime, item.maxplaytime),
+                ]
+            )
         rows.append(cols)
 
     # TODO: add "Showing all ___ in ___ collection." printout above table?

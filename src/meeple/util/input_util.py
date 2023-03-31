@@ -7,4 +7,4 @@ def bool_input(prompt: str) -> bool:
         bool: User boolean response.
     """
     response = input(f"{prompt} (y/N) ")
-    return response.lower() in ["y", "yes"]
+    return response.lower() in ("y", "yes")

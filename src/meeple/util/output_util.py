@@ -3,7 +3,14 @@ import numbers
 from rich import box
 from rich.console import Console
 from rich.table import Table
-from rich.text import Text
+
+
+def fmt_players(minplayers: str, maxplayers: str) -> str:
+    return f"{minplayers}-{maxplayers}"
+
+
+def fmt_playtime(minplaytime: str, maxplaytime: str) -> str:
+    return f"{minplaytime}-{maxplaytime} Min"
 
 
 def fmt_rank(rank: int) -> str:
@@ -13,7 +20,7 @@ def fmt_rank(rank: int) -> str:
     return rank_str
 
 
-def fmt_rating(rating: float) -> Text:
+def fmt_rating(rating: float) -> str:
     rating_str = f"{rating:.2f}"
     if rating >= 8:
         return f"[green]{rating_str}[/green]"
@@ -39,15 +46,15 @@ def fmt_weight(weight: float) -> str:
     return f"[green]{weight_str}[/green]"
 
 
-def print_error(message: str) -> str:
+def print_error(message: str) -> None:
     print_table([["[red]Error[/red]", message]])
 
 
-def print_info(message: str) -> str:
+def print_info(message: str) -> None:
     print_table([[message]])
 
 
-def print_warning(message: str):
+def print_warning(message: str) -> None:
     print_table([["[yellow]Warning[/yellow]", message]])
 
 

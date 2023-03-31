@@ -9,7 +9,7 @@ from meeple.util.output_util import print_error, print_info
 @click.command()
 @click.help_option("-h", "--help")
 @click.argument("collection")
-def new(collection: str):
+def new(collection: str) -> None:
     """Create a new local collection.
 
     - COLLECTION is the name of the collection to be created.

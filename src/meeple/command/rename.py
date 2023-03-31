@@ -11,7 +11,7 @@ from meeple.util.output_util import print_error, print_info
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.argument("new_name")
-def rename(collection: str, new_name: str):
+def rename(collection: str, new_name: str) -> None:
     """Rename a local collection.
 
     - COLLECTION is the name of the collection to be renamed.

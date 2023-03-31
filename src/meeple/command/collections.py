@@ -11,7 +11,7 @@ from meeple.util.output_util import print_table, print_warning
 @click.help_option("-h", "--help")
 @click.option("-v", "--verbose", is_flag=True, help="Display additional information.")
 # TODO: add option to sort list by different columns
-def collections(verbose: bool):
+def collections(verbose: bool) -> None:
     """List all local collections."""
     # attempt to retrieve collections
     collections = get_collections()
@@ -27,18 +27,20 @@ def collections(verbose: bool):
     # prepare table data
     headers = ["Collection"]
     if verbose:
-        headers.append("Boardgames")
-        headers.append("Expansions")
-        headers.append("Last Updated")
+        headers.extend(["Boardgames", "Expansions", "Last Updated"])
     rows = []
     for collection in collections:
         boardgames, expansions = get_collection_data(collection)
         cols = [collection]
         # include additional data if the user choose verbose output
         if verbose:
-            cols.append(str(len(boardgames)))
-            cols.append(str(len(expansions)))
-            cols.append(last_updated(collection))
+            cols.extend(
+                [
+                    str(len(boardgames)),
+                    str(len(expansions)),
+                    last_updated(collection),
+                ]
+            )
 
         rows.append(cols)
 

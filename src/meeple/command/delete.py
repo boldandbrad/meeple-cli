@@ -12,7 +12,7 @@ from meeple.util.output_util import print_error, print_info
 @click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option("-y", "--yes", is_flag=True, help="Dangerous - Bypass confirmation.")
-def delete(collection: str, yes: bool):
+def delete(collection: str, yes: bool) -> None:
     """Delete a local collection.
 
     - COLLECTION is the name of the collection to be deleted.
