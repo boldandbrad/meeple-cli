@@ -5,7 +5,7 @@ import click
 from meeple.util.collection_util import is_collection
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
-    fmt_rank,
+    fmt_avg_rank,
     fmt_rating,
     fmt_weight,
     print_error,
@@ -76,7 +76,10 @@ def stats(collection: str, type: str) -> None:
         if item.weight > 0:
             num_weighted += 1
             sum_weight += item.weight
-        sum_players += int(item.maxplayers)
+        if int(item.maxplayers) > 10:
+            sum_players += 10
+        else:
+            sum_players += int(item.maxplayers)
 
     if num_rated > 0:
         avg_rating = round(sum_ratings / len(out_list), 2)
@@ -107,7 +110,7 @@ def stats(collection: str, type: str) -> None:
                 f"Avg. Max Players: {avg_max_players}",
             ],
             [
-                f"Avg. Rank: {fmt_rank(avg_rank)}",
+                f"Avg. Rank: {fmt_avg_rank(avg_rank)}",
                 f"Avg. Weight: {fmt_weight(avg_weight)}",
             ],
         ],

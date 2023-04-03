@@ -6,7 +6,7 @@ from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_bgg_items
 from meeple.util.collection_util import get_collections, is_collection, read_collection
 from meeple.util.data_util import write_collection_data
 from meeple.util.output_util import print_error, print_info, print_warning
-from meeple.util.sort_util import sortby_rank
+from meeple.util.sort_util import sort_items
 
 
 @click.command()
@@ -47,21 +47,26 @@ def update(collection: str) -> None:
 
         # get items from BoardGameGeek
         api_result = get_bgg_items(board_game_ids)
-        update_result = {"boardgames": [], "expansions": []}
+        boardgames = []
+        expansions = []
         for item in api_result:
             item_type = item.type
             if item_type == BOARDGAME_TYPE:
-                update_result["boardgames"].append(item.__dict__)
+                boardgames.append(item)
             if item_type == EXPANSION_TYPE:
-                update_result["expansions"].append(item.__dict__)
+                expansions.append(item)
 
         # sort board games by rank and expansions by rating
-        if update_result["boardgames"]:
-            update_result["boardgames"].sort(key=sortby_rank)
-        if update_result["expansions"]:
-            update_result["expansions"].sort(key=lambda x: x["rating"], reverse=True)
+        if boardgames:
+            boardgames = sort_items(boardgames, "rank")
+        if expansions:
+            expansions = sort_items(expansions, "rating")
 
         # save results
+        update_result = {
+            "boardgames": [boardgame.__dict__ for boardgame in boardgames],
+            "expansions": [expansion.__dict__ for expansion in expansions],
+        }
         write_collection_data(collection, update_result)
 
     print_info("Updated local data")
