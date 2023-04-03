@@ -9,13 +9,26 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Ability to sort `meeple collections` output via `--sort` option
+  - Sort by name, # of boardgames, # of expansions, or updated date
+- Ability to sort `meeple list` output via `--sort` option
+  - Sort by id, name, year, rank, rating, or weight
+
 ### Changed
 
 - Play times now always display with their appropriate unit (`Min`)
 - Weights no longer display with `/ 5`
 - Slightly updated the output format of `meeple update`
 - Updated the minimum supported python version from `3.8` to `3.10`
+- Updated `meeple collections` and `meeple list` command help text
+- `meeple stats` Average Max Players now calculates items with a max player count greater than 10 as 10 to avoid skewed results from outliers
 - Backend code improvements
+
+### Fixed
+
+- Fix `meeple list` rank "NA" formatting
 
 ## [v0.1.0-beta-2] - 2023-03-28
 

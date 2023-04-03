@@ -13,11 +13,17 @@ def fmt_playtime(minplaytime: str, maxplaytime: str) -> str:
     return f"{minplaytime}-{maxplaytime} Min"
 
 
-def fmt_rank(rank: int) -> str:
-    if rank == 0 or not isinstance(rank, numbers.Number):
+def fmt_avg_rank(rank: str) -> str:
+    if not isinstance(rank, numbers.Number) or int(rank) == 0:
         return "[bright_black]NA[/bright_black]"
     rank_str = f"{rank:.2f}"
     return rank_str
+
+
+def fmt_rank(rank: str) -> str:
+    if rank == "NA" or not rank.isdigit():
+        return "[bright_black]NA[/bright_black]"
+    return rank
 
 
 def fmt_rating(rating: float) -> str:
