@@ -80,7 +80,6 @@ See a list of already implemented features/changes in the [Changelog](docs/chang
 - [ ] Copy a local collection -> `meeple copy`
 - [ ] Export a local collection to csv or another format -> `meeple export`
 - [ ] Import a local collection from a variety of formats -> `meeple import`
-- [ ] Ability to sort listed outputs by a particular column
 - [ ] Ability to assign and manage personal ratings of board games/expansions
 
 ### Potential Features (May or may not happen)
