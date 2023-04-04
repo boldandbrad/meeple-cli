@@ -7,7 +7,7 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html "Semantic Versioning").
 
-## [Unreleased]
+## [v0.1.0b3] - 2023-04-03
 
 ### Added
 
@@ -24,7 +24,8 @@ and this project adheres to
 - Updated the minimum supported python version from `3.8` to `3.10`
 - Updated `meeple collections` and `meeple list` command help text
 - `meeple stats` Average Max Players now calculates items with a max player count greater than 10 as 10 to avoid skewed results from outliers
-- Backend code improvements
+- Switched from trunk code lint manager to pre-commit
+- Backend code lint fixes and improvements
 
 ### Fixed
 
