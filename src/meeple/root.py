@@ -5,6 +5,7 @@ from meeple.command import (
     collections,
     delete,
     drop,
+    find,
     hot,
     info,
     list_collection,
@@ -36,8 +37,9 @@ cli.add_command(add, "add")
 cli.add_command(collections, "collections")
 cli.add_command(delete, "delete")
 cli.add_command(drop, "drop")
-cli.add_command(info, "info")
+cli.add_command(find, "find")
 cli.add_command(hot, "hot")
+cli.add_command(info, "info")
 cli.add_command(list_collection, "list")
 cli.add_command(move, "move")
 cli.add_command(new, "new")

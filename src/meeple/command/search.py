@@ -1,12 +1,12 @@
 import click
 
 from meeple.util.api_util import search_bgg
-from meeple.util.output_util import print_table
+from meeple.util.output_util import fmt_year, print_table
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("query")
+@click.help_option("-h", "--help")
 # TODO: add option to sort output by different columns
 # TODO: add verbosity flag to show more info about each result
 def search(query: str) -> None:
@@ -27,7 +27,7 @@ def search(query: str) -> None:
             [
                 str(item.id),
                 item.name,
-                str(item.year),
+                fmt_year(item.year),
             ]
         )
         rows.append(cols)

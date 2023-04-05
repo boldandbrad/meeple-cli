@@ -9,20 +9,16 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
+@click.argument("id", type=int)
 @click.help_option("-h", "--help")
-@click.argument("id")
 # TODO: add -y option to automatically confirm opening on browser
-def open_on_bgg(id: str) -> None:
+def open_on_bgg(id: int) -> None:
     """Open a board game or expansion on the BoardGameGeek website.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be opened on boardgamegeek.com.
     """
-    # check that the given ID is an integer
-    if not id.isdigit():
-        sys.exit(print_error("Provided ID must be an integer value"))
-    bgg_id = int(id)
-
     # check that the given id is a valid BoardGameGeek ID
+    bgg_id = id
     api_result = get_bgg_items([bgg_id])
     if not api_result:
         sys.exit(print_error(f"Provided '{bgg_id}' is not a valid BoardGameGeek ID"))

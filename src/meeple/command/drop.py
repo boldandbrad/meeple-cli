@@ -12,22 +12,18 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
-@click.argument("id")
-def drop(collection: str, id: str) -> None:
+@click.argument("id", type=int)
+@click.help_option("-h", "--help")
+def drop(collection: str, id: int) -> None:
     """Remove a board game/extension from a collection.
 
     - COLLECTION is the name of the collection to be modified.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be removed.
     """
-    # check that the given ID is an integer
-    if not id.isdigit():
-        sys.exit(print_error("Provided ID must be an integer value"))
-    bgg_id = int(id)
-
     # check that the given id is a valid BoardGameGeek ID
+    bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
         sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))

@@ -73,6 +73,12 @@ class Item:
     def __repr__(self) -> str:
         return self.__str__()
 
+    def __eq__(self, other) -> bool:
+        return self.id == other.id
+
+    def __hash__(self):
+        return hash(("id", self.id))
+
     @staticmethod
     def from_json(json_dict):
         return Item(
@@ -103,6 +109,8 @@ class Item:
             item_type = None
         if bgg_dict.get("yearpublished"):
             year = bgg_dict["yearpublished"]["@value"]
+        else:
+            year = 0
         if bgg_dict.get("statistics"):
             stats_dict = bgg_dict["statistics"]["ratings"]
             rating = round(_parse_item_float_val(stats_dict["average"]), 2)

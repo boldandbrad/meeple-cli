@@ -10,8 +10,8 @@ from meeple.util.sort_util import sort_items
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection", required=False)
+@click.help_option("-h", "--help")
 def update(collection: str) -> None:
     """Update local collection data.
 

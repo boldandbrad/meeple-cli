@@ -34,6 +34,10 @@ def is_collection(name: str) -> bool:
     return name in get_collections()
 
 
+def are_collections(names: [str]) -> bool:
+    return set(names) <= set(get_collections())
+
+
 def read_collection(name: str) -> List[int]:
     with open(_collection_file(name), "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
