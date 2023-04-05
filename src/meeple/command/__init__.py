@@ -1,15 +1,33 @@
-from .add import add  # noqa: F401
-from .collections import collections  # noqa: F401
-from .delete import delete  # noqa: F401
-from .drop import drop  # noqa: F401
-from .find import find  # noqa: F401
-from .hot import hot  # noqa: F401
-from .info import info  # noqa: F401
-from .list import list_collection  # noqa: F401
-from .move import move  # noqa: F401
-from .new import new  # noqa: F401
-from .open import open_on_bgg  # noqa: F401
-from .rename import rename  # noqa: F401
-from .search import search  # noqa: F401
-from .stats import stats  # noqa: F401
-from .update import update  # noqa: F401
+from .add import add
+from .collections import collections
+from .delete import delete
+from .drop import drop
+from .find import find
+from .hot import hot
+from .info import info
+from .list import list_collection
+from .move import move
+from .new import new
+from .open import open_on_bgg
+from .rename import rename
+from .search import search
+from .stats import stats
+from .update import update
+
+__all__ = (
+    add,
+    collections,
+    delete,
+    drop,
+    find,
+    hot,
+    info,
+    list_collection,
+    move,
+    new,
+    open_on_bgg,
+    rename,
+    search,
+    stats,
+    update,
+)
