@@ -16,25 +16,25 @@ from meeple.util.output_util import (
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option(
     "-b",
     "--boardgames",
-    "type",
+    "item_type",
     is_flag=True,
-    flag_value="b",
-    help="Include only board games in output.",
+    flag_value="bg",
+    help="Output only board games.",
 )
 @click.option(
     "-e",
     "--expansions",
-    "type",
+    "item_type",
     is_flag=True,
-    flag_value="e",
-    help="Include only expansions in output.",
+    flag_value="ex",
+    help="Output only expansions.",
 )
-def stats(collection: str, type: str) -> None:
+@click.help_option("-h", "--help")
+def stats(collection: str, item_type: str) -> None:
     """Print out the details of a local collection.
 
     - COLLECTION is the name of the collection to be detailed.
@@ -54,9 +54,9 @@ def stats(collection: str, type: str) -> None:
         )
 
     # determine what to include in results depending on given flags
-    if type == "b":
+    if item_type == "bg":
         out_list = boardgames
-    elif type == "e":
+    elif item_type == "ex":
         out_list = expansions
     else:
         out_list = boardgames + expansions
@@ -95,9 +95,9 @@ def stats(collection: str, type: str) -> None:
         avg_weight = 0
     avg_max_players = round(sum_players / len(out_list), 2)
 
-    if type == "b":
+    if item_type == "bg":
         header = f"{collection} ({len(boardgames)} Boardgames)"
-    elif type == "e":
+    elif item_type == "ex":
         header = f"{collection} ({len(expansions)} Expansions)"
     else:
         header = f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"

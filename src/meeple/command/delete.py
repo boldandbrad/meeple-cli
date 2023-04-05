@@ -9,9 +9,9 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option("-y", "--yes", is_flag=True, help="Dangerous - Bypass confirmation.")
+@click.help_option("-h", "--help")
 def delete(collection: str, yes: bool) -> None:
     """Delete a local collection.
 

@@ -9,25 +9,22 @@ from meeple.util.output_util import (
     fmt_rank,
     fmt_rating,
     fmt_weight,
+    fmt_year,
     print_error,
     print_table,
 )
 
 
 @click.command()
+@click.argument("id", type=int)
 @click.help_option("-h", "--help")
-@click.argument("id")
-def info(id: str) -> None:
+def info(id: int) -> None:
     """Print out the details of a board game or expansion.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be detailed.
     """
-    # check that the given id is an integer
-    if not id.isdigit():
-        sys.exit(print_error("Provided ID must be an integer value"))
-    bgg_id = int(id)
-
     # check that the given id is a valid one
+    bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
         sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))
@@ -44,5 +41,5 @@ def info(id: str) -> None:
             f"Weight: {fmt_weight(bgg_item.weight)}",
         ],
     ]
-    print_table([[f"{bgg_item.id}", f"{bgg_item.name} ({bgg_item.year})"]])
+    print_table([[f"{bgg_item.id}", f"{bgg_item.name} ({fmt_year(bgg_item.year)})"]])
     print_table(info_rows, lines=True)

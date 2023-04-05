@@ -12,11 +12,11 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("from_collection")
 @click.argument("to_collection")
-@click.argument("id")
-def move(from_collection: str, to_collection: str, id: str) -> None:
+@click.argument("id", type=int)
+@click.help_option("-h", "--help")
+def move(from_collection: str, to_collection: str, id: int) -> None:
     """Move a board game/extension from one collection to another.
 
     - FROM_COLLECTION is the name of the intended source collection.
@@ -25,12 +25,8 @@ def move(from_collection: str, to_collection: str, id: str) -> None:
 
     - ID is the BoardGameGeek ID of the board game/expansion to be moved.
     """
-    # check that the given id is an integer
-    if not id.isdigit():
-        sys.exit(print_error("Provided ID must be an integer value"))
-    bgg_id = int(id)
-
     # check that the given id is a valid BoardGameGeek ID
+    bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
         sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))
