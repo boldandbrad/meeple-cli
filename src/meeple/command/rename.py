@@ -8,9 +8,9 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
 @click.argument("new_name")
+@click.help_option("-h", "--help")
 def rename(collection: str, new_name: str) -> None:
     """Rename a local collection.
 

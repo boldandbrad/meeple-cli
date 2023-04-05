@@ -7,12 +7,31 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html "Semantic Versioning").
 
+## [Unreleased] - TBD
+
+### Added
+
+- Ability to find board games and expansions across local collections with `meeple find`
+  - Filter by any combination of type, player count, play time, and weight
+  - Sort by id, name, year, rank, rating, or weight
+
+### Changed
+
+- Reorder and standardize help messages
+- Update and improve id argument type checking and error messaging
+
+### Fixed
+
+- Fix `meeple search` output crash
+- `meeple -h` Commands now correctly listed in alphabetic order
+- Missing board game or expansion data now properly formats as "NA"
+
 ## [v0.1.0b3] - 2023-04-03
 
 ### Added
 
 - Ability to sort `meeple collections` output via `--sort` option
-  - Sort by name, # of boardgames, # of expansions, or updated date
+  - Sort by name, board game count, expansion count, or updated date
 - Ability to sort `meeple list` output via `--sort` option
   - Sort by id, name, year, rank, rating, or weight
 

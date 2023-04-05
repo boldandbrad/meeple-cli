@@ -7,8 +7,8 @@ from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
+@click.help_option("-h", "--help")
 def new(collection: str) -> None:
     """Create a new local collection.
 

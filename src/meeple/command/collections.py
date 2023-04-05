@@ -10,7 +10,6 @@ from meeple.util.sort_util import sort_collections
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.option(
     "--sort",
     type=click.Choice(
@@ -18,9 +17,10 @@ from meeple.util.sort_util import sort_collections
     ),
     default="updated",
     show_default=True,
-    help="Sort output by a chosen column.",
+    help="Sort output by the provided column.",
 )
-@click.option("-v", "--verbose", is_flag=True, help="Display additional details.")
+@click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
+@click.help_option("-h", "--help")
 def collections(sort: str, verbose: bool) -> None:
     """List all local collections."""
     # attempt to retrieve collections

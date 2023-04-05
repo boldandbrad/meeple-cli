@@ -10,6 +10,7 @@ from meeple.util.output_util import (
     fmt_rank,
     fmt_rating,
     fmt_weight,
+    fmt_year,
     print_error,
     print_table,
     print_warning,
@@ -18,23 +19,22 @@ from meeple.util.sort_util import sort_items
 
 
 @click.command()
-@click.help_option("-h", "--help")
 @click.argument("collection")
 @click.option(
     "-b",
     "--boardgames",
-    "only_include",
+    "item_type",
     is_flag=True,
     flag_value="bg",
-    help="Include only board games in output.",
+    help="Output only board games.",
 )
 @click.option(
     "-e",
     "--expansions",
-    "only_include",
+    "item_type",
     is_flag=True,
     flag_value="ex",
-    help="Include only expansions in output.",
+    help="Output only expansions.",
 )
 @click.option(
     "--sort",
@@ -43,15 +43,14 @@ from meeple.util.sort_util import sort_items
     ),
     default="rating",
     show_default=True,
-    help="Sort output by a chosen column.",
+    help="Sort output by the provided column.",
 )
-@click.option("-v", "--verbose", is_flag=True, help="Display additional details.")
+@click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
+@click.help_option("-h", "--help")
 # TODO: add option to run update on the collection prior to list
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how rich will like that
-def list_collection(
-    collection: str, only_include: str, sort: str, verbose: bool
-) -> None:
+def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -> None:
     """List all board games/extensions in a collection.
 
     - COLLECTION is the name of the collection to be listed.
@@ -71,9 +70,9 @@ def list_collection(
         )
 
     # determine what to include in results depending on given flags
-    if only_include == "bg":
+    if item_type == "bg":
         out_list = boardgames
-    elif only_include == "ex":
+    elif item_type == "ex":
         out_list = expansions
     else:
         out_list = boardgames + expansions
@@ -85,7 +84,7 @@ def list_collection(
     # TODO: add indicator to currently sorted by column
     headers = ["ID", "Name"]
     if verbose:
-        headers = ["ID", "Name", "Year", "Rank", "Rating", "Weight", "Players", "Time"]
+        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Time"])
 
     rows = []
     for item in out_list:
@@ -94,7 +93,7 @@ def list_collection(
         if verbose:
             cols.extend(
                 [
-                    str(item.year),
+                    fmt_year(item.year),
                     fmt_rank(str(item.rank)),
                     fmt_rating(item.rating),
                     fmt_weight(item.weight),

@@ -2,6 +2,7 @@ from .add import add  # noqa: F401
 from .collections import collections  # noqa: F401
 from .delete import delete  # noqa: F401
 from .drop import drop  # noqa: F401
+from .find import find  # noqa: F401
 from .hot import hot  # noqa: F401
 from .info import info  # noqa: F401
 from .list import list_collection  # noqa: F401

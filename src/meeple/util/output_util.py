@@ -4,25 +4,33 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
+from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
+
+NA = "[bright_black]NA[/bright_black]"
+
 
 def fmt_players(minplayers: str, maxplayers: str) -> str:
+    if int(minplayers) == int(maxplayers) == 0:
+        return NA
     return f"{minplayers}-{maxplayers}"
 
 
 def fmt_playtime(minplaytime: str, maxplaytime: str) -> str:
+    if int(minplaytime) == int(maxplaytime) == 0:
+        return NA
     return f"{minplaytime}-{maxplaytime} Min"
 
 
 def fmt_avg_rank(rank: str) -> str:
     if not isinstance(rank, numbers.Number) or int(rank) == 0:
-        return "[bright_black]NA[/bright_black]"
+        return NA
     rank_str = f"{rank:.2f}"
     return rank_str
 
 
 def fmt_rank(rank: str) -> str:
     if rank == "NA" or not rank.isdigit():
-        return "[bright_black]NA[/bright_black]"
+        return NA
     return rank
 
 
@@ -35,8 +43,16 @@ def fmt_rating(rating: float) -> str:
     if rating > 6:
         return f"[magenta]{rating_str}[/magenta]"
     if rating == 0:
-        return "[bright_black]NA[/bright_black]"
+        return NA
     return f"[red]{rating_str}[/red]"
+
+
+def fmt_type(item_type: str) -> str:
+    if item_type == BOARDGAME_TYPE:
+        return "Board Game"
+    if item_type == EXPANSION_TYPE:
+        return "Expansion"
+    return NA
 
 
 def fmt_weight(weight: float) -> str:
@@ -48,8 +64,14 @@ def fmt_weight(weight: float) -> str:
     if weight >= 2:
         return f"[bright_yellow]{weight_str}[/bright_yellow]"
     if weight == 0:
-        return "[bright_black]NA[/bright_black]"
+        return NA
     return f"[green]{weight_str}[/green]"
+
+
+def fmt_year(year: str) -> str:
+    if int(year) == 0:
+        return NA
+    return year
 
 
 def print_error(message: str) -> None:

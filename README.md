@@ -73,8 +73,6 @@ See a list of already implemented features/changes in the [Changelog](docs/chang
 
 ### Planned Features
 
-- [ ] Find board games/expansions across local collections by attributes ->
-      `meeple find`
 - [ ] Verbose option on `meeple info` that includes additional info such as
       description, publishers, etc
 - [ ] Copy a local collection -> `meeple copy`
