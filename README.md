@@ -53,6 +53,7 @@ Commands:
   collections  List all local collections.
   delete       Delete a local collection.
   drop         Remove a board game/extension from a collection.
+  find         Find board games/extensions in your collections.
   hot          Retrieve the current BoardGameGeek hotness list.
   info         Print out the details of a board game or expansion.
   list         List all board games/extensions in a collection.
