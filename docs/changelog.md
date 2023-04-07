@@ -24,12 +24,16 @@ and this project adheres to
   - Tab completion support for all command `COLLECTION` arguments.
   - Tab completion support for all command options.
 - `meeple completions` - Setup shell tab completions.
+- `README`
+  - Disclaimer section.
+  - FAQ section.
 
 ### Changed
 
 - `meeple`: `-h/--help` - Group like commands in output.
 - `GENERAL`: `-h/--help` - Standardize help messages.
 - `GENERAL`: `ID` arg - Improve argument type checking and error handling.
+- `CHANGELOG`: Standardize release notes format.
 
 ### Fixed
 
