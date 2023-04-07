@@ -3,6 +3,7 @@ import click
 from meeple.command import (
     add,
     collections,
+    completions,
     delete,
     drop,
     find,
@@ -17,9 +18,31 @@ from meeple.command import (
     stats,
     update,
 )
+from meeple.util.cmd_util import SectionedHelpGroup
+
+commands = {
+    "Collection Commands": [
+        add,
+        collections,
+        delete,
+        drop,
+        find,
+        list_collection,
+        move,
+        new,
+        rename,
+        stats,
+        update,
+    ],
+    "BoardGameGeek Commands": [hot, info, open_on_bgg, search],
+    "Other Commands": [completions],
+}
 
 
-@click.group(help="Local board game collection manager. Powered by BoardGameGeek.")
+@click.group(
+    cls=SectionedHelpGroup,
+    help="Local board game collection manager. Powered by BoardGameGeek.",
+)
 @click.help_option("-h", "--help")
 @click.version_option(
     None,  # use version auto discovery
@@ -33,21 +56,9 @@ def cli() -> None:
     pass
 
 
-cli.add_command(add, "add")
-cli.add_command(collections, "collections")
-cli.add_command(delete, "delete")
-cli.add_command(drop, "drop")
-cli.add_command(find, "find")
-cli.add_command(hot, "hot")
-cli.add_command(info, "info")
-cli.add_command(list_collection, "list")
-cli.add_command(move, "move")
-cli.add_command(new, "new")
-cli.add_command(open_on_bgg, "open")
-cli.add_command(rename, "rename")
-cli.add_command(search, "search")
-cli.add_command(stats, "stats")
-cli.add_command(update, "update")
+for section, cmds in commands.items():
+    for cmd in cmds:
+        cli.add_command(cmd, section=section)
 
 if __name__ == "__main__":
     cli()

@@ -10,7 +10,7 @@ from meeple.util.output_util import fmt_year, print_table
 # TODO: add option to sort output by different columns
 # TODO: add verbosity flag to show more info about each result
 def search(query: str) -> None:
-    """Search BoardGameGeek for a board game or expansion.
+    """Search BoardGameGeek for items.
 
     - QUERY is the text to be searched for on BoardGameGeek. If searching multiple words, surround with quotes.
     """

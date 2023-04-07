@@ -4,6 +4,7 @@ import click
 
 from meeple.type.collection import Collection
 from meeple.util.collection_util import are_collections, get_collections
+from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
 from meeple.util.output_util import (
@@ -21,7 +22,7 @@ from meeple.util.sort_util import sort_items
 
 
 @click.command()
-@click.argument("collections", nargs=-1)
+@click.argument("collections", nargs=-1, shell_complete=complete_collections)
 @click.option(
     "-b",
     "--boardgames",
@@ -73,7 +74,7 @@ def find(
     verbose: bool,
     weight: int,
 ) -> None:
-    """Find board games/extensions in your collections.
+    """Search collections for items.
 
     - COLLECTIONS are the names of a collections to query. [default: all]
     """
@@ -136,11 +137,13 @@ def find(
         # include collections data if more than one collection was included
         if len(collections) > 1:
             # determine which collections the item exists in
-            containing_collections = [
-                collection.name
-                for collection in collection_list
-                if item in collection.boardgames or item in collection.expansions
-            ]
+            containing_collections = set(
+                [
+                    collection.name
+                    for collection in collection_list
+                    if item in collection.boardgames or item in collection.expansions
+                ]
+            )
             cols.append(", ".join(containing_collections))
         # include additional data if verbose flag present
         if verbose:

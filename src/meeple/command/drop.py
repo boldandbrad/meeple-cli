@@ -8,15 +8,16 @@ from meeple.util.collection_util import (
     read_collection,
     update_collection,
 )
+from meeple.util.completion_util import complete_collections
 from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.argument("collection")
+@click.argument("collection", shell_complete=complete_collections)
 @click.argument("id", type=int)
 @click.help_option("-h", "--help")
 def drop(collection: str, id: int) -> None:
-    """Remove a board game/extension from a collection.
+    """Remove an item from a collection.
 
     - COLLECTION is the name of the collection to be modified.
 

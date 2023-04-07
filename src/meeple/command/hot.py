@@ -8,7 +8,7 @@ from meeple.util.output_util import print_table
 @click.help_option("-h", "--help")
 # TODO: add verbosity flag to show more details for each item
 def hot() -> None:
-    """Retrieve the current BoardGameGeek hotness list."""
+    """List current BoardGameGeek trending items."""
     # retrieve hotness data from BoardGameGeek
     api_result = get_bgg_hot()
 

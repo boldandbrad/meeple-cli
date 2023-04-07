@@ -8,12 +8,12 @@ from meeple.util.input_util import bool_input
 from meeple.util.output_util import print_error, print_info
 
 
-@click.command()
+@click.command(name="open")
 @click.argument("id", type=int)
 @click.help_option("-h", "--help")
 # TODO: add -y option to automatically confirm opening on browser
 def open_on_bgg(id: int) -> None:
-    """Open a board game or expansion on the BoardGameGeek website.
+    """Open an item on BoardGameGeek.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be opened on boardgamegeek.com.
     """
