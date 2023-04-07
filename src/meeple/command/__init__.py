@@ -1,5 +1,6 @@
 from .add import add
 from .collections import collections
+from .completions import completions
 from .delete import delete
 from .drop import drop
 from .find import find
@@ -17,6 +18,7 @@ from .update import update
 __all__ = (
     add,
     collections,
+    completions,
     delete,
     drop,
     find,

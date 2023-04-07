@@ -8,16 +8,17 @@ from meeple.util.collection_util import (
     read_collection,
     update_collection,
 )
+from meeple.util.completion_util import complete_collections
 from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.argument("from_collection")
-@click.argument("to_collection")
+@click.argument("from_collection", shell_complete=complete_collections)
+@click.argument("to_collection", shell_complete=complete_collections)
 @click.argument("id", type=int)
 @click.help_option("-h", "--help")
 def move(from_collection: str, to_collection: str, id: int) -> None:
-    """Move a board game/extension from one collection to another.
+    """Move an item from one collection to another.
 
     - FROM_COLLECTION is the name of the intended source collection.
 

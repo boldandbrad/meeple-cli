@@ -3,12 +3,13 @@ import sys
 import click
 
 from meeple.util.collection_util import is_collection, rename_collection
+from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import rename_collection_data_dir
 from meeple.util.output_util import print_error, print_info
 
 
 @click.command()
-@click.argument("collection")
+@click.argument("collection", shell_complete=complete_collections)
 @click.argument("new_name")
 @click.help_option("-h", "--help")
 def rename(collection: str, new_name: str) -> None:

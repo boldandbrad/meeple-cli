@@ -3,6 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import is_collection
+from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
     fmt_players,
@@ -18,8 +19,8 @@ from meeple.util.output_util import (
 from meeple.util.sort_util import sort_items
 
 
-@click.command()
-@click.argument("collection")
+@click.command(name="list")
+@click.argument("collection", shell_complete=complete_collections)
 @click.option(
     "-b",
     "--boardgames",
@@ -51,7 +52,7 @@ from meeple.util.sort_util import sort_items
 # TODO: add option to show grid lines or not in the table
 # TODO: implement paging/scrolling for long lists? not sure how rich will like that
 def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -> None:
-    """List all board games/extensions in a collection.
+    """List contents of a collection.
 
     - COLLECTION is the name of the collection to be listed.
     """

@@ -4,13 +4,14 @@ import click
 
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_bgg_items
 from meeple.util.collection_util import get_collections, is_collection, read_collection
+from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import write_collection_data
 from meeple.util.output_util import print_error, print_info, print_warning
 from meeple.util.sort_util import sort_items
 
 
 @click.command()
-@click.argument("collection", required=False)
+@click.argument("collection", required=False, shell_complete=complete_collections)
 @click.help_option("-h", "--help")
 def update(collection: str) -> None:
     """Update local collection data.

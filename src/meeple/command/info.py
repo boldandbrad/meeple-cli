@@ -19,7 +19,7 @@ from meeple.util.output_util import (
 @click.argument("id", type=int)
 @click.help_option("-h", "--help")
 def info(id: int) -> None:
-    """Print out the details of a board game or expansion.
+    """Print out the details of an item.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be detailed.
     """
