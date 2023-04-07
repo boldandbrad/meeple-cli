@@ -20,7 +20,8 @@ __pycache__/
 build/
 dist/
 
-# linters
+# tools
+.mypy_cache
 .ruff_cache
 
 # test

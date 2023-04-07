@@ -22,7 +22,7 @@ from meeple.util.sort_util import sort_collections
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
 def collections(sort: str, verbose: bool) -> None:
-    """List all local collections."""
+    """List all collections."""
     # attempt to retrieve collections
     collections = get_collections()
 

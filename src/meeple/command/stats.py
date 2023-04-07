@@ -3,6 +3,7 @@ import sys
 import click
 
 from meeple.util.collection_util import is_collection
+from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
     fmt_avg_rank,
@@ -16,7 +17,7 @@ from meeple.util.output_util import (
 
 
 @click.command()
-@click.argument("collection")
+@click.argument("collection", shell_complete=complete_collections)
 @click.option(
     "-b",
     "--boardgames",
@@ -35,7 +36,7 @@ from meeple.util.output_util import (
 )
 @click.help_option("-h", "--help")
 def stats(collection: str, item_type: str) -> None:
-    """Print out the details of a local collection.
+    """Print out the details of a collection.
 
     - COLLECTION is the name of the collection to be detailed.
     """
