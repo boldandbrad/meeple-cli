@@ -44,8 +44,6 @@ def get_bgg_hot() -> List[Item]:
     return _bgg_api_get_items(url)
 
 
-# TODO: figure out how to allow user to only search for board games or expansions
-# current api returns both as board game type for some reason
 def search_bgg(query: str) -> List[Item]:
     url = f"{API2_BASE_URL}/search?type={BOARDGAME_TYPE}&query={query}"
     return _bgg_api_get_items(url)
