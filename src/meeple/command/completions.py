@@ -7,8 +7,6 @@ SHELLS = ["bash", "zsh", "fish"]
 
 @click.command()
 @click.argument("shell", type=click.Choice(SHELLS, case_sensitive=False))
-# TODO: add --install option to automatically install completions
-# TODO: add -y option to bypass confirmation
 @click.help_option("-h", "--help")
 def completions(shell: str) -> None:
     """Setup meeple shell completions.

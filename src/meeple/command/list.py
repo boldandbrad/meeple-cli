@@ -16,7 +16,7 @@ from meeple.util.output_util import (
     print_table,
     print_warning,
 )
-from meeple.util.sort_util import sort_items
+from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
 
 @click.command(name="list")
@@ -39,18 +39,14 @@ from meeple.util.sort_util import sort_items
 )
 @click.option(
     "--sort",
-    type=click.Choice(
-        ["rank", "rating", "weight", "year", "name", "id"], case_sensitive=False
-    ),
+    type=click.Choice(ITEM_SORT_KEYS, case_sensitive=False),
     default="rating",
     show_default=True,
     help="Sort output by the provided column.",
 )
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
-# TODO: add option to run update on the collection prior to list
 # TODO: add option to show grid lines or not in the table
-# TODO: implement paging/scrolling for long lists? not sure how rich will like that
 def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -> None:
     """List contents of a collection.
 
@@ -82,10 +78,9 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
     out_list = sort_items(out_list, sort)
 
     # prepare table data
-    # TODO: add indicator to currently sorted by column
     headers = ["ID", "Name"]
     if verbose:
-        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Time"])
+        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Play Time"])
 
     rows = []
     for item in out_list:
@@ -99,11 +94,10 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
                     fmt_rating(item.rating),
                     fmt_weight(item.weight),
                     fmt_players(item.minplayers, item.maxplayers),
-                    fmt_playtime(item.minplaytime, item.maxplaytime),
+                    fmt_playtime(item.playtime),
                 ]
             )
 
         rows.append(cols)
 
-    # TODO: add "Showing all ___ in ___ collection." printout above table?
     print_table(rows, headers)

@@ -45,7 +45,6 @@ def collections(sort: str, verbose: bool) -> None:
     collection_list = sort_collections(collection_list, sort)
 
     # prepare table data
-    # TODO: add indicator to currently sorted by column
     headers = ["Name"]
     if verbose:
         headers.extend(["Boardgames", "Expansions", "Last Updated"])

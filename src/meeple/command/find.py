@@ -18,7 +18,7 @@ from meeple.util.output_util import (
     print_error,
     print_table,
 )
-from meeple.util.sort_util import sort_items
+from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
 
 @click.command()
@@ -46,9 +46,7 @@ from meeple.util.sort_util import sort_items
 )
 @click.option(
     "--sort",
-    type=click.Choice(
-        ["rank", "rating", "weight", "year", "name", "id"], case_sensitive=False
-    ),
+    type=click.Choice(ITEM_SORT_KEYS, case_sensitive=False),
     default="rating",
     show_default=True,
     help="Sort output by the provided column.",
@@ -125,7 +123,7 @@ def find(
         headers.append("Collection(s)")
     # include additional columns if verbose flag present
     if verbose:
-        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Time"])
+        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Play Time"])
 
     # prepare table data
     rows = []
@@ -154,7 +152,7 @@ def find(
                     fmt_rating(item.rating),
                     fmt_weight(item.weight),
                     fmt_players(item.minplayers, item.maxplayers),
-                    fmt_playtime(item.minplaytime, item.maxplaytime),
+                    fmt_playtime(item.playtime),
                 ]
             )
         rows.append(cols)
