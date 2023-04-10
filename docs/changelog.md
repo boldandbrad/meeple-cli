@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0b5] - 2023-04-10
+
 ### Added
 
 - `meeple info`: `-v/--verbose` - Output additional details.
