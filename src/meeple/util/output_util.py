@@ -15,10 +15,10 @@ def fmt_players(minplayers: str, maxplayers: str) -> str:
     return f"{minplayers}-{maxplayers}"
 
 
-def fmt_playtime(minplaytime: str, maxplaytime: str) -> str:
-    if int(minplaytime) == int(maxplaytime) == 0:
+def fmt_playtime(playtime: str) -> str:
+    if int(playtime) == 0:
         return NA
-    return f"{minplaytime}-{maxplaytime} Min"
+    return f"~{playtime} Min"
 
 
 def fmt_avg_rank(rank: str) -> str:

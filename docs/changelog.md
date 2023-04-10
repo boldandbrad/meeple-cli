@@ -9,6 +9,23 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0b5] - 2023-04-10
+
+### Added
+
+- `meeple info`: `-v/--verbose` - Output additional details.
+- `meeple open`: `-y/--yes` - Bypass confirmation.
+- `meeple find`/`meeple list`: `--sort` - Sort output by _time_.
+
+### Changed
+
+- `GENERAL` - Output _Play Time_ values as expected duration instead of a range.
+- `GENERAL` - Update _Time_ column header text to _Play Time_.
+
+### Removed
+
+- `ROADMAP` - Remove roadmap from README. Move to GitHub issues.
+
 ## [v0.1.0b4] - 2023-04-07
 
 ### Added

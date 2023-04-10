@@ -24,7 +24,7 @@ def filterby_players(item_list: [Item], players: int) -> [Item]:
 
 def filterby_playtime(item_list: [Item], max_time: int) -> [Item]:
     return filter(
-        lambda item: int(item.maxplaytime) <= max_time,
+        lambda item: int(item.playtime) <= max_time,
         item_list,
     )
 
