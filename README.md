@@ -12,7 +12,6 @@
 [BoardGameGeek](https://boardgamegeek.com).**
 
 > Disclaimer: Neither `meeple-cli` nor its maintainers are affiliated with
-
 > [BoardGameGeek](https://boardgamegeek.com).
 
 ## Install
@@ -124,24 +123,6 @@ See a history of implemented features/changes in the
 
 See a list of planned features and milestones
 [here](https://github.com/boldandbrad/meeple-cli/milestones).
-
-## FAQ
-
-### Why local only collections?
-
-Currently, the
-[BoardGameGeek Public API](https://boardgamegeek.com/wiki/page/BGG_XML_API2)
-provides limited _read-only_ data about user collections/GeekLists.
-
-While it is _technically_ feasible to interface with GeekLists via
-webscrapers/spiders, this kind of practice would be both complex and also
-violate [BoardGameGeek Terms of Service](https://boardgamegeek.com/terms#toc22).
-
-### Where does `meeple-cli` store data?
-
-`meeple-cli` stores collection data in `~/.meeple` and only makes network
-connections to retrieve data from the BoardGameGeek API.
-
 
 ## FAQ
 
