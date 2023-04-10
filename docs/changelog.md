@@ -13,6 +13,7 @@ and this project adheres to
 
 - `meeple info`: `-v/--verbose` - Output additional details.
 - `meeple open`: `-y/--yes` - Bypass confirmation.
+- `meeple find`/`meeple list`: `--sort` - Sort output by _time_.
 
 ### Changed
 
