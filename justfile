@@ -3,18 +3,22 @@
 venv:
     . .venv/bin/activate
 
-# install meeple-cli
+# install meeple-cli from local
 install:
+    pip install -q .
+
+# install meeple-cli via flit
+flit-install:
     pip install flit
     flit install
 
 # install editable
 dev-install:
-    pip install -e .
+    pip install -eq .
 
 # lint and format
 lint:
-    pre-commit run --all-files
+    pre-commit run --show-diff-on-failure --all-files
 
 # run all tests
 test: install
@@ -22,7 +26,7 @@ test: install
 
 # run all tests with coverage
 test-cov: install
-    pytest --cov-report=xml --cov=./src/meeple/
+    pytest -v --cov-report xml --cov meeple
 
 # build dist
 build:
@@ -31,11 +35,6 @@ build:
 # generate homebrew formula
 brew: install
     poet -f meeple-cli >> formula.rb
-
-# check code and deps for vulns
-# snyk doesn't currently support flit project with pyproject.toml
-# deps:
-#     snyk test --file=pyproject.toml
 
 # remove artifacts
 # TODO: remove __pycache__ dirs from src/ and tests/

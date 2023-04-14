@@ -29,7 +29,6 @@ test = [
   "pytest >=6",
   "pytest-cov",
   "pytest-mock",
-  "codecov",
 ]
 dev = [
   "black",
@@ -38,6 +37,7 @@ dev = [
   "isort",
   "pre-commit",
   "homebrew-pypi-poet",
+  "semgrep",
   "refurb",
 ]
 

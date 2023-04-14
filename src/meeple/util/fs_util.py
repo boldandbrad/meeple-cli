@@ -7,16 +7,14 @@ CONFIG_DIR_NAME = ".meeple"
 
 def _get_config_dir() -> str:
     usrname = getpass.getuser()
-    if platform.system() == "Linux":
-        data_dir = f"/home/{usrname}/{CONFIG_DIR_NAME}"
-    elif platform.system() == "Darwin":
-        data_dir = f"/Users/{usrname}/{CONFIG_DIR_NAME}"
-    elif platform.system() == "Windows":
-        data_dir = f"C:\\Users\\{usrname}\\{CONFIG_DIR_NAME}"
-    else:
-        data_dir = ""
-
-    return data_dir
+    system = platform.system()
+    if system == "Linux":
+        return f"/home/{usrname}/{CONFIG_DIR_NAME}"
+    elif system == "Darwin":
+        return f"/Users/{usrname}/{CONFIG_DIR_NAME}"
+    elif system == "Windows":
+        return f"C:\\Users\\{usrname}\\{CONFIG_DIR_NAME}"
+    return f"{CONFIG_DIR_NAME}"
 
 
 def get_collection_dir() -> str:

@@ -15,22 +15,21 @@ def _weight_range(weight_key: int) -> (float, float):
 
 
 def filterby_players(item_list: [Item], players: int) -> [Item]:
-    return filter(
-        lambda item: int(item.minplayers) <= players
-        and int(item.maxplayers) >= players,
-        item_list,
-    )
+    return [
+        item
+        for item in item_list
+        if int(item.minplayers) <= players and int(item.maxplayers) >= players
+    ]
 
 
 def filterby_playtime(item_list: [Item], max_time: int) -> [Item]:
-    return filter(
-        lambda item: int(item.playtime) <= max_time,
-        item_list,
-    )
+    return [item for item in item_list if int(item.playtime) <= max_time]
 
 
 def filterby_weight(item_list: [Item], weight_key: str) -> [Item]:
     min_weight, max_weight = _weight_range(int(weight_key))
-    return filter(
-        lambda item: item.weight >= min_weight and item.weight <= max_weight, item_list
-    )
+    return [
+        item
+        for item in item_list
+        if item.weight >= min_weight and item.weight <= max_weight
+    ]
