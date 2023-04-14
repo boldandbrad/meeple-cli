@@ -38,6 +38,11 @@ repos:
     rev: v3.0.0-alpha.6
     hooks:
       - id: prettier
+  - repo: https://github.com/returntocorp/semgrep
+    rev: v1.17.1
+    hooks:
+      - id: semgrep
+        args: ["--config", "auto", "--error", "--skip-unknown-extensions"]
   - repo: https://github.com/dosisod/refurb
     rev: v1.15.0
     hooks:
