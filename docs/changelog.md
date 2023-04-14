@@ -9,6 +9,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `TESTS` - Increase test coverage.
+- `CI` - Report test coverage to [Codecov](https://codecov.io).
+- `CI` - Speed up test github action with `pre-commit` caching.
+
 ## [v0.1.0b5] - 2023-04-10
 
 ### Added
