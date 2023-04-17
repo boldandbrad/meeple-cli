@@ -5,16 +5,19 @@ import click
 from meeple.type.collection import Collection
 from meeple.util.collection_util import get_collections
 from meeple.util.data_util import get_collection_data, last_updated
-from meeple.util.output_util import print_table, print_warning
-from meeple.util.sort_util import sort_collections
+from meeple.util.output_util import (
+    CollectionHeader,
+    fmt_headers,
+    print_table,
+    print_warning,
+)
+from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
 
 
 @click.command()
 @click.option(
     "--sort",
-    type=click.Choice(
-        ["name", "boardgames", "expansions", "updated"], case_sensitive=False
-    ),
+    type=click.Choice(COLLECTION_SORT_KEYS, case_sensitive=False),
     default="updated",
     show_default=True,
     help="Sort output by the provided column.",
@@ -42,12 +45,21 @@ def collections(sort: str, verbose: bool) -> None:
         )
 
     # sort output
-    collection_list = sort_collections(collection_list, sort)
+    collection_list, sort_direction = sort_collections(collection_list, sort)
 
     # prepare table data
-    headers = ["Name"]
+    headers = [CollectionHeader.NAME]
     if verbose:
-        headers.extend(["Boardgames", "Expansions", "Last Updated"])
+        headers.extend(
+            [
+                CollectionHeader.BOARDGAMES,
+                CollectionHeader.EXPANSIONS,
+                CollectionHeader.UPDATED,
+            ]
+        )
+
+    # format headers
+    headers = fmt_headers(headers, sort, sort_direction)
 
     rows = []
     for collection in collection_list:

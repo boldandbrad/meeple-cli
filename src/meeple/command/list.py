@@ -6,10 +6,13 @@ from meeple.util.collection_util import is_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
+    ItemHeader,
+    fmt_headers,
     fmt_players,
     fmt_playtime,
     fmt_rank,
     fmt_rating,
+    fmt_type,
     fmt_weight,
     fmt_year,
     print_error,
@@ -75,16 +78,34 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
         out_list = boardgames + expansions
 
     # sort output
-    out_list = sort_items(out_list, sort)
+    out_list, sort_direction = sort_items(out_list, sort)
 
     # prepare table data
-    headers = ["ID", "Name"]
+    headers = [ItemHeader.ID, ItemHeader.NAME]
+    # include type column if neither type is ommitted
+    if item_type not in ("bg", "ex"):
+        headers.append(ItemHeader.TYPE)
     if verbose:
-        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Play Time"])
+        headers.extend(
+            [
+                ItemHeader.YEAR,
+                ItemHeader.RANK,
+                ItemHeader.RATING,
+                ItemHeader.WEIGHT,
+                ItemHeader.PLAYERS,
+                ItemHeader.TIME,
+            ]
+        )
+
+    # format headers
+    headers = fmt_headers(headers, sort, sort_direction)
 
     rows = []
     for item in out_list:
         cols = [str(item.id), item.name]
+        # include type data if neither type is ommitted
+        if item_type not in ("bg", "ex"):
+            cols.append(fmt_type(item.type))
         # include additional data if the user chose verbose output
         if verbose:
             cols.extend(

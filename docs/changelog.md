@@ -9,11 +9,18 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0b6] - 2023-04-16
+
 ### Added
 
+- `GENERAL` - Sortedby column indicator in sorted output.
 - `TESTS` - Increase test coverage.
 - `CI` - Report test coverage to [Codecov](https://codecov.io).
 - `CI` - Speed up test github action with `pre-commit` caching.
+
+### Fixed
+
+- `meeple list` - Crash when listing verbose output containing both boardgames and expansions.
 
 ## [v0.1.0b5] - 2023-04-10
 

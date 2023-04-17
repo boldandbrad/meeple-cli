@@ -8,6 +8,8 @@ from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
 from meeple.util.output_util import (
+    ItemHeader,
+    fmt_headers,
     fmt_players,
     fmt_playtime,
     fmt_rank,
@@ -111,19 +113,31 @@ def find(
         result_items = filterby_weight(result_items, weight)
 
     # sort output
-    result_items = sort_items(result_items, sort)
+    result_items, sort_direction = sort_items(result_items, sort)
 
     # prepare table headers
-    headers = ["ID", "Name"]
+    headers = [ItemHeader.ID, ItemHeader.NAME]
     # include type column if neither type is ommitted
     if item_type not in ("bg", "ex"):
-        headers.append("Type")
+        headers.append(ItemHeader.TYPE)
     # include collections column if more than one collection was included
     if len(collections) > 1:
-        headers.append("Collection(s)")
+        headers.append(ItemHeader.COLLECTION)
     # include additional columns if verbose flag present
     if verbose:
-        headers.extend(["Year", "Rank", "Rating", "Weight", "Players", "Play Time"])
+        headers.extend(
+            [
+                ItemHeader.YEAR,
+                ItemHeader.RANK,
+                ItemHeader.RATING,
+                ItemHeader.WEIGHT,
+                ItemHeader.PLAYERS,
+                ItemHeader.TIME,
+            ]
+        )
+
+    # format headers
+    headers = fmt_headers(headers, sort, sort_direction)
 
     # prepare table data
     rows = []

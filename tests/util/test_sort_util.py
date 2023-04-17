@@ -81,37 +81,37 @@ test_collections = [
 
 
 def test_sort_collections():
-    sorted_collections = sort_collections(test_collections, "name")
+    sorted_collections, _ = sort_collections(test_collections, "name")
     assert sorted_collections[0] == test_collections[0]
 
-    sorted_collections = sort_collections(test_collections, "boardgames")
+    sorted_collections, _ = sort_collections(test_collections, "boardgames")
     assert sorted_collections[0] == test_collections[0]
 
-    sorted_collections = sort_collections(test_collections, "expansions")
+    sorted_collections, _ = sort_collections(test_collections, "expansions")
     assert sorted_collections[0] == test_collections[0]
 
-    sorted_collections = sort_collections(test_collections, "updated")
+    sorted_collections, _ = sort_collections(test_collections, "updated")
     assert sorted_collections[0] == test_collections[0]
 
 
 def test_sort_items():
-    sorted_items = sort_items(test_items, "rank")
+    sorted_items, _ = sort_items(test_items, "rank")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "weight")
+    sorted_items, _ = sort_items(test_items, "weight")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "year")
+    sorted_items, _ = sort_items(test_items, "year")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "name")
+    sorted_items, _ = sort_items(test_items, "name")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "id")
+    sorted_items, _ = sort_items(test_items, "id")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "time")
+    sorted_items, _ = sort_items(test_items, "time")
     assert sorted_items[0] == test_items[0]
 
-    sorted_items = sort_items(test_items, "rating")
+    sorted_items, _ = sort_items(test_items, "rating")
     assert sorted_items[0] == test_items[0]
