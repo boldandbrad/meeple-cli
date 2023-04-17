@@ -14,7 +14,7 @@ flit-install:
 
 # install editable
 dev-install:
-    pip install -eq .
+    pip install -q -e .
 
 # lint and format
 lint:

@@ -1,6 +1,6 @@
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.output_util import (
-    NA,
+    NA_VALUE,
     fmt_avg_rank,
     fmt_players,
     fmt_playtime,
@@ -14,7 +14,7 @@ from meeple.util.output_util import (
 
 def test_fmt_players():
     na_output = fmt_players(0, 0)
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     output = fmt_players(1, 2)
     assert output == "1-2"
@@ -22,7 +22,7 @@ def test_fmt_players():
 
 def test_fmt_playtime():
     na_output = fmt_playtime(0)
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     output = fmt_playtime(30)
     assert output == "~30 Min"
@@ -30,10 +30,10 @@ def test_fmt_playtime():
 
 def test_fmt_avg_rank():
     na_output = fmt_avg_rank("Not Ranked")
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     na_output_2 = fmt_avg_rank(0)
-    assert na_output_2 == NA
+    assert na_output_2 == NA_VALUE
 
     output = fmt_avg_rank(50.3444)
     assert output == "50.34"
@@ -41,10 +41,10 @@ def test_fmt_avg_rank():
 
 def test_fmt_rank():
     na_output = fmt_rank("NA")
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     na_output_2 = fmt_rank("Not Ranked")
-    assert na_output_2 == NA
+    assert na_output_2 == NA_VALUE
 
     output = fmt_rank("50")
     assert output == "50"
@@ -52,7 +52,7 @@ def test_fmt_rank():
 
 def test_fmt_rating():
     na_output = fmt_rating(0)
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     green_output = fmt_rating(8.5)
     assert green_output == "[green]8.50[/green]"
@@ -69,7 +69,7 @@ def test_fmt_rating():
 
 def test_fmt_type():
     na_output = fmt_type("other")
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     bg_output = fmt_type(BOARDGAME_TYPE)
     assert bg_output == "Board Game"
@@ -80,7 +80,7 @@ def test_fmt_type():
 
 def test_fmt_weight():
     na_output = fmt_weight(0)
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     red_output = fmt_weight(4.5)
     assert red_output == "[red]4.50[/red]"
@@ -97,7 +97,7 @@ def test_fmt_weight():
 
 def test_fmt_year():
     na_output = fmt_year(0)
-    assert na_output == NA
+    assert na_output == NA_VALUE
 
     other_output = fmt_year("2000")
     assert other_output == "2000"
