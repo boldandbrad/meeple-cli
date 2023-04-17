@@ -14,13 +14,10 @@ and this project adheres to
 ### Added
 
 - `GENERAL` - Sortedby column indicator in sorted output.
+- `meeple list` - _Type_ column included if output contains both boardgames and expansions.
 - `TESTS` - Increase test coverage.
 - `CI` - Report test coverage to [Codecov](https://codecov.io).
 - `CI` - Speed up test github action with `pre-commit` caching.
-
-### Fixed
-
-- `meeple list` - Crash when listing verbose output containing both boardgames and expansions.
 
 ## [v0.1.0b5] - 2023-04-10
 
