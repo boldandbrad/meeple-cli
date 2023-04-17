@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.api_util import search_bgg
-from meeple.util.output_util import fmt_year, print_table
+from meeple.util.output_util import ItemHeader, fmt_headers, fmt_year, print_table
 
 
 @click.command()
@@ -17,7 +17,9 @@ def search(query: str) -> None:
     api_result.sort(key=lambda x: x.id)
 
     # prepare table data
-    headers = ["ID", "Name", "Year"]
+    headers = [ItemHeader.ID, ItemHeader.NAME, ItemHeader.YEAR]
+    headers = fmt_headers(headers, None, None)
+
     rows = []
     for item in api_result:
         cols = []

@@ -59,9 +59,9 @@ def update(collection: str) -> None:
 
         # sort board games by rank and expansions by rating
         if boardgames:
-            boardgames = sort_items(boardgames, "rank")
+            boardgames, _ = sort_items(boardgames, "rank")
         if expansions:
-            expansions = sort_items(expansions, "rating")
+            expansions, _ = sort_items(expansions, "rating")
 
         # save results
         update_result = {

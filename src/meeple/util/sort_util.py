@@ -1,6 +1,8 @@
 from meeple.type.collection import Collection
 from meeple.type.item import Item
+from meeple.util.output_util import SORT_ASC_SYMBOL, SORT_DESC_SYMBOL
 
+COLLECTION_SORT_KEYS = ["name", "boardgames", "expansions", "updated"]
 ITEM_SORT_KEYS = ["rank", "rating", "weight", "year", "name", "id", "time"]
 
 
@@ -14,23 +16,35 @@ def _handle_str_rank(item: Item):
 def sort_collections(collection_list: [Collection], sort_key: str) -> [Collection]:
     match sort_key:
         case "name":
-            return sorted(collection_list, key=lambda collection: collection.name)
+            return (
+                sorted(collection_list, key=lambda collection: collection.name),
+                SORT_ASC_SYMBOL,
+            )
         case "boardgames":
-            return sorted(
-                collection_list,
-                key=lambda collection: len(collection.boardgames),
-                reverse=True,
+            return (
+                sorted(
+                    collection_list,
+                    key=lambda collection: len(collection.boardgames),
+                    reverse=True,
+                ),
+                SORT_DESC_SYMBOL,
             )
         case "expansions":
-            return sorted(
-                collection_list,
-                key=lambda collection: len(collection.expansions),
-                reverse=True,
+            return (
+                sorted(
+                    collection_list,
+                    key=lambda collection: len(collection.expansions),
+                    reverse=True,
+                ),
+                SORT_DESC_SYMBOL,
             )
-    return sorted(
-        collection_list,
-        key=lambda collection: collection.last_updated,
-        reverse=True,
+    return (
+        sorted(
+            collection_list,
+            key=lambda collection: collection.last_updated,
+            reverse=True,
+        ),
+        SORT_DESC_SYMBOL,
     )
 
 
@@ -46,15 +60,24 @@ def sort_items(item_list: [Item], sort_key: str) -> [Item]:
     """
     match sort_key:
         case "rank":
-            return sorted(item_list, key=_handle_str_rank)
+            return sorted(item_list, key=_handle_str_rank), SORT_ASC_SYMBOL
         case "weight":
-            return sorted(item_list, key=lambda item: item.weight, reverse=True)
+            return (
+                sorted(item_list, key=lambda item: item.weight, reverse=True),
+                SORT_DESC_SYMBOL,
+            )
         case "year":
-            return sorted(item_list, key=lambda item: item.year)
+            return sorted(item_list, key=lambda item: item.year), SORT_ASC_SYMBOL
         case "name":
-            return sorted(item_list, key=lambda item: item.name)
+            return sorted(item_list, key=lambda item: item.name), SORT_ASC_SYMBOL
         case "id":
-            return sorted(item_list, key=lambda item: int(item.id))
+            return sorted(item_list, key=lambda item: int(item.id)), SORT_ASC_SYMBOL
         case "time":
-            return sorted(item_list, key=lambda item: int(item.playtime))
-    return sorted(item_list, key=lambda item: item.rating, reverse=True)
+            return (
+                sorted(item_list, key=lambda item: int(item.playtime)),
+                SORT_ASC_SYMBOL,
+            )
+    return (
+        sorted(item_list, key=lambda item: item.rating, reverse=True),
+        SORT_DESC_SYMBOL,
+    )
