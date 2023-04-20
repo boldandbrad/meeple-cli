@@ -5,7 +5,7 @@ venv:
 
 # install meeple-cli from local
 install:
-    pip install -q .
+    pip install -q ."[test]"
 
 # install meeple-cli via flit
 flit-install:
