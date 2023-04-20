@@ -16,24 +16,24 @@
 
 ## Install
 
-Global isolated install via [pipx](https://pypa.github.io/pipx/) (recommended):
+Via [Homebrew](https://brew.sh) (Recommended on macOS/Linux)
+
+```zsh
+brew tap boldandbrad/tap
+brew install meeple-cli
+```
+
+Via [pipx](https://pypa.github.io/pipx/) (Recommended on Windows):
 
 ```sh
 pipx install meeple-cli
 ```
 
-Local python environment install:
+Via `pip`:
 
 ```sh
 pip install meeple-cli
 ```
-
-<!-- Homebrew install: -->
-
-<!-- ```zsh
-brew tap boldandbrad/homebrew-tap
-brew install meeple-cli
-```-->
 
 <!-- > For more details, read the **meeple-cli**
 > [install guide](https://boldandbrad.github.io/meeple-cli/#/install). -->
