@@ -30,37 +30,60 @@ def move(from_collection: str, to_collection: str, id: int) -> None:
     bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
-        sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))
+        sys.exit(
+            print_error(f"[yellow]{bgg_id}[/yellow] is not a valid BoardGameGeek ID.")
+        )
 
     # check that the given collection is a valid collection
     if not is_collection(from_collection):
-        sys.exit(print_error(f"'{from_collection}' is not a valid collection"))
+        sys.exit(
+            print_error(
+                f"[yellow]{from_collection}[/yellow] is not a valid collection."
+            )
+        )
+
+    from_item_ids, from_to_add_ids, from_to_drop_ids = read_collection(from_collection)
 
     # check that the given collection is a valid collection
     if not is_collection(to_collection):
         # TODO: offer to create the new collection
-        sys.exit(print_error(f"'{to_collection}' is not a valid collection"))
-
-    # TODO: refactor to avoid the following duplicated code
-    # remove the id from the source collection
-    from_bgg_ids = read_collection(from_collection)
-    if bgg_id not in from_bgg_ids:
-        # TODO: ask if they want to add it to the to collection anyway
         sys.exit(
-            print_error(f"'{bgg_id}' already doesn't exist in '{from_collection}'")
+            print_error(f"[yellow]{to_collection}[/yellow] is not a valid collection.")
         )
 
-    from_bgg_ids.remove(bgg_id)
+    dest_item_ids, dest_to_add_ids, dest_to_drop_ids = read_collection(to_collection)
+
+    # check that the id exists in from collection
+    # TODO: check the from collection to_add list and to_drop list
+    if bgg_id not in from_item_ids:
+        # TODO: ask if they want to add it to the destination collection anyway
+        sys.exit(
+            print_error(
+                f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in [u magenta]{from_collection}[/u magenta]."
+            )
+        )
+
+    # check that the id doesn't exist in dest collection
+    # TODO: check the dest collection to_add list and to_drop list
+    if dest_item_ids and bgg_id in dest_item_ids:
+        sys.exit(
+            print_error(
+                f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{to_collection}[/u magenta]."
+            )
+        )
+
+    # drop the id from the from collection
+    from_item_ids.remove(bgg_id)
+    from_to_drop_ids.append(bgg_id)
+    from_to_drop_ids.sort()
 
     # add the id to the destination collection
-    to_bgg_ids = read_collection(to_collection)
-    if to_bgg_ids and bgg_id in to_bgg_ids:
-        sys.exit(print_error(f"'{bgg_id}' already exists in '{to_collection}'"))
+    dest_to_add_ids.append(bgg_id)
+    dest_to_add_ids.sort()
 
-    to_bgg_ids.append(bgg_id)
-    to_bgg_ids.sort()
-
-    # save changes
-    update_collection(from_collection, from_bgg_ids)
-    update_collection(to_collection, to_bgg_ids)
-    print_info(f"Moved '{bgg_item.name}' from '{from_collection}' to '{to_collection}'")
+    # persist changes
+    update_collection(from_collection, from_item_ids, from_to_add_ids, from_to_drop_ids)
+    update_collection(to_collection, dest_item_ids, dest_to_add_ids, dest_to_drop_ids)
+    print_info(
+        f"Moved [i blue]{bgg_item.name}[/i blue] from [u magenta]{from_collection}[/u magenta] to [u magenta]{to_collection}[/u magenta]. To update, run: [green]meeple update[/green]"
+    )

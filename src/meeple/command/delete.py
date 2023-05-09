@@ -20,11 +20,15 @@ def delete(collection: str, yes: bool) -> None:
     """
     # check that the given collection exists
     if not is_collection(collection):
-        sys.exit(print_error(f"'{collection}' already does not exist"))
+        sys.exit(
+            print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
+        )
 
     # ask for confirmation or not depending on presence of flag
     if not yes:
-        confirmation = bool_input(f"Are you sure you want to delete '{collection}'?")
+        confirmation = bool_input(
+            f"Are you sure you want to delete collection [u magenta]{collection}[/u magenta]?"
+        )
     else:
         confirmation = True
 
@@ -34,4 +38,4 @@ def delete(collection: str, yes: bool) -> None:
         boardgames, expansions = get_collection_data(collection)
         if boardgames or expansions:
             delete_collection_data(collection)
-        print_info(f"Deleted collection '{collection}'")
+        print_info(f"Deleted collection [u magenta]{collection}[/u magenta]")

@@ -9,11 +9,11 @@ from typing import List
 from meeple.type.item import Item
 from meeple.util.fs_util import get_data_dir
 
-OUT_PATH = get_data_dir()
+DATA_DIR = get_data_dir()
 
 
 def _collection_data_dir(collection_name: str) -> str:
-    return join(OUT_PATH, collection_name)
+    return join(DATA_DIR, collection_name)
 
 
 def _latest_data_file(collection_name: str) -> str:
@@ -31,7 +31,7 @@ def _latest_data_file(collection_name: str) -> str:
 
 def rename_collection_data_dir(current_name: str, new_name: str) -> None:
     if Path(_collection_data_dir(current_name)).exists():
-        rename(_collection_data_dir(current_name), join(OUT_PATH, new_name))
+        rename(_collection_data_dir(current_name), join(DATA_DIR, new_name))
 
 
 def last_updated(collection_name: str) -> str:
@@ -72,8 +72,6 @@ def write_collection_data(collection_name: str, result: dict) -> None:
 
     with open(join(data_path, filename), "w") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
-    # TODO: find a more elegant way to print this out
-    print(f"\tUpdated collection '{collection_name}'.")
 
 
 def delete_collection_data(collection_name: str) -> None:

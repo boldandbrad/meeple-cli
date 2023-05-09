@@ -33,7 +33,7 @@ def collections(sort: str, verbose: bool) -> None:
     if not collections:
         sys.exit(
             print_warning(
-                "No local collections yet exist. Create a new one with `meeple new`"
+                "No local collections yet exist. To create one, run: [green]meeple new[/green]"
             )
         )
 
@@ -61,6 +61,7 @@ def collections(sort: str, verbose: bool) -> None:
     # format headers
     headers = fmt_headers(headers, sort, sort_direction)
 
+    # TODO: show indicator if collection has pending updates
     rows = []
     for collection in collection_list:
         cols = [collection.name]

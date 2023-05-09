@@ -28,7 +28,9 @@ def info(id: int, verbose: bool) -> None:
     bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
-        sys.exit(print_error(f"'{bgg_id}' is not a valid BoardGameGeek ID"))
+        sys.exit(
+            print_error(f"[yellow]{bgg_id}[/yellow] is not a valid BoardGameGeek ID.")
+        )
 
     info_rows = [
         [
