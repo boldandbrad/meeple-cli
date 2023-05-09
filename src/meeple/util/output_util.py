@@ -110,6 +110,11 @@ def fmt_year(year: str) -> str:
     return year
 
 
+def printf(message: str) -> None:
+    console = Console()
+    console.print(message)
+
+
 def print_error(message: str) -> None:
     print_table([["[red]Error[/red]", message]])
 

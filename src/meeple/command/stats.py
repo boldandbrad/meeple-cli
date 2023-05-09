@@ -50,7 +50,7 @@ def stats(collection: str, item_type: str) -> None:
     if not boardgames and not expansions:
         sys.exit(
             print_warning(
-                f"local data not found for '{collection}'. update with `meeple update {collection}`"
+                f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
             )
         )
 

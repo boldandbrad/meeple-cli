@@ -20,13 +20,21 @@ def rename(collection: str, new_name: str) -> None:
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(print_error(f"'{collection}' is not a valid collection"))
+        sys.exit(
+            print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
+        )
 
     # check that the given collection new name doesn't already exist
     if is_collection(new_name):
-        sys.exit(print_error(f"'{new_name}' already exists"))
+        sys.exit(
+            print_error(
+                f"Collection [u magenta]{collection}[/u magenta] already exists."
+            )
+        )
 
     # create new collection
     rename_collection(collection, new_name)
     rename_collection_data_dir(collection, new_name)
-    print_info(f"Renamed collection '{collection}' to '{new_name}'")
+    print_info(
+        f"Renamed collection [u magenta]{collection}[/u magenta] to [u magenta]{new_name}[/u magenta]"
+    )

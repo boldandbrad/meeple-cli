@@ -16,8 +16,12 @@ def new(collection: str) -> None:
     """
     # check that the given collection doesn't already exist
     if is_collection(collection):
-        sys.exit(print_error(f"'{collection}' already exists"))
+        sys.exit(
+            print_error(
+                f"Collection [u magenta]{collection}[/u magenta] already exists."
+            )
+        )
 
     # create new collection
     create_collection(collection)
-    print_info(f"Created new collection '{collection}'")
+    print_info(f"Created new collection [u magenta]{collection}[/u magenta].")
