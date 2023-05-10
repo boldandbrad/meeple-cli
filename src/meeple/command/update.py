@@ -13,7 +13,7 @@ from meeple.util.collection_util import (
 )
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import last_updated, write_collection_data
-from meeple.util.output_util import print_error, print_info, print_warning, printf
+from meeple.util.output_util import print_error, print_info, printf
 from meeple.util.sort_util import sort_items
 
 
@@ -41,7 +41,7 @@ def update(collection: str, force: bool) -> None:
     # check that local collections exist
     if not collections:
         sys.exit(
-            print_warning(
+            print_error(
                 "No local collections yet exist. To create one, run: [green]meeple new[/green]"
             )
         )

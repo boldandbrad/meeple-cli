@@ -86,6 +86,14 @@ def find(
     if not collections:
         collections = get_collections()
 
+    # check that local collections exist
+    if not collections:
+        sys.exit(
+            print_error(
+                "No local collections yet exist. To create one, run: [green]meeple new[/green]"
+            )
+        )
+
     # get collection items
     result_items = []
     collection_list = []

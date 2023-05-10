@@ -35,6 +35,12 @@ and this project adheres to
 - `DATA`
   - Update collection yaml file format to accomodate pending changes. (NON-BREAKING - Collection modifying commands such `meeple add/drop/move/update` will automatically convert old files to the new format when possible.)
 
+### Fixed
+
+- `meeple find` - Exit with error when no collections exist to search.
+- `GENERAL` - Properly print out messages as Errors instead of Warnings when the
+  result is a process termination.
+
 ## [v0.1.0b6] - 2023-04-16
 
 ### Added

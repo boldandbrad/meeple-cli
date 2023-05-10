@@ -17,7 +17,6 @@ from meeple.util.output_util import (
     fmt_year,
     print_error,
     print_table,
-    print_warning,
 )
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
@@ -67,7 +66,7 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
     # TODO: add better error handling for when a collection has no data files and/or is empty?
     if not boardgames and not expansions:
         sys.exit(
-            print_warning(
+            print_error(
                 f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
             )
         )
