@@ -8,8 +8,8 @@ from meeple.util.data_util import get_collection_data, last_updated
 from meeple.util.output_util import (
     CollectionHeader,
     fmt_headers,
+    print_error,
     print_table,
-    print_warning,
 )
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
 
@@ -32,7 +32,7 @@ def collections(sort: str, verbose: bool) -> None:
     # check that local collections exist
     if not collections:
         sys.exit(
-            print_warning(
+            print_error(
                 "No local collections yet exist. To create one, run: [green]meeple new[/green]"
             )
         )

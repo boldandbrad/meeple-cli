@@ -12,7 +12,6 @@ from meeple.util.output_util import (
     print_error,
     print_info,
     print_table,
-    print_warning,
 )
 
 
@@ -49,7 +48,7 @@ def stats(collection: str, item_type: str) -> None:
     # TODO: add error/better handling for when a collection has no data files and/or is empty?
     if not boardgames and not expansions:
         sys.exit(
-            print_warning(
+            print_error(
                 f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
             )
         )
