@@ -9,6 +9,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0b8] - 2023-05-10
+
+### Fixed
+
+- `meeple stats`: `-b/-e` - Fix output format issue when.
+
 ## [v0.1.0b7] - 2023-05-10
 
 ### Added

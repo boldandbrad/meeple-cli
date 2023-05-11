@@ -104,9 +104,15 @@ def stats(collection: str, item_type: str) -> None:
 
     # format output
     if item_type == "bg":
-        header = f"[u magenta]{collection}[/u magenta] ({len(boardgames)} Board games)"
+        header = [
+            f"[u magenta]{collection}[/u magenta]",
+            f"{len(boardgames)} Board Game(s)",
+        ]
     elif item_type == "ex":
-        header = f"[u magenta]{collection}[/u magenta] ({len(expansions)} Expansions)"
+        header = [
+            f"[u magenta]{collection}[/u magenta]",
+            f"{len(expansions)} Expansion(s)",
+        ]
     else:
         header = [
             f"[u magenta]{collection}[/u magenta]",
