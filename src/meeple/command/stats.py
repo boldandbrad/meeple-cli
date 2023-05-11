@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from meeple.util.collection_util import is_collection
+from meeple.util.collection_util import is_collection, is_pending_updates
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.output_util import (
@@ -10,8 +10,8 @@ from meeple.util.output_util import (
     fmt_rating,
     fmt_weight,
     print_error,
-    print_info,
     print_table,
+    print_warning,
 )
 
 
@@ -44,8 +44,7 @@ def stats(collection: str, item_type: str) -> None:
         sys.exit(print_error(f"'{collection}' is not a valid collection"))
 
     boardgames, expansions = get_collection_data(collection)
-    # check that local data exists for the given collection
-    # TODO: add error/better handling for when a collection has no data files and/or is empty?
+    # check that data exists for the given collection
     if not boardgames and not expansions:
         sys.exit(
             print_error(
@@ -60,6 +59,14 @@ def stats(collection: str, item_type: str) -> None:
         out_list = expansions
     else:
         out_list = boardgames + expansions
+
+    # check that data exists after applied filters
+    if not out_list:
+        sys.exit(
+            print_warning(
+                f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
+            )
+        )
 
     # calculate stats
     sum_ratings = (
@@ -95,14 +102,23 @@ def stats(collection: str, item_type: str) -> None:
         avg_weight = 0
     avg_max_players = round(sum_players / len(out_list), 2)
 
+    # format output
     if item_type == "bg":
-        header = f"{collection} ({len(boardgames)} Boardgames)"
+        header = f"[u magenta]{collection}[/u magenta] ({len(boardgames)} Board games)"
     elif item_type == "ex":
-        header = f"{collection} ({len(expansions)} Expansions)"
+        header = f"[u magenta]{collection}[/u magenta] ({len(expansions)} Expansions)"
     else:
-        header = f"{collection} ({len(boardgames)} Board games | {len(expansions)} Expansions)"
+        header = [
+            f"[u magenta]{collection}[/u magenta]",
+            f"{len(boardgames)} Board Game(s) | {len(expansions)} Expansion(s)",
+        ]
 
-    print_info(header)
+    if is_pending_updates(collection):
+        print_warning(
+            f"Collection [u magenta]{collection}[/u magenta] has pending changes. To apply, run [green]meeple update {collection}[/green]"
+        )
+
+    print_table([header])
     print_table(
         [
             [

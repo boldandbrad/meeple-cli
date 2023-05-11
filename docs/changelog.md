@@ -11,27 +11,31 @@ and this project adheres to
 
 ### Added
 
-- `meeple update`: `-f/--force` - Force update regardless of collection state.
 - `meeple add`
   - Gracefully handle the re-addition of items slated to be dropped.
   - Recommend `meeple update` in output.
+- `meeple collections` - Show pending changes indicators and warning message.
 - `meeple drop`
   - Gracefully handle the re-removal of items slated to be added.
   - Recommend `meeple update` in output.
+- `meeple find`/`meeple list`/`meeple search`/`meeple stats` - Show warning message when no items match provided filters.
 - `meeple move` - Recommend `meeple update` in output.
+- `meeple stats` - Show pending changes warning message.
+- `meeple update`: `-f/--force` - Force update regardless of collection state.
 
 ### Changed
 
+- `meeple completions` - Simplify output style.
+- `meeple delete`/`meeple open` - Confirmation input must now match `y/Y/n/N` or a re-prompt will occur.
 - `meeple update`
   - By default, only update collections that are either outdated or have pending changes.
   - Output is more readable.
-- `meeple completions` - Simplify output style.
 - `GENERAL`
   - Item names now appear blue and italicized in output messages.
   - Collection names now appear magenta and underlined in output messages.
   - Commands now appear green in output messages.
   - Item Ids and other values now appear yellow in error and warning messages.
-- `meeple delete` and `meeple open` - Provided input must now match `y/Y/n/N` or a re-prompt will occur.
+  - Output message ontainer borders now appear dimmer.
 - `DATA`
   - Update collection yaml file format to accomodate pending changes. (NON-BREAKING - Collection modifying commands such `meeple add/drop/move/update` will automatically convert old files to the new format when possible.)
 

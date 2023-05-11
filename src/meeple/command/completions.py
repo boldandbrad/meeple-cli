@@ -16,13 +16,13 @@ def completions(shell: str) -> None:
     match shell.lower():
         case "bash":
             print_info(
-                'To install, add this to ~/.bashrc: [green]eval "$(_MEEPLE_COMPLETE=bash_source meeple)"[/green]'
+                'To install completions, add this to ~/.bashrc: [green]eval "$(_MEEPLE_COMPLETE=bash_source meeple)"[/green]'
             )
         case "zsh":
             print_info(
-                'To install, add this to ~/.zshrc: [green]eval "$(_MEEPLE_COMPLETE=zsh_source meeple)"[/green]'
+                'To install completions, add this to ~/.zshrc: [green]eval "$(_MEEPLE_COMPLETE=zsh_source meeple)"[/green]'
             )
         case "fish":
             print_info(
-                "To install, run: [green]_MEEPLE_COMPLETE=fish_source meeple > ~/.config/fish/completions/meeple.fish[/green]"
+                "To install completions, run: [green]_MEEPLE_COMPLETE=fish_source meeple > ~/.config/fish/completions/meeple.fish[/green]"
             )

@@ -6,6 +6,7 @@ from rich.console import Console
 from rich.table import Table
 
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
+from meeple.util.collection_util import is_pending_updates
 
 NA_VALUE = "[bright_black]NA[/bright_black]"
 
@@ -32,6 +33,12 @@ class CollectionHeader(Enum):
     BOARDGAMES = ("Boardgames", "boardgames")
     EXPANSIONS = ("Expansions", "expansions")
     UPDATED = ("Last Updated", "updated")
+
+
+def fmt_collection_name(name: str) -> str:
+    if is_pending_updates(name):
+        return f"{name} ([red]*[/red])"
+    return name
 
 
 def fmt_headers(headers: ItemHeader, sort_key: str, sort_direction: str):
@@ -116,28 +123,36 @@ def printf(message: str) -> None:
 
 
 def print_error(message: str) -> None:
-    print_table([["[red]Error[/red]", message]])
+    print_table([["[red]Error[/red]", message]], dim_border=True)
 
 
 def print_info(message: str) -> None:
-    print_table([[message]])
+    print_table([[message]], dim_border=True)
 
 
 def print_warning(message: str) -> None:
-    print_table([["[yellow]Warning[/yellow]", message]])
+    print_table([["[yellow]Warning[/yellow]", message]], dim_border=True)
 
 
 def print_table(
-    rows: list, headers: list = [], lines: bool = False, zebra: bool = False
+    rows: list,
+    headers: list = [],
+    lines: bool = False,
+    dim_border: bool = False,
+    zebra: bool = False,
 ) -> None:
     row_styles = []
+    border_styles = []
     if zebra:
         row_styles = ["", "dim"]
+    if dim_border:
+        border_styles = "dim"
     table = Table(
         box=box.ROUNDED,
         show_header=(len(headers) != 0),
         show_lines=lines,
         row_styles=row_styles,
+        border_style=border_styles,
     )
     for header in headers:
         table.add_column(header)

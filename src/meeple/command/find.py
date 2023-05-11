@@ -19,6 +19,7 @@ from meeple.util.output_util import (
     fmt_year,
     print_error,
     print_table,
+    print_warning,
 )
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
@@ -119,6 +120,14 @@ def find(
         result_items = filterby_playtime(result_items, max_time)
     if weight:
         result_items = filterby_weight(result_items, weight)
+
+    # check that data exists after applied filters
+    if not result_items:
+        sys.exit(
+            print_warning(
+                f"No items found matching provided filters for collection(s) [u magenta]{collections}[/u magenta]."
+            )
+        )
 
     # sort output
     result_items, sort_direction = sort_items(result_items, sort)
