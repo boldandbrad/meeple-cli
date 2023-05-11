@@ -36,5 +36,5 @@ def rename(collection: str, new_name: str) -> None:
     rename_collection(collection, new_name)
     rename_collection_data_dir(collection, new_name)
     print_info(
-        f"Renamed collection [u magenta]{collection}[/u magenta] to [u magenta]{new_name}[/u magenta]"
+        f"Renamed collection [u magenta]{collection}[/u magenta] to [u magenta]{new_name}[/u magenta]."
     )

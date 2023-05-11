@@ -3,13 +3,15 @@ import sys
 import click
 
 from meeple.type.collection import Collection
-from meeple.util.collection_util import get_collections
+from meeple.util.collection_util import get_collections, is_pending_updates
 from meeple.util.data_util import get_collection_data, last_updated
 from meeple.util.output_util import (
     CollectionHeader,
+    fmt_collection_name,
     fmt_headers,
     print_error,
     print_table,
+    print_warning,
 )
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
 
@@ -38,11 +40,14 @@ def collections(sort: str, verbose: bool) -> None:
         )
 
     collection_list = []
+    pending_changes = False
     for collection in collections:
         boardgames, expansions = get_collection_data(collection)
         collection_list.append(
             Collection(collection, boardgames, expansions, last_updated(collection))
         )
+        if is_pending_updates(collection):
+            pending_changes = True
 
     # sort output
     collection_list, sort_direction = sort_collections(collection_list, sort)
@@ -61,10 +66,9 @@ def collections(sort: str, verbose: bool) -> None:
     # format headers
     headers = fmt_headers(headers, sort, sort_direction)
 
-    # TODO: show indicator if collection has pending updates
     rows = []
     for collection in collection_list:
-        cols = [collection.name]
+        cols = [fmt_collection_name(collection.name)]
         # include additional data if the user chose verbose output
         if verbose:
             cols.extend(
@@ -76,5 +80,11 @@ def collections(sort: str, verbose: bool) -> None:
             )
 
         rows.append(cols)
+
+    # print warning if some collections need to be updated
+    if pending_changes:
+        print_warning(
+            "Some collections ([red]*[/red]) are pending changes. To apply, run [green]meeple update[/green]"
+        )
 
     print_table(rows, headers)

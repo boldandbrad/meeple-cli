@@ -17,6 +17,7 @@ from meeple.util.output_util import (
     fmt_year,
     print_error,
     print_table,
+    print_warning,
 )
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
@@ -78,6 +79,14 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
         out_list = expansions
     else:
         out_list = boardgames + expansions
+
+    # check that data exists after applied filters
+    if not out_list:
+        sys.exit(
+            print_warning(
+                f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
+            )
+        )
 
     # sort output
     out_list, sort_direction = sort_items(out_list, sort)

@@ -38,4 +38,4 @@ def delete(collection: str, yes: bool) -> None:
         boardgames, expansions = get_collection_data(collection)
         if boardgames or expansions:
             delete_collection_data(collection)
-        print_info(f"Deleted collection [u magenta]{collection}[/u magenta]")
+        print_info(f"Deleted collection [u magenta]{collection}[/u magenta].")
