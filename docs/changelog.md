@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0b7] - 2023-05-10
+
 ### Added
 
 - `meeple add`
@@ -22,6 +24,7 @@ and this project adheres to
 - `meeple move` - Recommend `meeple update` in output.
 - `meeple stats` - Show pending changes warning message.
 - `meeple update`: `-f/--force` - Force update regardless of collection state.
+- `INSTALL` - Install via [Homebrew](https://brew.sh). See project README for details.
 
 ### Changed
 
