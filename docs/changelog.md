@@ -13,7 +13,7 @@ and this project adheres to
 
 ### Fixed
 
-- `meeple stats`: `-b/-e` - Fix output format issue when.
+- `meeple stats`: `-b/-e` - Fix output format issue.
 
 ## [v0.1.0b7] - 2023-05-10
 
