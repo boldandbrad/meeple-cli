@@ -9,6 +9,24 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `meeple list` - Show warning message when the collection has pending changes.
+
+### Changed
+
+- `meeple add`/`meeple drop`/`meeple move`/`meeple update` - Update output message wording.
+- `meeple update` - Skipped collection output is now dimmed.
+- `GENERAL` - Reduce duplicate code.
+
+### Fixed
+
+- `meeple add`
+  - Remove rogue `'` character in output.
+  - Properly colorize collection name in output.
+- `meeple search` - Properly show error message when no results found matching query.
+- `meeple collections` - Properly dim NA _Last Updated_ value.
+
 ## [v0.1.0b8] - 2023-05-10
 
 ### Fixed
