@@ -1,11 +1,9 @@
-import sys
-
 import click
 
 from meeple.util.collection_util import is_collection, rename_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import rename_collection_data_dir
-from meeple.util.output_util import print_error, print_info
+from meeple.util.message_util import error_msg, info_msg, invalid_collection_error
 
 
 @click.command()
@@ -20,21 +18,15 @@ def rename(collection: str, new_name: str) -> None:
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(
-            print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
-        )
+        invalid_collection_error(collection)
 
     # check that the given collection new name doesn't already exist
     if is_collection(new_name):
-        sys.exit(
-            print_error(
-                f"Collection [u magenta]{collection}[/u magenta] already exists."
-            )
-        )
+        error_msg(f"Collection [u magenta]{collection}[/u magenta] already exists.")
 
     # create new collection
     rename_collection(collection, new_name)
     rename_collection_data_dir(collection, new_name)
-    print_info(
+    info_msg(
         f"Renamed collection [u magenta]{collection}[/u magenta] to [u magenta]{new_name}[/u magenta]."
     )

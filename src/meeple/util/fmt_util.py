@@ -1,38 +1,12 @@
 import numbers
-from enum import Enum
-
-from rich import box
-from rich.console import Console
-from rich.table import Table
 
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.collection_util import is_pending_updates
 
-NA_VALUE = "[bright_black]NA[/bright_black]"
+NA_VALUE = "[dim]NA[/dim]"
 
 SORT_ASC_SYMBOL = "[blue]˄[/blue]"
 SORT_DESC_SYMBOL = "[blue]˅[/blue]"
-
-
-class ItemHeader(Enum):
-    COUNT = ("#", "count")
-    ID = ("ID", "id")
-    NAME = ("Name", "name")
-    TYPE = ("Type", "type")
-    COLLECTION = ("Collection(s)", "collection")
-    YEAR = ("Year", "year")
-    RANK = ("Rank", "rank")
-    RATING = ("Rating", "rating")
-    WEIGHT = ("Weight", "weight")
-    PLAYERS = ("Players", "players")
-    TIME = ("Play Time", "time")
-
-
-class CollectionHeader(Enum):
-    NAME = ("Name", "name")
-    BOARDGAMES = ("Boardgames", "boardgames")
-    EXPANSIONS = ("Expansions", "expansions")
-    UPDATED = ("Last Updated", "updated")
 
 
 def fmt_collection_name(name: str) -> str:
@@ -41,7 +15,7 @@ def fmt_collection_name(name: str) -> str:
     return name
 
 
-def fmt_headers(headers: ItemHeader, sort_key: str, sort_direction: str):
+def fmt_headers(headers, sort_key: str, sort_direction: str):
     header_strs = []
     for header in headers:
         if sort_key and header.value[1] == sort_key:
@@ -90,7 +64,7 @@ def fmt_rating(rating: float) -> str:
     return f"[red]{rating_str}[/red]"
 
 
-def fmt_type(item_type: str) -> str:
+def fmt_item_type(item_type: str) -> str:
     if item_type == BOARDGAME_TYPE:
         return "Board Game"
     if item_type == EXPANSION_TYPE:
@@ -115,48 +89,3 @@ def fmt_year(year: str) -> str:
     if int(year) == 0:
         return NA_VALUE
     return year
-
-
-def printf(message: str) -> None:
-    console = Console()
-    console.print(message)
-
-
-def print_error(message: str) -> None:
-    print_table([["[red]Error[/red]", message]], dim_border=True)
-
-
-def print_info(message: str) -> None:
-    print_table([[message]], dim_border=True)
-
-
-def print_warning(message: str) -> None:
-    print_table([["[yellow]Warning[/yellow]", message]], dim_border=True)
-
-
-def print_table(
-    rows: list,
-    headers: list = [],
-    lines: bool = False,
-    dim_border: bool = False,
-    zebra: bool = False,
-) -> None:
-    row_styles = []
-    border_styles = []
-    if zebra:
-        row_styles = ["", "dim"]
-    if dim_border:
-        border_styles = "dim"
-    table = Table(
-        box=box.ROUNDED,
-        show_header=(len(headers) != 0),
-        show_lines=lines,
-        row_styles=row_styles,
-        border_style=border_styles,
-    )
-    for header in headers:
-        table.add_column(header)
-    for row in rows:
-        table.add_row(*row)
-    console = Console()
-    console.print(table)

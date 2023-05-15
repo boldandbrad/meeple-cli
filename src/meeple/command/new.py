@@ -1,9 +1,7 @@
-import sys
-
 import click
 
 from meeple.util.collection_util import create_collection, is_collection
-from meeple.util.output_util import print_error, print_info
+from meeple.util.message_util import error_msg, info_msg
 
 
 @click.command()
@@ -16,12 +14,8 @@ def new(collection: str) -> None:
     """
     # check that the given collection doesn't already exist
     if is_collection(collection):
-        sys.exit(
-            print_error(
-                f"Collection [u magenta]{collection}[/u magenta] already exists."
-            )
-        )
+        error_msg(f"Collection [u magenta]{collection}[/u magenta] already exists.")
 
     # create new collection
     create_collection(collection)
-    print_info(f"Created new collection [u magenta]{collection}[/u magenta].")
+    info_msg(f"Created new collection [u magenta]{collection}[/u magenta].")

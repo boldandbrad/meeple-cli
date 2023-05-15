@@ -1,7 +1,8 @@
 import click
 
 from meeple.util.api_util import get_bgg_hot
-from meeple.util.output_util import ItemHeader, fmt_headers, print_table
+from meeple.util.fmt_util import fmt_headers
+from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command()

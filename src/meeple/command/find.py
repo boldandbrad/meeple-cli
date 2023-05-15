@@ -1,5 +1,3 @@
-import sys
-
 import click
 
 from meeple.type.collection import Collection
@@ -7,21 +5,19 @@ from meeple.util.collection_util import are_collections, get_collections
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
-from meeple.util.output_util import (
-    ItemHeader,
+from meeple.util.fmt_util import (
     fmt_headers,
+    fmt_item_type,
     fmt_players,
     fmt_playtime,
     fmt_rank,
     fmt_rating,
-    fmt_type,
     fmt_weight,
     fmt_year,
-    print_error,
-    print_table,
-    print_warning,
 )
+from meeple.util.message_util import error_msg, no_collections_exist_error
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
+from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command()
@@ -81,7 +77,7 @@ def find(
     """
     # check if provided collections exist
     if not are_collections(collections):
-        sys.exit(print_error("Not all provided collections are valid collections."))
+        error_msg("Not all provided collections are valid collections.")
 
     # if no collections provided, default to all local collections
     if not collections:
@@ -89,11 +85,7 @@ def find(
 
     # check that local collections exist
     if not collections:
-        sys.exit(
-            print_error(
-                "No local collections yet exist. To create one, run: [green]meeple new[/green]"
-            )
-        )
+        no_collections_exist_error()
 
     # get collection items
     result_items = []
@@ -123,10 +115,8 @@ def find(
 
     # check that data exists after applied filters
     if not result_items:
-        sys.exit(
-            print_warning(
-                f"No items found matching provided filters for collection(s) [u magenta]{collections}[/u magenta]."
-            )
+        error_msg(
+            f"No items found matching provided filters for collection(s) [u magenta]{collections}[/u magenta]."
         )
 
     # sort output
@@ -162,7 +152,7 @@ def find(
         cols = [str(item.id), item.name]
         # include type data if neither type is ommitted
         if item_type not in ("bg", "ex"):
-            cols.append(fmt_type(item.type))
+            cols.append(fmt_item_type(item.type))
         # include collections data if more than one collection was included
         if len(collections) > 1:
             # determine which collections the item exists in

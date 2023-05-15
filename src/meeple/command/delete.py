@@ -1,12 +1,10 @@
-import sys
-
 import click
 
 from meeple.util.collection_util import delete_collection, is_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import delete_collection_data, get_collection_data
 from meeple.util.input_util import bool_input
-from meeple.util.output_util import print_error, print_info
+from meeple.util.message_util import info_msg, invalid_collection_error
 
 
 @click.command()
@@ -20,9 +18,7 @@ def delete(collection: str, yes: bool) -> None:
     """
     # check that the given collection exists
     if not is_collection(collection):
-        sys.exit(
-            print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
-        )
+        invalid_collection_error(collection)
 
     # ask for confirmation or not depending on presence of flag
     if not yes:
@@ -38,4 +34,4 @@ def delete(collection: str, yes: bool) -> None:
         boardgames, expansions = get_collection_data(collection)
         if boardgames or expansions:
             delete_collection_data(collection)
-        print_info(f"Deleted collection [u magenta]{collection}[/u magenta].")
+        info_msg(f"Deleted collection [u magenta]{collection}[/u magenta].")
