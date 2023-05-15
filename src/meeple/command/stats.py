@@ -121,5 +121,5 @@ def stats(collection: str, item_type: str) -> None:
                 f"Avg. Weight: {fmt_weight(avg_weight)}",
             ],
         ],
-        lines=True,
+        row_lines=True,
     )
