@@ -41,8 +41,15 @@ def info(id: int, verbose: bool) -> None:
         ],
     ]
 
-    print_table([[f"{bgg_item.id}", f"{bgg_item.name} ({fmt_year(bgg_item.year)})"]])
-    print_table(info_rows, lines=True)
+    print_table(
+        [
+            [
+                f"{bgg_item.id}",
+                f"[i blue]{bgg_item.name}[/i blue] ({fmt_year(bgg_item.year)})",
+            ]
+        ]
+    )
+    print_table(info_rows, row_lines=True)
 
     # include additional data if verbose flag present
     if verbose:

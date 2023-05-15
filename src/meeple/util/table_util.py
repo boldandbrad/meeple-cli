@@ -27,7 +27,11 @@ class CollectionHeader(Enum):
 
 
 def print_table(
-    rows: list, headers: list = [], dim_border: bool = False, zebra_rows: bool = False
+    rows: list,
+    headers: list = [],
+    dim_border: bool = False,
+    zebra_rows: bool = False,
+    row_lines: bool = False,
 ) -> None:
     border_styles, row_styles = [], []
     if dim_border:
@@ -40,6 +44,7 @@ def print_table(
         show_header=(len(headers) != 0),
         row_styles=row_styles,
         border_style=border_styles,
+        show_lines=row_lines,
     )
 
     for header in headers:
