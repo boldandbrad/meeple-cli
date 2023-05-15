@@ -136,6 +136,18 @@ While it is _technically_ feasible to interface with GeekLists via
 webscrapers/spiders, this kind of practice would be both complex and also
 violate [BoardGameGeek Terms of Service](https://boardgamegeek.com/terms#toc22).
 
+### Why do some items show a weight of `NA` when boardgamegeek.com has a value?
+
+This is a known and occasionally recurring bug with the BoardGameGeek database.
+It usually resolves itself within a day. For more info, read this
+[thread](https://boardgamegeek.com/thread/3049286/some-games-show-weight-000).
+
+Luckily for us, game weights do not often change drastically. In most cases, we
+can assume that the weight from yesterday is _close enough_.
+[In the future](https://github.com/boldandbrad/meeple-cli/issues/61),
+`meeple-cli` will account for this automatically and display the last known
+value by default, if there is one.
+
 ### Where does `meeple-cli` store data?
 
 `meeple-cli` stores collection data in `~/.meeple` and only makes network
