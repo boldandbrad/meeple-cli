@@ -1,18 +1,11 @@
-import sys
-
 import click
 
 from meeple.util.collection_util import is_collection, is_pending_updates
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
-from meeple.util.output_util import (
-    fmt_avg_rank,
-    fmt_rating,
-    fmt_weight,
-    print_error,
-    print_table,
-    print_warning,
-)
+from meeple.util.fmt_util import fmt_avg_rank, fmt_rating, fmt_weight
+from meeple.util.message_util import error_msg, invalid_collection_error, warn_msg
+from meeple.util.table_util import print_table
 
 
 @click.command()
@@ -41,15 +34,13 @@ def stats(collection: str, item_type: str) -> None:
     """
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(print_error(f"'{collection}' is not a valid collection"))
+        invalid_collection_error(collection)
 
     boardgames, expansions = get_collection_data(collection)
     # check that data exists for the given collection
     if not boardgames and not expansions:
-        sys.exit(
-            print_error(
-                f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
-            )
+        error_msg(
+            f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
         )
 
     # determine what to include in results depending on given flags
@@ -62,10 +53,8 @@ def stats(collection: str, item_type: str) -> None:
 
     # check that data exists after applied filters
     if not out_list:
-        sys.exit(
-            print_warning(
-                f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
-            )
+        error_msg(
+            f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
         )
 
     # calculate stats
@@ -120,7 +109,7 @@ def stats(collection: str, item_type: str) -> None:
         ]
 
     if is_pending_updates(collection):
-        print_warning(
+        warn_msg(
             f"Collection [u magenta]{collection}[/u magenta] has pending changes. To apply, run [green]meeple update {collection}[/green]"
         )
 

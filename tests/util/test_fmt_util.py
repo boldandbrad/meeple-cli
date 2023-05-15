@@ -1,12 +1,12 @@
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
-from meeple.util.output_util import (
+from meeple.util.fmt_util import (
     NA_VALUE,
     fmt_avg_rank,
+    fmt_item_type,
     fmt_players,
     fmt_playtime,
     fmt_rank,
     fmt_rating,
-    fmt_type,
     fmt_weight,
     fmt_year,
 )
@@ -67,14 +67,14 @@ def test_fmt_rating():
     assert red_output == "[red]5.50[/red]"
 
 
-def test_fmt_type():
-    na_output = fmt_type("other")
+def test_fmt_item_type():
+    na_output = fmt_item_type("other")
     assert na_output == NA_VALUE
 
-    bg_output = fmt_type(BOARDGAME_TYPE)
+    bg_output = fmt_item_type(BOARDGAME_TYPE)
     assert bg_output == "Board Game"
 
-    ex_output = fmt_type(EXPANSION_TYPE)
+    ex_output = fmt_item_type(EXPANSION_TYPE)
     assert ex_output == "Expansion"
 
 

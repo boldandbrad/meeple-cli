@@ -1,15 +1,9 @@
-import sys
-
 import click
 
 from meeple.util.api_util import search_bgg
-from meeple.util.output_util import (
-    ItemHeader,
-    fmt_headers,
-    fmt_year,
-    print_table,
-    print_warning,
-)
+from meeple.util.fmt_util import fmt_headers, fmt_year
+from meeple.util.message_util import error_msg
+from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command()
@@ -25,10 +19,8 @@ def search(query: str) -> None:
 
     # check that data exists after applied filters
     if not result_items:
-        sys.exit(
-            print_warning(
-                f"No items found on BoardGameGeek matching search term [i blue]{query}[i blue]."
-            )
+        error_msg(
+            f"No items found on BoardGameGeek matching search term [i blue]{query}[/i blue]."
         )
 
     result_items.sort(key=lambda x: x.id)

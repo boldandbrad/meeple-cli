@@ -1,4 +1,3 @@
-import sys
 from datetime import date
 
 import click
@@ -13,7 +12,12 @@ from meeple.util.collection_util import (
 )
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import last_updated, write_collection_data
-from meeple.util.output_util import print_error, print_info, printf
+from meeple.util.message_util import (
+    info_msg,
+    invalid_collection_error,
+    no_collections_exist_error,
+    print_msg,
+)
 from meeple.util.sort_util import sort_items
 
 
@@ -26,32 +30,26 @@ def update(collection: str, force: bool) -> None:
 
     - COLLECTION (optional) is the name of the collection to be updated. If not provided, update all collections.
     """
-    print_info("Updating local collection data...")
+    info_msg("Updating collection data...")
     # update only a specific collection, if given
     if collection:
         # check that the given collection is a valid collection
         if not is_collection(collection):
-            sys.exit(
-                print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
-            )
+            invalid_collection_error(collection)
         collections = [collection]
     else:
         collections = get_collections()
 
     # check that local collections exist
     if not collections:
-        sys.exit(
-            print_error(
-                "No local collections yet exist. To create one, run: [green]meeple new[/green]"
-            )
-        )
+        no_collections_exist_error()
 
     # update collection data
     for collection in collections:
         # read board game ids from src file
         item_ids, to_add_ids, to_drop_ids = read_collection(collection)
         if not item_ids and not to_add_ids and not to_drop_ids:
-            printf(
+            print_msg(
                 f" ╰╴ [yellow]Warning[/yellow]: Could not update collection [u magenta]{collection}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
             )
             continue
@@ -63,8 +61,8 @@ def update(collection: str, force: bool) -> None:
             and not is_pending_updates(collection)
             and updated == str(date.today())
         ):
-            printf(
-                f" ╰╴ Skipped collection [u magenta]{collection}[/u magenta]. Already up to date."
+            print_msg(
+                f" ╰╴ [dim]Skipped collection [u magenta]{collection}[/u magenta]. Already up to date.[/dim]"
             )
             continue
 
@@ -101,6 +99,6 @@ def update(collection: str, force: bool) -> None:
             "expansions": [expansion.__dict__ for expansion in expansions],
         }
         write_collection_data(collection, update_result)
-        printf(f" ╰╴ Updated collection [u magenta]{collection}[/u magenta].")
+        print_msg(f" ╰╴ Updated collection [u magenta]{collection}[/u magenta].")
 
-    print_info("Updated local collection data.")
+    info_msg("Updated collection data.")

@@ -1,19 +1,12 @@
-import sys
-
 import click
 
 from meeple.type.collection import Collection
 from meeple.util.collection_util import get_collections, is_pending_updates
 from meeple.util.data_util import get_collection_data, last_updated
-from meeple.util.output_util import (
-    CollectionHeader,
-    fmt_collection_name,
-    fmt_headers,
-    print_error,
-    print_table,
-    print_warning,
-)
+from meeple.util.fmt_util import fmt_collection_name, fmt_headers
+from meeple.util.message_util import no_collections_exist_error, warn_msg
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
+from meeple.util.table_util import CollectionHeader, print_table
 
 
 @click.command()
@@ -33,11 +26,7 @@ def collections(sort: str, verbose: bool) -> None:
 
     # check that local collections exist
     if not collections:
-        sys.exit(
-            print_error(
-                "No local collections yet exist. To create one, run: [green]meeple new[/green]"
-            )
-        )
+        no_collections_exist_error()
 
     collection_list = []
     pending_changes = False
@@ -83,7 +72,7 @@ def collections(sort: str, verbose: bool) -> None:
 
     # print warning if some collections need to be updated
     if pending_changes:
-        print_warning(
+        warn_msg(
             "Some collections ([red]*[/red]) are pending changes. To apply, run [green]meeple update[/green]"
         )
 

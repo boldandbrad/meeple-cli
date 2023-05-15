@@ -1,6 +1,6 @@
 from meeple.type.collection import Collection
 from meeple.type.item import Item
-from meeple.util.output_util import SORT_ASC_SYMBOL, SORT_DESC_SYMBOL
+from meeple.util.fmt_util import SORT_ASC_SYMBOL, SORT_DESC_SYMBOL
 
 COLLECTION_SORT_KEYS = ["name", "boardgames", "expansions", "updated"]
 ITEM_SORT_KEYS = ["rank", "rating", "weight", "year", "name", "id", "time"]

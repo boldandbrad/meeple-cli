@@ -1,6 +1,6 @@
 import click
 
-from meeple.util.output_util import print_info
+from meeple.util.message_util import info_msg
 
 SHELLS = ["bash", "zsh", "fish"]
 
@@ -15,14 +15,14 @@ def completions(shell: str) -> None:
     """
     match shell.lower():
         case "bash":
-            print_info(
+            info_msg(
                 'To install completions, add this to ~/.bashrc: [green]eval "$(_MEEPLE_COMPLETE=bash_source meeple)"[/green]'
             )
         case "zsh":
-            print_info(
+            info_msg(
                 'To install completions, add this to ~/.zshrc: [green]eval "$(_MEEPLE_COMPLETE=zsh_source meeple)"[/green]'
             )
         case "fish":
-            print_info(
+            info_msg(
                 "To install completions, run: [green]_MEEPLE_COMPLETE=fish_source meeple > ~/.config/fish/completions/meeple.fish[/green]"
             )

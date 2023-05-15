@@ -1,5 +1,3 @@
-import sys
-
 import click
 
 from meeple.util.api_util import get_bgg_item
@@ -9,7 +7,12 @@ from meeple.util.collection_util import (
     update_collection,
 )
 from meeple.util.completion_util import complete_collections
-from meeple.util.output_util import print_error, print_info
+from meeple.util.message_util import (
+    error_msg,
+    info_msg,
+    invalid_collection_error,
+    invalid_id_error,
+)
 
 
 @click.command()
@@ -27,24 +30,18 @@ def add(collection: str, id: int) -> None:
     bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
-        sys.exit(
-            print_error(f"[yellow]{bgg_id}[/yellow] is not a valid BoardGameGeek ID.")
-        )
+        invalid_id_error(bgg_id)
 
     # check that the given collection is a valid collection
     if not is_collection(collection):
-        sys.exit(
-            print_error(f"[yellow]{collection}[/yellow] is not a valid collection.")
-        )
+        invalid_collection_error(collection)
 
     item_ids, to_add_ids, to_drop_ids = read_collection(collection)
 
     # check if the given id already exists in the given collection
     if (item_ids and bgg_id in item_ids) or (to_add_ids and bgg_id in to_add_ids):
-        sys.exit(
-            print_error(
-                f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{collection}[/u magenta]."
-            )
+        error_msg(
+            f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{collection}[/u magenta]."
         )
 
     if to_drop_ids and bgg_id in to_drop_ids:
@@ -59,6 +56,6 @@ def add(collection: str, id: int) -> None:
 
     # persist changes
     update_collection(collection, item_ids, to_add_ids, to_drop_ids)
-    print_info(
-        f"Added [i blue]{bgg_item.name}[/i blue]' to [u]{collection}[/u]. To update, run: [green]meeple update[/green]"
+    info_msg(
+        f"Added [i blue]{bgg_item.name}[/i blue] to collection [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update[/green]"
     )

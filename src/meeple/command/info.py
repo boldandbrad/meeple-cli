@@ -1,18 +1,16 @@
-import sys
-
 import click
 
 from meeple.util.api_util import get_bgg_item
-from meeple.util.output_util import (
+from meeple.util.fmt_util import (
     fmt_players,
     fmt_playtime,
     fmt_rank,
     fmt_rating,
     fmt_weight,
     fmt_year,
-    print_error,
-    print_table,
 )
+from meeple.util.message_util import invalid_id_error
+from meeple.util.table_util import print_table
 
 
 @click.command()
@@ -28,9 +26,7 @@ def info(id: int, verbose: bool) -> None:
     bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
-        sys.exit(
-            print_error(f"[yellow]{bgg_id}[/yellow] is not a valid BoardGameGeek ID.")
-        )
+        invalid_id_error(bgg_id)
 
     info_rows = [
         [
