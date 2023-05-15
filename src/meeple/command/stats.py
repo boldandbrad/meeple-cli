@@ -36,20 +36,20 @@ def stats(collection: str, item_type: str) -> None:
     if not is_collection(collection):
         invalid_collection_error(collection)
 
-    boardgames, expansions = get_collection_data(collection)
+    board_games, expansions = get_collection_data(collection)
     # check that data exists for the given collection
-    if not boardgames and not expansions:
+    if not board_games and not expansions:
         error_msg(
             f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
         )
 
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        out_list = boardgames
+        out_list = board_games
     elif item_type == "ex":
         out_list = expansions
     else:
-        out_list = boardgames + expansions
+        out_list = board_games + expansions
 
     # check that data exists after applied filters
     if not out_list:
@@ -92,20 +92,16 @@ def stats(collection: str, item_type: str) -> None:
     avg_max_players = round(sum_players / len(out_list), 2)
 
     # format output
+    num_bgs_tag = f"{len(board_games)} Board Game(s)"
+    num_exps_tag = f"{len(expansions)} Expansion(s)"
     if item_type == "bg":
-        header = [
-            f"[u magenta]{collection}[/u magenta]",
-            f"{len(boardgames)} Board Game(s)",
-        ]
+        header = [f"[u magenta]{collection}[/u magenta]", num_bgs_tag]
     elif item_type == "ex":
-        header = [
-            f"[u magenta]{collection}[/u magenta]",
-            f"{len(expansions)} Expansion(s)",
-        ]
+        header = [f"[u magenta]{collection}[/u magenta]", num_exps_tag]
     else:
         header = [
             f"[u magenta]{collection}[/u magenta]",
-            f"{len(boardgames)} Board Game(s) | {len(expansions)} Expansion(s)",
+            f"{num_bgs_tag} | {num_exps_tag}",
         ]
 
     if is_pending_updates(collection):

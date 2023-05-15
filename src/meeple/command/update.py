@@ -31,7 +31,8 @@ def update(collection: str, force: bool) -> None:
     - COLLECTION (optional) is the name of the collection to be updated. If not provided, update all collections.
     """
     info_msg("Updating collection data...")
-    # update only a specific collection, if given
+
+    # update only a specific collection, if given. otherwise, attempt to udpate all
     if collection:
         # check that the given collection is a valid collection
         if not is_collection(collection):
@@ -46,8 +47,10 @@ def update(collection: str, force: bool) -> None:
 
     # update collection data
     for collection in collections:
-        # read board game ids from src file
+        # get collection item ids
         item_ids, to_add_ids, to_drop_ids = read_collection(collection)
+
+        # print warning and skip if collection is empty
         if not item_ids and not to_add_ids and not to_drop_ids:
             print_msg(
                 f" ╰╴ [yellow]Warning[/yellow]: Could not update collection [u magenta]{collection}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
@@ -78,27 +81,22 @@ def update(collection: str, force: bool) -> None:
 
         # get items from BoardGameGeek
         api_result = get_bgg_items(item_ids)
-        boardgames = []
-        expansions = []
+        board_games, expansions = [], []
         for item in api_result:
             item_type = item.type
             if item_type == BOARDGAME_TYPE:
-                boardgames.append(item)
+                board_games.append(item)
             if item_type == EXPANSION_TYPE:
                 expansions.append(item)
 
         # sort board games by rank and expansions by rating
-        if boardgames:
-            boardgames, _ = sort_items(boardgames, "rank")
+        if board_games:
+            board_games, _ = sort_items(board_games, "rank")
         if expansions:
             expansions, _ = sort_items(expansions, "rating")
 
-        # save results
-        update_result = {
-            "boardgames": [boardgame.__dict__ for boardgame in boardgames],
-            "expansions": [expansion.__dict__ for expansion in expansions],
-        }
-        write_collection_data(collection, update_result)
+        # persist results
+        write_collection_data(collection, board_games, expansions)
         print_msg(f" ╰╴ Updated collection [u magenta]{collection}[/u magenta].")
 
     info_msg("Updated collection data.")

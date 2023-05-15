@@ -39,6 +39,7 @@ def move(from_collection: str, to_collection: str, id: int) -> None:
     if not is_collection(from_collection):
         invalid_collection_error(from_collection)
 
+    # get from collection item ids
     from_item_ids, from_to_add_ids, from_to_drop_ids = read_collection(from_collection)
 
     # check that the given collection is a valid collection
@@ -46,6 +47,7 @@ def move(from_collection: str, to_collection: str, id: int) -> None:
         # TODO: offer to create the new collection
         invalid_collection_error(to_collection)
 
+    # get destination collection item ids
     dest_item_ids, dest_to_add_ids, dest_to_drop_ids = read_collection(to_collection)
 
     # check that the id exists in from collection

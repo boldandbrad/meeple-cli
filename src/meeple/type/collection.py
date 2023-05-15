@@ -1,8 +1,8 @@
 class Collection:
-    """Collection of boardgames and expansions."""
+    """Collection of board game and expansion items."""
 
-    def __init__(self, name, boardgames, expansions, last_updated):
+    def __init__(self, name, board_games, expansions, last_updated):
         self.name = name
-        self.boardgames = boardgames
+        self.board_games = board_games
         self.expansions = expansions
         self.last_updated = last_updated

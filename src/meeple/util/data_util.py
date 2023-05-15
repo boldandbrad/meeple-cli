@@ -11,6 +11,9 @@ from meeple.util.fs_util import get_data_dir
 
 DATA_DIR = get_data_dir()
 
+_BOARD_GAME_LIST_KEY = "boardgames"
+_EXPANSION_LIST_KEY = "expansions"
+
 
 def _collection_data_dir(collection_name: str) -> str:
     return join(DATA_DIR, collection_name)
@@ -44,24 +47,26 @@ def last_updated(collection_name: str) -> str:
 
 def get_collection_data(collection_name: str) -> (List[Item], List[Item]):
     data_path = _latest_data_file(collection_name)
-    boardgames = []
-    expansions = []
+    board_games, expansions = [], []
     if not data_path:
-        return boardgames, expansions
+        return board_games, expansions
 
+    # get latest collection data
     with open(data_path, "r") as f:
         data = json.load(f)
 
-    for dict_item in data["boardgames"]:
-        item = json.loads(json.dumps(dict_item), object_hook=Item.from_json)
-        boardgames.append(item)
-    for dict_item in data["expansions"]:
-        item = json.loads(json.dumps(dict_item), object_hook=Item.from_json)
-        expansions.append(item)
-    return boardgames, expansions
+    for dict_item in data[_BOARD_GAME_LIST_KEY]:
+        board_games.append(
+            json.loads(json.dumps(dict_item), object_hook=Item.from_json)
+        )
+    for dict_item in data[_EXPANSION_LIST_KEY]:
+        expansions.append(json.loads(json.dumps(dict_item), object_hook=Item.from_json))
+    return board_games, expansions
 
 
-def write_collection_data(collection_name: str, result: dict) -> None:
+def write_collection_data(
+    collection_name: str, board_games: List[Item], expansions: List[Item]
+) -> None:
     today = date.today()
     data_path = f"{_collection_data_dir(collection_name)}/{today.strftime('%Y-%m')}"
     filename = f"{today}.json"
@@ -70,8 +75,15 @@ def write_collection_data(collection_name: str, result: dict) -> None:
     if not Path(data_path).exists():
         Path(data_path).mkdir(parents=True)
 
+    # build data dictionary
+    data_dict = {
+        _BOARD_GAME_LIST_KEY: [board_game.__dict__ for board_game in board_games],
+        _EXPANSION_LIST_KEY: [expansion.__dict__ for expansion in expansions],
+    }
+
+    # persist data
     with open(join(data_path, filename), "w") as f:
-        json.dump(result, f, indent=4, ensure_ascii=False)
+        json.dump(data_dict, f, indent=4, ensure_ascii=False)
 
 
 def delete_collection_data(collection_name: str) -> None:

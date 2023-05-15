@@ -91,16 +91,16 @@ def find(
     result_items = []
     collection_list = []
     for collection in collections:
-        boardgames, expansions = get_collection_data(collection)
-        collection_list.append(Collection(collection, boardgames, expansions, None))
+        board_games, expansions = get_collection_data(collection)
+        collection_list.append(Collection(collection, board_games, expansions, None))
 
         # determine what to include in results depending on given flags
         if item_type == "bg":
-            result_items.extend(boardgames)
+            result_items.extend(board_games)
         elif item_type == "ex":
             result_items.extend(expansions)
         else:
-            result_items.extend(boardgames + expansions)
+            result_items.extend(board_games + expansions)
 
     # remove duplicates
     result_items = list(set(result_items))
@@ -160,7 +160,7 @@ def find(
                 [
                     collection.name
                     for collection in collection_list
-                    if item in collection.boardgames or item in collection.expansions
+                    if item in collection.board_games or item in collection.expansions
                 ]
             )
             cols.append(", ".join(containing_collections))

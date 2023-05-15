@@ -59,7 +59,7 @@ and this project adheres to
 ### Added
 
 - `GENERAL` - Sortedby column indicator in sorted output.
-- `meeple list` - _Type_ column included if output contains both boardgames and expansions.
+- `meeple list` - _Type_ column included if output contains both board games and expansions.
 - `TESTS` - Increase test coverage.
 - `CI` - Report test coverage to [Codecov](https://codecov.io).
 - `CI` - Speed up test github action with `pre-commit` caching.
