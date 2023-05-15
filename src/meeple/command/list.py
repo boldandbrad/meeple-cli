@@ -55,22 +55,22 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
     if not is_collection(collection):
         invalid_collection_error(collection)
 
-    boardgames, expansions = get_collection_data(collection)
+    board_games, expansions = get_collection_data(collection)
 
     # check that local data exists for the given collection
     # TODO: add better error handling for when a collection has no data files and/or is empty?
-    if not boardgames and not expansions:
+    if not board_games and not expansions:
         error_msg(
             f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
         )
 
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        out_list = boardgames
+        out_list = board_games
     elif item_type == "ex":
         out_list = expansions
     else:
-        out_list = boardgames + expansions
+        out_list = board_games + expansions
 
     # check that data exists after applied filters
     if not out_list:
@@ -78,6 +78,7 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
             f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
         )
 
+    # check if the collection is pending updates
     if is_pending_updates(collection):
         warn_msg(
             f"Collection [u magenta]{collection}[/u magenta] has pending changes. To apply, run [green]meeple update {collection}[/green]"

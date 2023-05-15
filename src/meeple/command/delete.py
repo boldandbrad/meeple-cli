@@ -31,7 +31,7 @@ def delete(collection: str, yes: bool) -> None:
     # delete collection and its data if confirmation succeeded
     if confirmation:
         delete_collection(collection)
-        boardgames, expansions = get_collection_data(collection)
-        if boardgames or expansions:
+        board_games, expansions = get_collection_data(collection)
+        if board_games or expansions:
             delete_collection_data(collection)
         info_msg(f"Deleted collection [u magenta]{collection}[/u magenta].")

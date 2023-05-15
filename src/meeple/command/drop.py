@@ -36,6 +36,7 @@ def drop(collection: str, id: int) -> None:
     if not is_collection(collection):
         invalid_collection_error(collection)
 
+    # get collection item ids
     item_ids, to_add_ids, to_drop_ids = read_collection(collection)
 
     # check if the given id already does not exist in the given collection

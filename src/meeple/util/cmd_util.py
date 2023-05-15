@@ -1,9 +1,9 @@
 import collections
 
-import click
+from click import Group
 
 
-class SectionedHelpGroup(click.Group):
+class SectionedHelpGroup(Group):
     """Organize commands as sections"""
 
     def __init__(self, *args, **kwargs):

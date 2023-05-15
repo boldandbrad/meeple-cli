@@ -24,7 +24,7 @@ def sort_collections(collection_list: [Collection], sort_key: str) -> [Collectio
             return (
                 sorted(
                     collection_list,
-                    key=lambda collection: len(collection.boardgames),
+                    key=lambda collection: len(collection.board_games),
                     reverse=True,
                 ),
                 SORT_DESC_SYMBOL,

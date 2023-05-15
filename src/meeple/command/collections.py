@@ -31,9 +31,9 @@ def collections(sort: str, verbose: bool) -> None:
     collection_list = []
     pending_changes = False
     for collection in collections:
-        boardgames, expansions = get_collection_data(collection)
+        board_games, expansions = get_collection_data(collection)
         collection_list.append(
-            Collection(collection, boardgames, expansions, last_updated(collection))
+            Collection(collection, board_games, expansions, last_updated(collection))
         )
         if is_pending_updates(collection):
             pending_changes = True
@@ -62,7 +62,7 @@ def collections(sort: str, verbose: bool) -> None:
         if verbose:
             cols.extend(
                 [
-                    str(len(collection.boardgames)),
+                    str(len(collection.board_games)),
                     str(len(collection.expansions)),
                     collection.last_updated,
                 ]

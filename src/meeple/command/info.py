@@ -40,8 +40,10 @@ def info(id: int, verbose: bool) -> None:
             f"Weight: {fmt_weight(bgg_item.weight)}",
         ],
     ]
+
     print_table([[f"{bgg_item.id}", f"{bgg_item.name} ({fmt_year(bgg_item.year)})"]])
     print_table(info_rows, lines=True)
+
     # include additional data if verbose flag present
     if verbose:
         print_table(
