@@ -138,9 +138,9 @@ violate [BoardGameGeek Terms of Service](https://boardgamegeek.com/terms#toc22).
 
 ### Why do some items show a weight of `NA` when boardgamegeek.com has a value?
 
-This is a known and occasionally recurring bug with the BoardGameGeek database.
-It usually resolves itself within a day. For more info, read this
-[thread](https://boardgamegeek.com/thread/3049286/some-games-show-weight-000).
+This is a known and occasionally recurring bug in the BoardGameGeek database. It
+usually resolves itself within a day. For more info or additional support, read
+this [thread](https://boardgamegeek.com/thread/3049286/some-games-show-weight-000).
 
 Luckily for us, game weights do not often change drastically. In most cases, we
 can assume that the weight from yesterday is _close enough_.
