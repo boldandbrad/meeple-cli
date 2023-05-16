@@ -39,21 +39,19 @@ def add(collection: str, id: int) -> None:
     # get collection item ids
     item_ids, to_add_ids, to_drop_ids = read_collection(collection)
 
-    # check if the given id already exists in the given collection
-    if (item_ids and bgg_id in item_ids) or (to_add_ids and bgg_id in to_add_ids):
-        error_msg(
-            f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{collection}[/u magenta]."
-        )
-
+    # if the given id is slated to be dropped, simply undo that
     if to_drop_ids and bgg_id in to_drop_ids:
-        # if the given id is slated to be dropped, simply undo that
         to_drop_ids.remove(bgg_id)
         item_ids.append(bgg_id)
         item_ids.sort()
-    else:
-        # otherwise, add the id to the collection as normal
+    # if the given id does not exist in the collection, add the id
+    elif bgg_id not in item_ids:
         to_add_ids.append(bgg_id)
         to_add_ids.sort()
+    else:
+        error_msg(
+            f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{collection}[/u magenta]."
+        )
 
     # persist changes
     update_collection(collection, item_ids, to_add_ids, to_drop_ids)

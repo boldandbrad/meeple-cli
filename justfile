@@ -1,4 +1,3 @@
-
 # activate venv
 venv:
     . .venv/bin/activate

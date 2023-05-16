@@ -39,22 +39,18 @@ def drop(collection: str, id: int) -> None:
     # get collection item ids
     item_ids, to_add_ids, to_drop_ids = read_collection(collection)
 
-    # check if the given id already does not exist in the given collection
-    if (not item_ids or bgg_id not in item_ids) and (
-        not to_add_ids and bgg_id not in to_add_ids
-    ):
-        error_msg(
-            f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{collection}[/u magenta]."
-        )
-
+    # if the given id is slated to be added, simply undo that
     if to_add_ids and bgg_id in to_add_ids:
-        # if the given id is slated to be added, simply undo that
         to_add_ids.remove(bgg_id)
-    else:
-        # drop the id from the collection as normal
+    # if the given id exists in the collection, drop the id
+    elif item_ids and bgg_id in item_ids:
         item_ids.remove(bgg_id)
         to_drop_ids.append(bgg_id)
         to_drop_ids.sort()
+    else:
+        error_msg(
+            f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{collection}[/u magenta]."
+        )
 
     # persist changes
     update_collection(collection, item_ids, to_add_ids, to_drop_ids)

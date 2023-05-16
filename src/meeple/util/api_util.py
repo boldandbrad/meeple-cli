@@ -22,7 +22,7 @@ def _bgg_api_get_items(url: str) -> List[Item]:
         if not isinstance(resp_list, list):
             resp_list = [resp_list]
         return [Item.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
-    # TODO: provide better error handling and logging for bad requests
+    # TODO: provide better error handling and logging for bad requests/responses
     sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 

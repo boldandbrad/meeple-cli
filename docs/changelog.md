@@ -12,6 +12,9 @@ and this project adheres to
 ### Added
 
 - `meeple list` - Show warning message when the collection has pending changes.
+- `meeple move`
+  - Gracefully handle the re-removal of items slated to be added to the source collection.
+  - Gracefully handle the re-addition of items slated to be dropped from the destination collection.
 
 ### Changed
 

@@ -10,7 +10,7 @@ from meeple.util.fs_util import get_collection_dir
 COLLECTION_DIR = get_collection_dir()
 
 _ITEM_LIST_KEY = "items"
-_OLD_ITEM_LIST_KEY = "bgg-ids"  # TODO: eventually remove
+_OLD_ITEM_LIST_KEY = "bgg-ids"  # TODO: deprecated - eventually remove
 _TO_ADD_LIST_KEY = "to_add"
 _TO_DROP_LIST_KEY = "to_drop"
 
@@ -64,7 +64,7 @@ def read_collection(name: str) -> (List[int], List[int], List[int]):
         data = yaml.load(f, Loader=yaml.FullLoader)
 
         # check if data is in old format
-        # TODO: eventually remove
+        # TODO: deprecated - eventually remove
         if data and _OLD_ITEM_LIST_KEY in data:
             bgg_ids = data[_OLD_ITEM_LIST_KEY]
             if not bgg_ids:
