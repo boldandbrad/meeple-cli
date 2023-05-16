@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0rc1] - 2023-05-15
+
 ### Added
 
 - `meeple list` - Show warning message when the collection has pending changes.
