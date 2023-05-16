@@ -58,7 +58,6 @@ def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -
     board_games, expansions = get_collection_data(collection)
 
     # check that local data exists for the given collection
-    # TODO: add better error handling for when a collection has no data files and/or is empty?
     if not board_games and not expansions:
         error_msg(
             f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"

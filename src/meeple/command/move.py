@@ -35,44 +35,51 @@ def move(from_collection: str, to_collection: str, id: int) -> None:
     if not bgg_item:
         invalid_id_error(bgg_id)
 
-    # check that the given collection is a valid collection
+    # check that the given from collection is a valid collection
     if not is_collection(from_collection):
         invalid_collection_error(from_collection)
 
     # get from collection item ids
     from_item_ids, from_to_add_ids, from_to_drop_ids = read_collection(from_collection)
 
-    # check that the given collection is a valid collection
+    # check that the given to collection is a valid collection
     if not is_collection(to_collection):
-        # TODO: offer to create the new collection
+        # TODO: prompt to create the dest collection
         invalid_collection_error(to_collection)
 
     # get destination collection item ids
     dest_item_ids, dest_to_add_ids, dest_to_drop_ids = read_collection(to_collection)
 
-    # check that the id exists in from collection
-    # TODO: check the from collection to_add list and to_drop list
-    if bgg_id not in from_item_ids:
-        # TODO: ask if they want to add it to the destination collection anyway
+    # drop the id from the from collection
+    # if the given id is slated to be added, simply undo that
+    if from_to_add_ids and bgg_id in from_to_add_ids:
+        from_to_add_ids.remove(bgg_id)
+    # if the given id exists in the collection, drop the id
+    elif from_item_ids and bgg_id in from_item_ids:
+        from_item_ids.remove(bgg_id)
+        from_to_drop_ids.append(bgg_id)
+        from_to_drop_ids.sort()
+    else:
+        # TODO: prompt to just add to the destination collection anyway
         error_msg(
             f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{from_collection}[/u magenta]."
         )
 
-    # check that the id doesn't exist in dest collection
-    # TODO: check the dest collection to_add list and to_drop list
-    if dest_item_ids and bgg_id in dest_item_ids:
+    # add the id to the destination collection
+    # if the given id is slated to be dropped, simply undo that
+    if dest_to_drop_ids and bgg_id in dest_to_drop_ids:
+        dest_to_drop_ids.remove(bgg_id)
+        dest_item_ids.append(bgg_id)
+        dest_item_ids.sort()
+    # if the given id does not exist in the collection, add the id
+    elif bgg_id not in dest_item_ids:
+        dest_to_add_ids.append(bgg_id)
+        dest_to_add_ids.sort()
+    else:
+        # TODO: prompt to just remove from the from collection anyway
         error_msg(
             f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{to_collection}[/u magenta]."
         )
-
-    # drop the id from the from collection
-    from_item_ids.remove(bgg_id)
-    from_to_drop_ids.append(bgg_id)
-    from_to_drop_ids.sort()
-
-    # add the id to the destination collection
-    dest_to_add_ids.append(bgg_id)
-    dest_to_add_ids.sort()
 
     # persist changes
     update_collection(from_collection, from_item_ids, from_to_add_ids, from_to_drop_ids)
