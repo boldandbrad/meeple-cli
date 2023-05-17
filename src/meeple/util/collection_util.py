@@ -1,3 +1,4 @@
+import re
 from os import walk
 from os.path import join, splitext
 from pathlib import Path
@@ -82,9 +83,9 @@ def read_collection(collection_name: str) -> (List[int], List[int], List[int]):
     return [], [], []
 
 
-def create_collection(collection_name: str) -> None:
+def create_collection(collection_name: str, to_add_ids: List[int] = []) -> None:
     # TODO: create a class for this Collection object
-    data = {_ITEM_LIST_KEY: [], _TO_ADD_LIST_KEY: [], _TO_DROP_LIST_KEY: []}
+    data = {_ITEM_LIST_KEY: [], _TO_ADD_LIST_KEY: to_add_ids, _TO_DROP_LIST_KEY: []}
     write_yaml_file(_collection_file(collection_name), data)
 
 
@@ -105,3 +106,18 @@ def rename_collection(current_name: str, new_name: str) -> None:
 
 def delete_collection(collection_name: str) -> None:
     Path(_collection_file(collection_name)).unlink()
+
+
+def unique_collection_name(collection_name: str) -> str:
+    first_iteration = True
+    while is_collection(collection_name):
+        if first_iteration:
+            collection_name += "-1"
+            first_iteration = False
+            continue
+        collection_name = re.sub(
+            r"[0-9]+$",
+            lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",
+            collection_name,
+        )
+    return collection_name
