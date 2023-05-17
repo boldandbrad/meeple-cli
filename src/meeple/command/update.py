@@ -16,7 +16,7 @@ from meeple.util.message_util import (
     info_msg,
     invalid_collection_error,
     no_collections_exist_error,
-    print_msg,
+    under_msg,
 )
 from meeple.util.sort_util import sort_items
 
@@ -52,8 +52,8 @@ def update(collection: str, force: bool) -> None:
 
         # print warning and skip if collection is empty
         if not item_ids and not to_add_ids and not to_drop_ids:
-            print_msg(
-                f" ╰╴ [yellow]Warning[/yellow]: Could not update collection [u magenta]{collection}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
+            under_msg(
+                f"[yellow]Warning[/yellow]: Could not update collection [u magenta]{collection}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
             )
             continue
 
@@ -64,8 +64,8 @@ def update(collection: str, force: bool) -> None:
             and not is_pending_updates(collection)
             and updated == str(date.today())
         ):
-            print_msg(
-                f" ╰╴ [dim]Skipped collection [u magenta]{collection}[/u magenta]. Already up to date.[/dim]"
+            under_msg(
+                f"[dim]Skipped collection [u magenta]{collection}[/u magenta]. Already up to date.[/dim]"
             )
             continue
 
@@ -97,6 +97,6 @@ def update(collection: str, force: bool) -> None:
 
         # persist results
         write_collection_data(collection, board_games, expansions)
-        print_msg(f" ╰╴ Updated collection [u magenta]{collection}[/u magenta].")
+        under_msg(f"Updated collection [u magenta]{collection}[/u magenta].")
 
     info_msg("Updated collection data.")

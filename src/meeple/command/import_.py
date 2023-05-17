@@ -3,7 +3,7 @@ import click
 from meeple.util.api_util import get_bgg_user, get_bgg_user_collection
 from meeple.util.collection_util import create_collection, unique_collection_name
 from meeple.util.input_util import choice_input
-from meeple.util.message_util import error_msg, info_msg, print_msg
+from meeple.util.message_util import error_msg, info_msg, under_msg
 
 
 def _import_collection(collection_items, collection_name, username, dry_run) -> None:
@@ -15,8 +15,8 @@ def _import_collection(collection_items, collection_name, username, dry_run) -> 
             f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items."
         )
         for item in collection_items:
-            print_msg(
-                f" ╰╴ [i blue]{item.name}[/i blue] ([default dim]{item.bgg_id}[/default dim])"
+            under_msg(
+                f"[i blue]{item.name}[/i blue] ([default dim]{item.bgg_id}[/default dim])"
             )
     # perform import
     else:
