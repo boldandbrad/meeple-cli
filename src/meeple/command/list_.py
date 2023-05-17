@@ -46,7 +46,7 @@ from meeple.util.table_util import ItemHeader, print_table
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
 # TODO: add option to show grid lines or not in the table
-def list_collection(collection: str, item_type: str, sort: str, verbose: bool) -> None:
+def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
     """List contents of a collection.
 
     - COLLECTION is the name of the collection to be listed.

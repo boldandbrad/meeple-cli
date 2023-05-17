@@ -130,11 +130,14 @@ See a list of planned features and milestones
 
 Currently, the
 [BoardGameGeek Public API](https://boardgamegeek.com/wiki/page/BGG_XML_API2)
-provides limited _read-only_ data about user collections/GeekLists.
+provides limited _read-only_ data about user Collections and GeekLists.
 
-While it is _technically_ feasible to interface with GeekLists via
-webscrapers/spiders, this kind of practice would be both complex and also
-violate [BoardGameGeek Terms of Service](https://boardgamegeek.com/terms#toc22).
+While it is _technically_ feasible to interface with Collections and GeekLists
+via webscrapers or spiders, these approaches would be complex and also violate
+[BoardGameGeek Terms of Service](https://boardgamegeek.com/terms#toc22).
+
+For now, it is possible to import BGG user collections into `meeple-cli` via
+`meeple import`.
 
 ### Why do some items show a weight of `NA` when boardgamegeek.com has a value?
 

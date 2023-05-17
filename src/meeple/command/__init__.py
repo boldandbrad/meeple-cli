@@ -5,11 +5,12 @@ from .delete import delete
 from .drop import drop
 from .find import find
 from .hot import hot
+from .import_ import import_
 from .info import info
-from .list import list_collection
+from .list_ import list_
 from .move import move
 from .new import new
-from .open import open_on_bgg
+from .open_ import open_
 from .rename import rename
 from .search import search
 from .stats import stats
@@ -23,11 +24,12 @@ __all__ = (
     drop,
     find,
     hot,
+    import_,
     info,
-    list_collection,
+    list_,
     move,
     new,
-    open_on_bgg,
+    open_,
     rename,
     search,
     stats,
