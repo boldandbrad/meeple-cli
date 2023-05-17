@@ -2,6 +2,7 @@ from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.fmt_util import (
     NA_VALUE,
     fmt_avg_rank,
+    fmt_collection_name,
     fmt_item_type,
     fmt_players,
     fmt_playtime,
@@ -10,6 +11,16 @@ from meeple.util.fmt_util import (
     fmt_weight,
     fmt_year,
 )
+
+
+def test_fmt_collection_name(mocker):
+    mocker.patch("meeple.util.fmt_util.is_pending_updates", side_effect=[True, False])
+
+    pending_output = fmt_collection_name("collection")
+    assert pending_output == "collection ([red]*[/red])"
+
+    no_pending_output = fmt_collection_name("collection")
+    assert no_pending_output == "collection"
 
 
 def test_fmt_players():

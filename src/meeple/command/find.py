@@ -1,7 +1,7 @@
 import click
 
 from meeple.type.collection import Collection
-from meeple.util.collection_util import are_collections, get_collections
+from meeple.util.collection_util import are_collections, get_collection_names
 from meeple.util.completion_util import complete_collections
 from meeple.util.data_util import get_collection_data
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
@@ -81,7 +81,7 @@ def find(
 
     # if no collections provided, default to all local collections
     if not collections:
-        collections = get_collections()
+        collections = get_collection_names()
 
     # check that local collections exist
     if not collections:

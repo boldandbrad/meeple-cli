@@ -1,7 +1,7 @@
 import click
 
 from meeple.type.collection import Collection
-from meeple.util.collection_util import get_collections, is_pending_updates
+from meeple.util.collection_util import get_collection_names, is_pending_updates
 from meeple.util.data_util import get_collection_data, last_updated
 from meeple.util.fmt_util import fmt_collection_name, fmt_headers
 from meeple.util.message_util import no_collections_exist_error, warn_msg
@@ -21,25 +21,27 @@ from meeple.util.table_util import CollectionHeader, print_table
 @click.help_option("-h", "--help")
 def collections(sort: str, verbose: bool) -> None:
     """List all collections."""
-    # attempt to retrieve collections
-    collections = get_collections()
+    # attempt to retrieve collection names
+    collection_names = get_collection_names()
 
     # check that local collections exist
-    if not collections:
+    if not collection_names:
         no_collections_exist_error()
 
-    collection_list = []
+    collections = []
     pending_changes = False
-    for collection in collections:
-        board_games, expansions = get_collection_data(collection)
-        collection_list.append(
-            Collection(collection, board_games, expansions, last_updated(collection))
+    for collection_name in collection_names:
+        board_games, expansions = get_collection_data(collection_name)
+        collections.append(
+            Collection(
+                collection_name, board_games, expansions, last_updated(collection_name)
+            )
         )
-        if is_pending_updates(collection):
+        if is_pending_updates(collection_name):
             pending_changes = True
 
     # sort output
-    collection_list, sort_direction = sort_collections(collection_list, sort)
+    collections, sort_direction = sort_collections(collections, sort)
 
     # prepare table data
     headers = [CollectionHeader.NAME]
@@ -56,7 +58,7 @@ def collections(sort: str, verbose: bool) -> None:
     headers = fmt_headers(headers, sort, sort_direction)
 
     rows = []
-    for collection in collection_list:
+    for collection in collections:
         cols = [fmt_collection_name(collection.name)]
         # include additional data if the user chose verbose output
         if verbose:

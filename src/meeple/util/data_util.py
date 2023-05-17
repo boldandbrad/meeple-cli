@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import List
 
 from meeple.type.item import Item
-from meeple.util.fs_util import get_data_dir
+from meeple.util.fs_util import get_data_dir, read_json_file, write_json_file
 
 DATA_DIR = get_data_dir()
 
@@ -52,15 +52,14 @@ def get_collection_data(collection_name: str) -> (List[Item], List[Item]):
         return board_games, expansions
 
     # get latest collection data
-    with open(data_path, "r") as f:
-        data = json.load(f)
+    data_dict = read_json_file(data_path)
 
-    for dict_item in data[_BOARD_GAME_LIST_KEY]:
+    for item_dict in data_dict[_BOARD_GAME_LIST_KEY]:
         board_games.append(
-            json.loads(json.dumps(dict_item), object_hook=Item.from_json)
+            json.loads(json.dumps(item_dict), object_hook=Item.from_json)
         )
-    for dict_item in data[_EXPANSION_LIST_KEY]:
-        expansions.append(json.loads(json.dumps(dict_item), object_hook=Item.from_json))
+    for item_dict in data_dict[_EXPANSION_LIST_KEY]:
+        expansions.append(json.loads(json.dumps(item_dict), object_hook=Item.from_json))
     return board_games, expansions
 
 
@@ -82,8 +81,7 @@ def write_collection_data(
     }
 
     # persist data
-    with open(join(data_path, filename), "w") as f:
-        json.dump(data_dict, f, indent=4, ensure_ascii=False)
+    write_json_file(join(data_path, filename), data_dict)
 
 
 def delete_collection_data(collection_name: str) -> None:

@@ -4,7 +4,7 @@ import click
 
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_bgg_items
 from meeple.util.collection_util import (
-    get_collections,
+    get_collection_names,
     is_collection,
     is_pending_updates,
     read_collection,
@@ -39,7 +39,7 @@ def update(collection: str, force: bool) -> None:
             invalid_collection_error(collection)
         collections = [collection]
     else:
-        collections = get_collections()
+        collections = get_collection_names()
 
     # check that local collections exist
     if not collections:

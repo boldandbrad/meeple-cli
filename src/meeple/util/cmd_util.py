@@ -4,7 +4,7 @@ from click import Group
 
 
 class SectionedHelpGroup(Group):
-    """Organize commands as sections"""
+    """Organize commands in sections."""
 
     def __init__(self, *args, **kwargs):
         self.section_commands = collections.defaultdict(list)
