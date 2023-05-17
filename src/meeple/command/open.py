@@ -2,7 +2,7 @@ import webbrowser
 
 import click
 
-from meeple.util.api_util import BGG_DOMAIN, get_bgg_items
+from meeple.util.api_util import BGG_DOMAIN, get_bgg_item
 from meeple.util.input_util import bool_input
 from meeple.util.message_util import info_msg, invalid_id_error, print_msg
 
@@ -18,12 +18,11 @@ def open_on_bgg(id: int, yes: bool) -> None:
     """
     # check that the given id is a valid BoardGameGeek ID
     bgg_id = id
-    api_result = get_bgg_items([bgg_id])
-    if not api_result:
+    item = get_bgg_item(bgg_id)
+    if not item:
         invalid_id_error(bgg_id)
 
     # confirm the user wants to open the board game/expansion on BoardGameGeek website
-    item = api_result[0]
     url = f"https://{BGG_DOMAIN}/{item.type}/{bgg_id}"
     name = item.name
     if yes or bool_input(f"Open [i blue]{name}[/i blue] on {BGG_DOMAIN}?"):
