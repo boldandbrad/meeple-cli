@@ -4,7 +4,7 @@ import click
 
 from meeple.util.api_util import BGG_DOMAIN, get_bgg_item
 from meeple.util.input_util import bool_input
-from meeple.util.message_util import info_msg, invalid_id_error, print_msg
+from meeple.util.message_util import info_msg, invalid_id_error, under_msg
 
 
 @click.command(name="open")
@@ -26,7 +26,7 @@ def open_(id: int, yes: bool) -> None:
     url = f"https://{BGG_DOMAIN}/{item.type}/{bgg_id}"
     name = item.name
     if yes or bool_input(f"Open [i blue]{name}[/i blue] on {BGG_DOMAIN}?"):
-        print_msg(f" ╰╴ Opening [i blue]{name}[/i blue] on {BGG_DOMAIN} ...")
+        under_msg(f"Opening [i blue]{name}[/i blue] on {BGG_DOMAIN} ...")
         webbrowser.open(url)
     else:
         info_msg(f"View [i blue]{name}[/i blue] at {url}")

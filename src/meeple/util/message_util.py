@@ -10,6 +10,10 @@ def print_msg(message: str) -> None:
     console.print(message)
 
 
+def under_msg(message: str) -> None:
+    print_msg(f" ╰╴ {message}")
+
+
 def error_msg(message: str) -> None:
     """Print error message and exit."""
     sys.exit(print_table([["[red]Error[/red]", message]], dim_border=True))
