@@ -11,7 +11,7 @@ from meeple.util.message_util import info_msg, invalid_id_error, print_msg
 @click.argument("id", type=int)
 @click.option("-y", "--yes", is_flag=True, help="Bypass confirmation.")
 @click.help_option("-h", "--help")
-def open_on_bgg(id: int, yes: bool) -> None:
+def open_(id: int, yes: bool) -> None:
     """Open an item on BoardGameGeek.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be opened on boardgamegeek.com.

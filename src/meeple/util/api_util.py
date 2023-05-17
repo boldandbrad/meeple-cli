@@ -1,9 +1,11 @@
 import sys
+import time
 from typing import List
 
 import requests
 import xmltodict
 
+from meeple.type.bgg_user import BGGUser
 from meeple.type.item import Item
 
 BGG_DOMAIN = "boardgamegeek.com"
@@ -14,7 +16,7 @@ BOARDGAME_TYPE = "boardgame"
 EXPANSION_TYPE = "boardgameexpansion"
 
 
-def _bgg_api_get_items(endpoint: str, params: dict) -> List[Item]:
+def _bgg_api_get(endpoint: str, params: dict) -> List[Item]:
     """Get items from the provided BGG endpoint.
 
     Args:
@@ -23,15 +25,23 @@ def _bgg_api_get_items(endpoint: str, params: dict) -> List[Item]:
     Returns:
         List[Item]: List of items.
     """
-    response = requests.get(f"{API2_BASE_URL}/{endpoint}", params=params)
-    if response.status_code == 200:
-        resp_dict = xmltodict.parse(response.content)
-        resp_list = resp_dict["items"].get("item", [])
-        if not isinstance(resp_list, list):
-            resp_list = [resp_list]
-        return [Item.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
-    # TODO: log this error and print out a friendly message to the user
-    sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
+    while True:
+        response = requests.get(f"{API2_BASE_URL}/{endpoint}", params=params)
+        if response.status_code == 202:
+            time.sleep(0.25)
+            continue
+        elif response.status_code == 200:
+            return xmltodict.parse(response.content)
+        else:
+            # TODO: log this error and print out a friendly message to the user
+            sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
+
+
+def _serialize_item_dict(resp_dict: dict) -> List[Item]:
+    resp_list = resp_dict["items"].get("item", [])
+    if not isinstance(resp_list, list):
+        resp_list = [resp_list]
+    return [Item.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
 
 
 def get_bgg_items(bgg_ids: List[int]) -> List[Item]:
@@ -48,7 +58,8 @@ def get_bgg_items(bgg_ids: List[int]) -> List[Item]:
         "type": f"{BOARDGAME_TYPE},{EXPANSION_TYPE}",
         "stats": 1,
     }
-    return _bgg_api_get_items(endpoint="thing", params=params)
+    resp_dict = _bgg_api_get(endpoint="thing", params=params)
+    return _serialize_item_dict(resp_dict)
 
 
 def get_bgg_item(bgg_id: int) -> Item:
@@ -73,7 +84,8 @@ def get_bgg_hot() -> List[Item]:
         List[Item]: List of items.
     """
     params = {"type": BOARDGAME_TYPE}
-    return _bgg_api_get_items(endpoint="hot", params=params)
+    resp_dict = _bgg_api_get(endpoint="hot", params=params)
+    return _serialize_item_dict(resp_dict)
 
 
 def search_bgg(query: str) -> List[Item]:
@@ -86,4 +98,25 @@ def search_bgg(query: str) -> List[Item]:
         List[Item]: List of items.
     """
     params = {"type": BOARDGAME_TYPE, "query": query}
-    return _bgg_api_get_items(endpoint="search", params=params)
+    resp_dict = _bgg_api_get(endpoint="search", params=params)
+    return _serialize_item_dict(resp_dict)
+
+
+def get_bgg_user(username: str) -> BGGUser:
+    """Get BGG User details by username.
+
+    Args:
+        username (str): username.
+
+    Returns:
+        BGGUser: BGGUser.
+    """
+    params = {"name": username}
+    resp_dict = _bgg_api_get(endpoint="user", params=params)
+    return BGGUser.from_bgg_dict(resp_dict["user"])
+
+
+def get_bgg_user_collection(username: str):
+    params = {"username": username, "brief": 1}
+    resp_dict = _bgg_api_get(endpoint="collection", params=params)
+    return _serialize_item_dict(resp_dict)

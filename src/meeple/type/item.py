@@ -2,10 +2,14 @@ import html
 import json
 
 
-def _grab_first(key_dict: dict) -> str:
+def _parse_sub_dict(key_dict: dict) -> str:
     if isinstance(key_dict, list):
-        return key_dict[0]["@value"]
-    return key_dict["@value"]
+        key_dict = key_dict[0]
+    if key_dict.get("@value"):
+        return key_dict["@value"]
+    elif key_dict.get("#text"):
+        return key_dict["#text"]
+    return None
 
 
 def _parse_item_float_val(key_dict: dict) -> float:
@@ -17,7 +21,7 @@ def _parse_item_float_val(key_dict: dict) -> float:
 
 def _parse_item_rank(ranks_dict: dict) -> str:
     if isinstance(ranks_dict, dict):
-        rank = _grab_first(ranks_dict["rank"])
+        rank = _parse_sub_dict(ranks_dict["rank"])
         if rank.isdigit():
             return rank
     return "NA"
@@ -118,8 +122,16 @@ class Item:
             Item: Item
         """
         rating = weight = rank = minplayers = maxplayers = playtime = minage = 0
-        item_id = int(bgg_dict["@id"])
-        name = _grab_first(bgg_dict["name"])
+        if bgg_dict.get("@id"):
+            item_id = int(bgg_dict["@id"])
+        elif bgg_dict.get("@objectid"):
+            item_id = int(bgg_dict["@objectid"])
+        else:
+            item_id = None
+        if bgg_dict.get("name"):
+            name = _parse_sub_dict(bgg_dict["name"])
+        else:
+            name = None
         if bgg_dict.get("@type"):
             item_type = bgg_dict["@type"]
         else:
