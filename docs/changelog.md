@@ -9,6 +9,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.1.0] - 2023-05-16
+
+### Changed
+
+- `GENERAL` - Code cleanup and increased test coverage.
+
 ## [v0.1.0rc1] - 2023-05-15
 
 ### Added
