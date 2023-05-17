@@ -5,7 +5,7 @@ from typing import List
 import requests
 import xmltodict
 
-from meeple.type.bgg_user import BGGUser
+from meeple.type import BGGCollectionItem, BGGUser
 from meeple.type.item import Item
 
 BGG_DOMAIN = "boardgamegeek.com"
@@ -37,11 +37,11 @@ def _bgg_api_get(endpoint: str, params: dict) -> List[Item]:
             sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
 
 
-def _serialize_item_dict(resp_dict: dict) -> List[Item]:
+def _serialize_resp_dict(resp_dict: dict, obj_class) -> List:
     resp_list = resp_dict["items"].get("item", [])
     if not isinstance(resp_list, list):
         resp_list = [resp_list]
-    return [Item.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
+    return [obj_class.from_bgg_dict(bgg_dict) for bgg_dict in resp_list]
 
 
 def get_bgg_items(bgg_ids: List[int]) -> List[Item]:
@@ -59,7 +59,7 @@ def get_bgg_items(bgg_ids: List[int]) -> List[Item]:
         "stats": 1,
     }
     resp_dict = _bgg_api_get(endpoint="thing", params=params)
-    return _serialize_item_dict(resp_dict)
+    return _serialize_resp_dict(resp_dict, Item)
 
 
 def get_bgg_item(bgg_id: int) -> Item:
@@ -85,7 +85,7 @@ def get_bgg_hot() -> List[Item]:
     """
     params = {"type": BOARDGAME_TYPE}
     resp_dict = _bgg_api_get(endpoint="hot", params=params)
-    return _serialize_item_dict(resp_dict)
+    return _serialize_resp_dict(resp_dict, Item)
 
 
 def search_bgg(query: str) -> List[Item]:
@@ -99,7 +99,7 @@ def search_bgg(query: str) -> List[Item]:
     """
     params = {"type": BOARDGAME_TYPE, "query": query}
     resp_dict = _bgg_api_get(endpoint="search", params=params)
-    return _serialize_item_dict(resp_dict)
+    return _serialize_resp_dict(resp_dict, Item)
 
 
 def get_bgg_user(username: str) -> BGGUser:
@@ -117,6 +117,14 @@ def get_bgg_user(username: str) -> BGGUser:
 
 
 def get_bgg_user_collection(username: str):
+    """Get BGG User Collection by username.
+
+    Args:
+        username (str): username.
+
+    Returns:
+        List[BGGCollectionItem]: List[BGGCollectionItem].
+    """
     params = {"username": username, "brief": 1}
     resp_dict = _bgg_api_get(endpoint="collection", params=params)
-    return _serialize_item_dict(resp_dict)
+    return _serialize_resp_dict(resp_dict, BGGCollectionItem)
