@@ -6,6 +6,27 @@ from meeple.util.input_util import choice_input
 from meeple.util.message_util import error_msg, info_msg, print_msg
 
 
+def _import_collection(collection_items, collection_name, username, dry_run) -> None:
+    # assign a unique collection name
+    collection_name = unique_collection_name(collection_name)
+    # show expected changes if import were performed
+    if dry_run:
+        info_msg(
+            f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items."
+        )
+        for item in collection_items:
+            print_msg(
+                f" ╰╴ [i blue]{item.name}[/i blue] ([default dim]{item.bgg_id}[/default dim])"
+            )
+    # perform import
+    else:
+        collection_ids = [item.bgg_id for item in collection_items]
+        create_collection(collection_name, to_add_ids=collection_ids)
+        info_msg(
+            f"Imported [magenta]{username}[/magenta]'s BoardGameGeek collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items. To update, run [green]meeple update[/green]"
+        )
+
+
 @click.command(name="import")
 @click.option("--username", required=True)
 @click.option("--dry-run", is_flag=True)
@@ -38,47 +59,46 @@ def import_(username: str, dry_run: bool) -> None:
     match import_method:
         # import single collection with all items
         case "single":
-            # assign a unique collection name
-            collection_name = unique_collection_name(username)
-            # show expected changes if import were performed
-            if dry_run:
-                info_msg(
-                    f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items."
-                )
-                for item in collection_items:
-                    print_msg(
-                        f" ╰╴ [i blue]{item.name}[/i blue] ([default dim]{item.bgg_id}[/default dim])"
-                    )
-            # perform import
-            else:
-                collection_ids = [item.bgg_id for item in collection_items]
-                create_collection(collection_name, to_add_ids=collection_ids)
-                info_msg(
-                    f"Imported [magenta]{username}[/magenta]'s BoardGameGeek collection to collection [u magenta]{collection_name}[/u magenta]. To update, run [green]meeple update[/green]"
-                )
+            _import_collection(collection_items, username, username, dry_run)
+
         # import a separate collection for each used item status
         case "multiple":
-            own = []
-            prevowned = []
-            fortrade = []
-            wanttoplay = []
-            wanttobuy = []
-            want = []
-            wishlist = []
-            for item in collection_items:
-                if item.status.own:
-                    own.append(item)
-                if item.status.prevowned:
-                    prevowned.append(item)
-                if item.status.fortrade:
-                    fortrade.append(item)
-                if item.status.wanttoplay:
-                    wanttoplay.append(item)
-                if item.status.wanttobuy:
-                    wanttobuy.append(item)
-                if item.status.want:
-                    want.append(item)
-                if item.status.wishlist:
-                    wishlist.append(item)
+            # separate items into their respective collections
+            own_items = [item for item in collection_items if item.status.own]
+            prevowned_items = [
+                item for item in collection_items if item.status.prevowned
+            ]
+            fortrade_items = [item for item in collection_items if item.status.fortrade]
+            wanttoplay_items = [
+                item for item in collection_items if item.status.wanttoplay
+            ]
+            wanttobuy_items = [
+                item for item in collection_items if item.status.wanttobuy
+            ]
+            want_items = [item for item in collection_items if item.status.want]
+            wishlist_items = [item for item in collection_items if item.status.wishlist]
 
-            print("coming soon...")
+            if own_items:
+                _import_collection(own_items, f"{username}-own", username, dry_run)
+            if prevowned_items:
+                _import_collection(
+                    prevowned_items, f"{username}-prevowned", username, dry_run
+                )
+            if fortrade_items:
+                _import_collection(
+                    fortrade_items, f"{username}-fortrade", username, dry_run
+                )
+            if wanttoplay_items:
+                _import_collection(
+                    wanttoplay_items, f"{username}-wanttoplay", username, dry_run
+                )
+            if wanttobuy_items:
+                _import_collection(
+                    wanttobuy_items, f"{username}-wanttobuy", username, dry_run
+                )
+            if want_items:
+                _import_collection(want_items, f"{username}-want", username, dry_run)
+            if wishlist_items:
+                _import_collection(
+                    wishlist_items, f"{username}-wishlist", username, dry_run
+                )
