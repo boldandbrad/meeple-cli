@@ -9,6 +9,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `meeple import` - Import BoardGameGeek user collections.
+  - Import as either one large collection or as separate collections based on item status.
+  - `--dry-run` - Summarize potential import operations without persisting.
+
 ## [v0.1.0] - 2023-05-16
 
 ### Changed

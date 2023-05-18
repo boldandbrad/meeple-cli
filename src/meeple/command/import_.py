@@ -32,7 +32,9 @@ def _import_collection(
 @click.command(name="import")
 @click.option("--bgg-user", required=True, help="BoardGameGeek username.")
 @click.option(
-    "--dry-run", is_flag=True, help="Summarize potential changes without persisting."
+    "--dry-run",
+    is_flag=True,
+    help="Summarize potential import operations without persisting.",
 )
 @click.help_option("-h", "--help")
 # TODO: add single/multiple options or a flag to bypass import method prompt
