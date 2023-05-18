@@ -65,6 +65,7 @@ Collection Commands:
 
 BoardGameGeek Commands:
   hot     List current BoardGameGeek trending items.
+  import  Import BoardGameGeek user collections.
   info    Print out the details of an item.
   open    Open an item on BoardGameGeek.
   search  Search BoardGameGeek for items.
