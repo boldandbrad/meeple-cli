@@ -7,26 +7,28 @@ from meeple.util.message_util import error_msg, info_msg, under_msg
 
 
 def _import_collection(
-    collection_items, collection_name: str, bgg_user: str, dry_run: bool
+    collection_items, collection_name: str, bgg_user: str, dry_run: bool, verbose: bool
 ) -> None:
     # assign a unique collection name
     collection_name = unique_collection_name(collection_name)
     # show expected changes if import were performed
     if dry_run:
-        info_msg(
-            f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items."
+        under_msg(
+            f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} item(s)."
         )
-        for item in collection_items:
-            under_msg(
-                f"[i blue]{item.name}[/i blue] ([default dim]{item.bgg_id}[/default dim])"
-            )
     # perform import
     else:
         collection_ids = [item.bgg_id for item in collection_items]
         create_collection(collection_name, to_add_ids=collection_ids)
-        info_msg(
-            f"Imported [magenta]{bgg_user}[/magenta]'s BoardGameGeek collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} items. To update, run [green]meeple update[/green]"
+        under_msg(
+            f"Imported collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} item(s)."
         )
+    if verbose:
+        for item in collection_items:
+            under_msg(
+                f"[i blue]{item.name}[/i blue] ([dim]{item.bgg_id}[/dim])",
+                indents=2,
+            )
 
 
 @click.command(name="import")
@@ -36,9 +38,10 @@ def _import_collection(
     is_flag=True,
     help="Summarize potential import operations without persisting.",
 )
+@click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
 # TODO: add single/multiple options or a flag to bypass import method prompt
-def import_(bgg_user: str, dry_run: bool) -> None:
+def import_(bgg_user: str, dry_run: bool, verbose: bool) -> None:
     """Import BoardGameGeek user collections."""
     # check that the given BoardGameGeek username is a valid
     user = get_bgg_user(bgg_user)
@@ -60,11 +63,16 @@ def import_(bgg_user: str, dry_run: bool) -> None:
         ["single", "multiple"],
     )
 
-    # create new collection(s) using the chosen import method
+    if dry_run:
+        info_msg("Simulating collection import...")
+    else:
+        info_msg("Importing collection(s)...")
+
+    # create new collection(s) using the chosen import method or preform dry run
     match import_method:
         # import single collection with all items
         case "single":
-            _import_collection(collection_items, bgg_user, bgg_user, dry_run)
+            _import_collection(collection_items, bgg_user, bgg_user, dry_run, verbose)
 
         # import a separate collection for each used item status
         case "multiple":
@@ -84,26 +92,37 @@ def import_(bgg_user: str, dry_run: bool) -> None:
             wishlist_items = [item for item in collection_items if item.status.wishlist]
 
             if own_items:
-                _import_collection(own_items, f"{bgg_user}-own", bgg_user, dry_run)
+                _import_collection(
+                    own_items, f"{bgg_user}-own", bgg_user, dry_run, verbose
+                )
             if prevowned_items:
                 _import_collection(
-                    prevowned_items, f"{bgg_user}-prevowned", bgg_user, dry_run
+                    prevowned_items, f"{bgg_user}-prevowned", bgg_user, dry_run, verbose
                 )
             if fortrade_items:
                 _import_collection(
-                    fortrade_items, f"{bgg_user}-fortrade", bgg_user, dry_run
+                    fortrade_items, f"{bgg_user}-fortrade", bgg_user, dry_run, verbose
                 )
             if wanttoplay_items:
                 _import_collection(
-                    wanttoplay_items, f"{bgg_user}-wanttoplay", bgg_user, dry_run
+                    wanttoplay_items,
+                    f"{bgg_user}-wanttoplay",
+                    bgg_user,
+                    dry_run,
+                    verbose,
                 )
             if wanttobuy_items:
                 _import_collection(
-                    wanttobuy_items, f"{bgg_user}-wanttobuy", bgg_user, dry_run
+                    wanttobuy_items, f"{bgg_user}-wanttobuy", bgg_user, dry_run, verbose
                 )
             if want_items:
-                _import_collection(want_items, f"{bgg_user}-want", bgg_user, dry_run)
+                _import_collection(
+                    want_items, f"{bgg_user}-want", bgg_user, dry_run, verbose
+                )
             if wishlist_items:
                 _import_collection(
-                    wishlist_items, f"{bgg_user}-wishlist", bgg_user, dry_run
+                    wishlist_items, f"{bgg_user}-wishlist", bgg_user, dry_run, verbose
                 )
+
+    if not dry_run:
+        info_msg("Imported collection(s). To update, run [green]meeple update[/green]")

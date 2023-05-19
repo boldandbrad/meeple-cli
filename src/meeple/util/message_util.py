@@ -10,8 +10,9 @@ def print_msg(message: str) -> None:
     console.print(message)
 
 
-def under_msg(message: str) -> None:
-    print_msg(f" ╰╴ {message}")
+def under_msg(message: str, indents: int = 1) -> None:
+    spaces = indents * "  "
+    print_msg(f"{spaces}[dim]╰╴[/dim][default]{message}[/default]")
 
 
 def error_msg(message: str) -> None:
