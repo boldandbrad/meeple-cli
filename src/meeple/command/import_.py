@@ -5,6 +5,9 @@ from meeple.util.collection_util import create_collection, unique_collection_nam
 from meeple.util.input_util import choice_input
 from meeple.util.message_util import error_msg, info_msg, under_msg
 
+ONE_IMPORT_METHOD = "one"
+MANY_IMPORT_METHOD = "many"
+
 
 def _import_collection(
     collection_items, collection_name: str, bgg_user: str, dry_run: bool, verbose: bool
@@ -32,17 +35,31 @@ def _import_collection(
 
 
 @click.command(name="import")
-@click.option("--bgg-user", required=True, help="BoardGameGeek username.")
+@click.argument("bgg-user")
+@click.option(
+    "--one",
+    "import_method",
+    flag_value=ONE_IMPORT_METHOD,
+    help="Import as one collection.",
+)
+@click.option(
+    "--many",
+    "import_method",
+    flag_value=MANY_IMPORT_METHOD,
+    help="Import as separate collections by status.",
+)
 @click.option(
     "--dry-run",
     is_flag=True,
-    help="Summarize potential import operations without persisting.",
+    help="Simulate import operations without persisting.",
 )
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
-# TODO: add single/multiple options or a flag to bypass import method prompt
-def import_(bgg_user: str, dry_run: bool, verbose: bool) -> None:
-    """Import BoardGameGeek user collections."""
+def import_(bgg_user: str, import_method: bool, dry_run: bool, verbose: bool) -> None:
+    """Import BoardGameGeek user collections.
+
+    - BGG_USER is a BoardGameGeek username.
+    """
     # check that the given BoardGameGeek username is a valid
     user = get_bgg_user(bgg_user)
     if not user.user_id:
@@ -58,10 +75,11 @@ def import_(bgg_user: str, dry_run: bool, verbose: bool) -> None:
         )
 
     # prompt to user for import method
-    import_method = choice_input(
-        f"Would you like to import [magenta]{bgg_user}[/magenta]'s user collection items into a single collection or into multiple by item status?",
-        ["single", "multiple"],
-    )
+    if not import_method:
+        import_method = choice_input(
+            f"Would you like to import [magenta]{bgg_user}[/magenta]'s user collection items into one collection or many by item status?",
+            [ONE_IMPORT_METHOD, MANY_IMPORT_METHOD],
+        )
 
     if dry_run:
         info_msg("Simulating collection import...")
@@ -71,11 +89,11 @@ def import_(bgg_user: str, dry_run: bool, verbose: bool) -> None:
     # create new collection(s) using the chosen import method or preform dry run
     match import_method:
         # import single collection with all items
-        case "single":
+        case "one":
             _import_collection(collection_items, bgg_user, bgg_user, dry_run, verbose)
 
         # import a separate collection for each used item status
-        case "multiple":
+        case "many":
             # separate items into their respective collections
             own_items = [item for item in collection_items if item.status.own]
             prevowned_items = [
