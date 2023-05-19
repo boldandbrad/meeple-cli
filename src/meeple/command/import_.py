@@ -1,6 +1,8 @@
+from typing import List
+
 import click
 
-from meeple.type.bgg_collection_item import BGG_COLLECTION_STATUSES
+from meeple.type import BGG_COLLECTION_STATUSES, BGGCollectionItem
 from meeple.util.api_util import get_bgg_user, get_bgg_user_collection
 from meeple.util.collection_util import create_collection, unique_collection_name
 from meeple.util.input_util import choice_input
@@ -11,11 +13,14 @@ MANY_IMPORT_METHOD = "many"
 
 
 def _import_collection(
-    collection_items, collection_name: str, dry_run: bool, verbose: bool
-) -> None:
+    collection_items: List[BGGCollectionItem],
+    collection_name: str,
+    dry_run: bool,
+    verbose: bool,
+):
     # assign a unique collection name
     collection_name = unique_collection_name(collection_name)
-    # show expected changes if import were performed
+    # simulate import
     if dry_run:
         under_msg(
             f"Import collection [u magenta]{collection_name}[/u magenta] containing {len(collection_items)} item(s)."
@@ -75,7 +80,7 @@ def import_(bgg_user: str, import_method: bool, dry_run: bool, verbose: bool) ->
             f"Nothing to import. BoardGameGeek user [yellow]{bgg_user}[/yellow]'s collection is empty."
         )
 
-    # prompt to user for import method
+    # prompt the user for import method
     if not import_method:
         import_method = choice_input(
             f"Would you like to import [magenta]{bgg_user}[/magenta]'s user collection items into one collection or many by item status?",
@@ -97,12 +102,15 @@ def import_(bgg_user: str, import_method: bool, dry_run: bool, verbose: bool) ->
         case "many":
             # separate items into their respective status collections and import each
             for status in BGG_COLLECTION_STATUSES:
+                # get items with status
                 status_items = [
                     item for item in collection_items if status in item.statuses
                 ]
-                _import_collection(
-                    status_items, f"{bgg_user}-{status}", dry_run, verbose
-                )
+                # import the collection if it contains items
+                if status_items:
+                    _import_collection(
+                        status_items, f"{bgg_user}-{status}", dry_run, verbose
+                    )
 
     if not dry_run:
         info_msg("Imported collection(s). To update, run [green]meeple update[/green]")
