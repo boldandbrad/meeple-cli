@@ -1,5 +1,6 @@
 import click
 
+from meeple.type.bgg_collection_item import BGG_COLLECTION_STATUSES
 from meeple.util.api_util import get_bgg_user, get_bgg_user_collection
 from meeple.util.collection_util import create_collection, unique_collection_name
 from meeple.util.input_util import choice_input
@@ -10,7 +11,7 @@ MANY_IMPORT_METHOD = "many"
 
 
 def _import_collection(
-    collection_items, collection_name: str, bgg_user: str, dry_run: bool, verbose: bool
+    collection_items, collection_name: str, dry_run: bool, verbose: bool
 ) -> None:
     # assign a unique collection name
     collection_name = unique_collection_name(collection_name)
@@ -90,56 +91,17 @@ def import_(bgg_user: str, import_method: bool, dry_run: bool, verbose: bool) ->
     match import_method:
         # import single collection with all items
         case "one":
-            _import_collection(collection_items, bgg_user, bgg_user, dry_run, verbose)
+            _import_collection(collection_items, bgg_user, dry_run, verbose)
 
         # import a separate collection for each used item status
         case "many":
-            # separate items into their respective collections
-            own_items = [item for item in collection_items if item.status.own]
-            prevowned_items = [
-                item for item in collection_items if item.status.prevowned
-            ]
-            fortrade_items = [item for item in collection_items if item.status.fortrade]
-            wanttoplay_items = [
-                item for item in collection_items if item.status.wanttoplay
-            ]
-            wanttobuy_items = [
-                item for item in collection_items if item.status.wanttobuy
-            ]
-            want_items = [item for item in collection_items if item.status.want]
-            wishlist_items = [item for item in collection_items if item.status.wishlist]
-
-            if own_items:
+            # separate items into their respective status collections and import each
+            for status in BGG_COLLECTION_STATUSES:
+                status_items = [
+                    item for item in collection_items if status in item.statuses
+                ]
                 _import_collection(
-                    own_items, f"{bgg_user}-own", bgg_user, dry_run, verbose
-                )
-            if prevowned_items:
-                _import_collection(
-                    prevowned_items, f"{bgg_user}-prevowned", bgg_user, dry_run, verbose
-                )
-            if fortrade_items:
-                _import_collection(
-                    fortrade_items, f"{bgg_user}-fortrade", bgg_user, dry_run, verbose
-                )
-            if wanttoplay_items:
-                _import_collection(
-                    wanttoplay_items,
-                    f"{bgg_user}-wanttoplay",
-                    bgg_user,
-                    dry_run,
-                    verbose,
-                )
-            if wanttobuy_items:
-                _import_collection(
-                    wanttobuy_items, f"{bgg_user}-wanttobuy", bgg_user, dry_run, verbose
-                )
-            if want_items:
-                _import_collection(
-                    want_items, f"{bgg_user}-want", bgg_user, dry_run, verbose
-                )
-            if wishlist_items:
-                _import_collection(
-                    wishlist_items, f"{bgg_user}-wishlist", bgg_user, dry_run, verbose
+                    status_items, f"{bgg_user}-{status}", dry_run, verbose
                 )
 
     if not dry_run:
