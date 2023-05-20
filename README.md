@@ -53,15 +53,15 @@ Options:
 Collection Commands:
   add          Add an item to a collection.
   collections  List all collections.
-  delete       Delete a collection.
+  delete       Delete collections.
   drop         Remove an item from a collection.
   find         Search collections for items.
   list         List contents of a collection.
   move         Move an item from one collection to another.
-  new          Create a new collection.
-  rename       Rename a local collection.
+  new          Create new collections.
+  rename       Rename a collection.
   stats        Print out the details of a collection.
-  update       Update local collection data.
+  update       Update collection data.
 
 BoardGameGeek Commands:
   hot     List current BoardGameGeek trending items.

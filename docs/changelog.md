@@ -11,12 +11,22 @@ and this project adheres to
 
 ### Added
 
-- `meeple import` - Import BoardGameGeek user collections.
+- `meeple import` - Import BoardGameGeek user collections. ([#46](https://github.com/boldandbrad/meeple-cli/issues/46))
   - Import as either one large collection or as separate collections based on item status.
   - `--one` - Import as one collection.
   - `--many` - Import as separate collections by status.
   - `--dry-run` - Simulate import operations without persisting.
   - `-v/--verbose` - Output additional details.
+
+### Changed
+
+- `meeple delete` - Delete multiple collections at once. ([#69](https://github.com/boldandbrad/meeple-cli/issues/69))
+- `meeple new` - Create multiple collections at once. ([#70](https://github.com/boldandbrad/meeple-cli/issues/70))
+- `meeple update` - Update multiple specific collections at once. ([#66](https://github.com/boldandbrad/meeple-cli/issues/66))
+
+### Fixed
+
+- `meeple rename` - Fixed help message wording.
 
 ## [v0.1.0] - 2023-05-16
 
