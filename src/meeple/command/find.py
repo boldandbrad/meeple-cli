@@ -116,7 +116,7 @@ def find(
     # check that data exists after applied filters
     if not result_items:
         error_msg(
-            f"No items found matching provided filters for collection(s) [u magenta]{collections}[/u magenta]."
+            f"No items found matching provided filters for collection(s) [u magenta]{'[/u magenta], [u magenta]'.join(collections)}[/u magenta]."
         )
 
     # sort output

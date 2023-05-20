@@ -26,7 +26,8 @@ and this project adheres to
 
 ### Fixed
 
-- `meeple rename` - Fixed help message wording.
+- `meeple find` - Fix error message collection name formatting.
+- `meeple rename` - Fix help message wording.
 
 ## [v0.1.0] - 2023-05-16
 
