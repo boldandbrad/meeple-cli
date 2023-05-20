@@ -28,7 +28,7 @@ def delete(collections: List[str], yes: bool) -> None:
     # ask for confirmation or not depending on presence of flag
     if not yes:
         confirmation = bool_input(
-            f"Are you sure you want to delete collection(s) [u magenta]{collections}[/u magenta]?"
+            f"Are you sure you want to delete collection(s) [u magenta]{'[/u magenta], [u magenta]'.join(collections)}[/u magenta]?"
         )
     else:
         confirmation = True
