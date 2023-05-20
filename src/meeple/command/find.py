@@ -73,7 +73,7 @@ def find(
 ) -> None:
     """Search collections for items.
 
-    - COLLECTIONS are the names of a collections to query. [default: all]
+    - COLLECTIONS are names of the collections to query. [default: all]
     """
     # check if provided collections exist
     if not are_collections(collections):
