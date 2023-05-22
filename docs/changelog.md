@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.2.0] - 2023-05-22
+
 ### Added
 
 - `meeple import` - Import BoardGameGeek user collections. ([#46](https://github.com/boldandbrad/meeple-cli/issues/46))
