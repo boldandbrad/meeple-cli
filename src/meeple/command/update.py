@@ -3,7 +3,7 @@ from typing import List
 
 import click
 
-from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE, get_bgg_items
+from meeple.util.api_util import get_bgg_items
 from meeple.util.collection_util import (
     get_collection_names,
     is_collection,
@@ -12,7 +12,7 @@ from meeple.util.collection_util import (
     update_collection,
 )
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import last_updated, write_collection_data
+from meeple.util.data_util import last_updated, write_collection_items
 from meeple.util.message_util import (
     error_msg,
     info_msg,
@@ -36,22 +36,12 @@ def _update_collection(collection_name: str, item_ids, to_add_ids, to_drop_ids) 
 
     # get items from BoardGameGeek
     api_result = get_bgg_items(item_ids)
-    board_games, expansions = [], []
-    for item in api_result:
-        item_type = item.type
-        if item_type == BOARDGAME_TYPE:
-            board_games.append(item)
-        if item_type == EXPANSION_TYPE:
-            expansions.append(item)
 
-    # sort board games by rank and expansions by rating
-    if board_games:
-        board_games, _ = sort_items(board_games, "rank")
-    if expansions:
-        expansions, _ = sort_items(expansions, "rating")
+    # sort items by id
+    sort_items(api_result, "id")
 
     # persist results
-    write_collection_data(collection_name, board_games, expansions)
+    write_collection_items(collection_name, api_result)
 
 
 @click.command()

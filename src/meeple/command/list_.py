@@ -1,8 +1,9 @@
 import click
 
+from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.collection_util import is_collection, is_pending_updates
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import get_collection_data
+from meeple.util.data_util import get_collection_items
 from meeple.util.fmt_util import (
     fmt_headers,
     fmt_item_type,
@@ -55,24 +56,28 @@ def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
     if not is_collection(collection):
         invalid_collection_error(collection)
 
-    board_games, expansions = get_collection_data(collection)
+    collection_items = get_collection_items(collection)
 
     # check that local data exists for the given collection
-    if not board_games and not expansions:
+    if not collection_items:
         error_msg(
             f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
         )
 
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        out_list = board_games
+        result_items = [
+            item for item in collection_items if item.type == BOARDGAME_TYPE
+        ]
     elif item_type == "ex":
-        out_list = expansions
+        result_items = [
+            item for item in collection_items if item.type == EXPANSION_TYPE
+        ]
     else:
-        out_list = board_games + expansions
+        result_items = collection_items
 
     # check that data exists after applied filters
-    if not out_list:
+    if not result_items:
         error_msg(
             f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
         )
@@ -84,7 +89,7 @@ def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
         )
 
     # sort output
-    out_list, sort_direction = sort_items(out_list, sort)
+    result_items, sort_direction = sort_items(result_items, sort)
 
     # prepare table data
     headers = [ItemHeader.ID, ItemHeader.NAME]
@@ -107,7 +112,7 @@ def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
     headers = fmt_headers(headers, sort, sort_direction)
 
     rows = []
-    for item in out_list:
+    for item in result_items:
         cols = [str(item.id), item.name]
         # include type data if neither type is ommitted
         if item_type not in ("bg", "ex"):
@@ -117,7 +122,7 @@ def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
             cols.extend(
                 [
                     fmt_year(item.year),
-                    fmt_rank(str(item.rank)),
+                    fmt_rank(item.rank),
                     fmt_rating(item.rating),
                     fmt_weight(item.weight),
                     fmt_players(item.minplayers, item.maxplayers),

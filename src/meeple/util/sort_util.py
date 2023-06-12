@@ -24,7 +24,7 @@ def sort_collections(collection_list: [Collection], sort_key: str) -> [Collectio
             return (
                 sorted(
                     collection_list,
-                    key=lambda collection: len(collection.board_games),
+                    key=lambda collection: len(collection.get_board_games()),
                     reverse=True,
                 ),
                 SORT_DESC_SYMBOL,
@@ -33,7 +33,7 @@ def sort_collections(collection_list: [Collection], sort_key: str) -> [Collectio
             return (
                 sorted(
                     collection_list,
-                    key=lambda collection: len(collection.expansions),
+                    key=lambda collection: len(collection.get_expansions()),
                     reverse=True,
                 ),
                 SORT_DESC_SYMBOL,

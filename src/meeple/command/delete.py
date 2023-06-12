@@ -4,15 +4,14 @@ import click
 
 from meeple.util.collection_util import delete_collection, is_collection
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import delete_collection_data, get_collection_data
+from meeple.util.data_util import delete_collection_data, get_collection_items
 from meeple.util.input_util import bool_input
 from meeple.util.message_util import info_msg, invalid_collection_error, under_msg
 
 
 def _delete_collection(collection_name: str) -> None:
     delete_collection(collection_name)
-    board_games, expansions = get_collection_data(collection_name)
-    if board_games or expansions:
+    if get_collection_items(collection_name):
         delete_collection_data(collection_name)
 
 

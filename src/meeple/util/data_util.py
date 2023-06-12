@@ -14,6 +14,9 @@ DATA_DIR = get_data_dir()
 _BOARD_GAME_LIST_KEY = "boardgames"
 _EXPANSION_LIST_KEY = "expansions"
 
+_DATA_VERSION_KEY = "version"
+_ITEM_LIST_KEY = "items"
+
 
 def _collection_data_dir(collection_name: str) -> str:
     return join(DATA_DIR, collection_name)
@@ -45,27 +48,34 @@ def last_updated(collection_name: str) -> str:
     return date
 
 
-def get_collection_data(collection_name: str) -> (List[Item], List[Item]):
+def get_collection_items(collection_name: str) -> List[Item]:
     data_path = _latest_data_file(collection_name)
-    board_games, expansions = [], []
+    items, board_games, expansions = [], [], []
     if not data_path:
-        return board_games, expansions
+        return items
 
     # get latest collection data
     data_dict = read_json_file(data_path)
 
-    for item_dict in data_dict[_BOARD_GAME_LIST_KEY]:
-        board_games.append(
-            json.loads(json.dumps(item_dict), object_hook=Item.from_json)
-        )
-    for item_dict in data_dict[_EXPANSION_LIST_KEY]:
-        expansions.append(json.loads(json.dumps(item_dict), object_hook=Item.from_json))
-    return board_games, expansions
+    if _ITEM_LIST_KEY in data_dict.keys():
+        for item_dict in data_dict[_ITEM_LIST_KEY]:
+            items.append(json.loads(json.dumps(item_dict), object_hook=Item.from_json))
+    else:
+        # read data from old format
+        # TODO: deprecated - eventually remove
+        for item_dict in data_dict[_BOARD_GAME_LIST_KEY]:
+            board_games.append(
+                json.loads(json.dumps(item_dict), object_hook=Item.from_json)
+            )
+        for item_dict in data_dict[_EXPANSION_LIST_KEY]:
+            expansions.append(
+                json.loads(json.dumps(item_dict), object_hook=Item.from_json)
+            )
+        items = board_games + expansions
+    return items
 
 
-def write_collection_data(
-    collection_name: str, board_games: List[Item], expansions: List[Item]
-) -> None:
+def write_collection_items(collection_name: str, collection_items: List[Item]) -> None:
     today = date.today()
     data_path = f"{_collection_data_dir(collection_name)}/{today.strftime('%Y-%m')}"
     filename = f"{today}.json"
@@ -76,8 +86,8 @@ def write_collection_data(
 
     # build data dictionary
     data_dict = {
-        _BOARD_GAME_LIST_KEY: [board_game.__dict__ for board_game in board_games],
-        _EXPANSION_LIST_KEY: [expansion.__dict__ for expansion in expansions],
+        _DATA_VERSION_KEY: "v1.0",
+        _ITEM_LIST_KEY: [item.__dict__ for item in collection_items],
     }
 
     # persist data

@@ -1,8 +1,9 @@
 import click
 
+from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.collection_util import is_collection, is_pending_updates
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import get_collection_data
+from meeple.util.data_util import get_collection_items
 from meeple.util.fmt_util import fmt_avg_rank, fmt_rating, fmt_weight
 from meeple.util.message_util import error_msg, invalid_collection_error, warn_msg
 from meeple.util.table_util import print_table
@@ -36,23 +37,25 @@ def stats(collection: str, item_type: str) -> None:
     if not is_collection(collection):
         invalid_collection_error(collection)
 
-    board_games, expansions = get_collection_data(collection)
+    collection_items = get_collection_items(collection)
     # check that data exists for the given collection
-    if not board_games and not expansions:
+    if not collection_items:
         error_msg(
             f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
         )
 
+    board_games = [item for item in collection_items if item.type == BOARDGAME_TYPE]
+    expansions = [item for item in collection_items if item.type == EXPANSION_TYPE]
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        out_list = board_games
+        result_items = board_games
     elif item_type == "ex":
-        out_list = expansions
+        result_items = expansions
     else:
-        out_list = board_games + expansions
+        result_items = collection_items
 
     # check that data exists after applied filters
-    if not out_list:
+    if not result_items:
         error_msg(
             f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
         )
@@ -62,11 +65,11 @@ def stats(collection: str, item_type: str) -> None:
         num_rated
     ) = sum_rank = num_ranked = sum_weight = num_weighted = sum_players = 0
 
-    for item in out_list:
+    for item in result_items:
         if item.rating > 0:
             num_rated += 1
             sum_ratings += item.rating
-        if item.rank.isdigit():
+        if item.rank > 0:
             num_ranked += 1
             sum_rank += int(item.rank)
         if item.weight > 0:
@@ -78,7 +81,7 @@ def stats(collection: str, item_type: str) -> None:
             sum_players += int(item.maxplayers)
 
     if num_rated > 0:
-        avg_rating = round(sum_ratings / len(out_list), 2)
+        avg_rating = round(sum_ratings / len(result_items), 2)
     else:
         avg_rating = 0
     if num_ranked > 0:
@@ -89,7 +92,7 @@ def stats(collection: str, item_type: str) -> None:
         avg_weight = round(sum_weight / num_weighted, 2)
     else:
         avg_weight = 0
-    avg_max_players = round(sum_players / len(out_list), 2)
+    avg_max_players = round(sum_players / len(result_items), 2)
 
     # format output
     num_bgs_tag = f"{len(board_games)} Board Game(s)"
