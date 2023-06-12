@@ -18,7 +18,7 @@ from meeple.util.table_util import print_table
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
 def info(id: int, verbose: bool) -> None:
-    """Print out the details of an item.
+    """View detailed information of an item.
 
     - ID is the BoardGameGeek ID of the board game/expansion to be detailed.
     """

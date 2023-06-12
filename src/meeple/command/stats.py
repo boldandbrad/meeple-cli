@@ -28,7 +28,7 @@ from meeple.util.table_util import print_table
 )
 @click.help_option("-h", "--help")
 def stats(collection: str, item_type: str) -> None:
-    """Print out the details of a collection.
+    """View collection statistics.
 
     - COLLECTION is the name of the collection to be detailed.
     """

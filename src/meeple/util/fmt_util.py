@@ -15,6 +15,12 @@ def fmt_collection_name(name: str) -> str:
     return name
 
 
+def fmt_date(date: str) -> str:
+    if date:
+        return date
+    return NA_VALUE
+
+
 def fmt_headers(headers, sort_key: str, sort_direction: str):
     header_strs = []
     for header in headers:
