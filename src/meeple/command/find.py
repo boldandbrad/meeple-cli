@@ -3,7 +3,7 @@ import click
 from meeple.type.collection import Collection
 from meeple.util.collection_util import are_collections, get_collection_names
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import get_collection_data
+from meeple.util.data_util import get_collection_items
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
 from meeple.util.fmt_util import (
     fmt_headers,
@@ -91,16 +91,16 @@ def find(
     result_items = []
     collection_list = []
     for collection in collections:
-        board_games, expansions = get_collection_data(collection)
-        collection_list.append(Collection(collection, board_games, expansions, None))
+        collection_items = get_collection_items(collection)
+        collection_list.append(Collection(collection, collection_items, None))
 
         # determine what to include in results depending on given flags
         if item_type == "bg":
-            result_items.extend(board_games)
+            result_items.extend(collection.get_board_games())
         elif item_type == "ex":
-            result_items.extend(expansions)
+            result_items.extend(collection.get_expansions())
         else:
-            result_items.extend(board_games + expansions)
+            result_items = collection_items
 
     # remove duplicates
     result_items = list(set(result_items))
@@ -160,7 +160,7 @@ def find(
                 [
                     collection.name
                     for collection in collection_list
-                    if item in collection.board_games or item in collection.expansions
+                    if item in collection.items
                 ]
             )
             cols.append(", ".join(containing_collections))

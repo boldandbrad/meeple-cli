@@ -51,10 +51,10 @@ def fmt_avg_rank(rank: str) -> str:
     return rank_str
 
 
-def fmt_rank(rank: str) -> str:
-    if rank == "NA" or not rank.isdigit():
+def fmt_rank(rank: int) -> str:
+    if rank == 0:
         return NA_VALUE
-    return rank
+    return str(rank)
 
 
 def fmt_rating(rating: float) -> str:

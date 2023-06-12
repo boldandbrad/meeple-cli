@@ -23,8 +23,8 @@ def _parse_item_rank(ranks_dict: dict) -> str:
     if isinstance(ranks_dict, dict):
         rank = _parse_sub_dict(ranks_dict["rank"])
         if rank.isdigit():
-            return rank
-    return "NA"
+            return int(rank)
+    return 0
 
 
 class Item:

@@ -2,7 +2,7 @@ import click
 
 from meeple.type.collection import Collection
 from meeple.util.collection_util import get_collection_names, is_pending_updates
-from meeple.util.data_util import get_collection_data, last_updated
+from meeple.util.data_util import get_collection_items, last_updated
 from meeple.util.fmt_util import fmt_collection_name, fmt_date, fmt_headers
 from meeple.util.message_util import no_collections_exist_error, warn_msg
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
@@ -31,12 +31,11 @@ def collections(sort: str, verbose: bool) -> None:
     collections = []
     pending_changes = False
     for collection_name in collection_names:
-        board_games, expansions = get_collection_data(collection_name)
+        collection_items = get_collection_items(collection_name)
         collections.append(
             Collection(
                 collection_name,
-                board_games,
-                expansions,
+                collection_items,
                 fmt_date(last_updated(collection_name)),
             )
         )
@@ -67,8 +66,8 @@ def collections(sort: str, verbose: bool) -> None:
         if verbose:
             cols.extend(
                 [
-                    str(len(collection.board_games)),
-                    str(len(collection.expansions)),
+                    str(len(collection.get_board_games())),
+                    str(len(collection.get_expansions())),
                     collection.last_updated,
                 ]
             )
