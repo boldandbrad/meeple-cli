@@ -40,7 +40,7 @@ def rename_collection_data_dir(current_name: str, new_name: str) -> None:
 def last_updated(collection_name: str) -> str:
     latest_data_file = _latest_data_file(collection_name)
     if not latest_data_file:
-        return "[dim]NA[/dim]"
+        return None
     date = splitext(basename(latest_data_file))[0]
     return date
 
