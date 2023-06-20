@@ -15,7 +15,7 @@ from meeple.util.table_util import print_table
     "item_type",
     is_flag=True,
     flag_value="bg",
-    help="Output only board games.",
+    help="Include only board games.",
 )
 @click.option(
     "-e",
@@ -23,7 +23,7 @@ from meeple.util.table_util import print_table
     "item_type",
     is_flag=True,
     flag_value="ex",
-    help="Output only expansions.",
+    help="Include only expansions.",
 )
 @click.help_option("-h", "--help")
 def stats(collection_name: str, item_type: str) -> None:

@@ -28,6 +28,21 @@ and this project adheres to
     - Add `date` attribute.
     - Replace `boardgames` and `expansions` attributes with a single `items` attribute.
     - Add `type` attribute to `items` objects.
+- `meeple collections` - Update `--sort` option help text.
+- `meeple find`
+  - Update `-b/--boardgames` option help text.
+  - Update `-e/--expansions` option help text.
+  - Update `--players` option help text.
+  - Update `--max-time` option help text.
+  - Update `--weight` option help text.
+  - Update `--sort` option help text and move to bottom of options.
+- `meeple list`
+  - Update `-b/--boardgames` option help text.
+  - Update `-e/--expansions` option help text.
+  - Update `--sort` option help text.
+- `meeple stats`
+  - Update `-b/--boardgames` option help text.
+  - Update `-e/--expansions` option help text.
 - `GENERAL`
   - Rename `COLLECTION/S` argument `--help` references to `COLLECTION_NAME/S`
   - Rename `ID` argument `--help` references to `BGG_ID`

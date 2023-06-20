@@ -13,7 +13,7 @@ from meeple.util.table_util import CollectionHeader, print_table
     type=click.Choice(COLLECTION_SORT_KEYS, case_sensitive=False),
     default="updated",
     show_default=True,
-    help="Sort output by the provided column.",
+    help="Sort collections by the provided value.",
 )
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")

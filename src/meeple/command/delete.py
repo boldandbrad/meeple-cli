@@ -48,7 +48,7 @@ def delete(collection_names: List[str], yes: bool) -> None:
             # check that the given collection exists
             collection = get_collection(collection_name)
             if collection:
-                delete_collection(collection_name)
+                delete_collection(collection)
                 info_msg(
                     f"Deleted collection [u magenta]{collection_name}[/u magenta]."
                 )

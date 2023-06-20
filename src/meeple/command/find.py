@@ -30,7 +30,7 @@ from meeple.util.table_util import ItemHeader, print_table
     "item_type",
     is_flag=True,
     flag_value="bg",
-    help="Output only board games.",
+    help="Find only board games.",
 )
 @click.option(
     "-e",
@@ -38,29 +38,29 @@ from meeple.util.table_util import ItemHeader, print_table
     "item_type",
     is_flag=True,
     flag_value="ex",
-    help="Output only expansions.",
+    help="Find only expansions.",
 )
 @click.option(
     "--players",
     type=int,
-    help="Output only board games/expansions that support the provided player count.",
+    help="Find only items that support the provided player count.",
+)
+@click.option(
+    "--max-time",
+    type=int,
+    help="Find only items that fit the provided play time (Min).",
+)
+@click.option(
+    "--weight",
+    type=click.Choice(["1", "2", "3", "4"]),
+    help="Find only items that match the provided weight class. (Ex: 2 = 2.00-2.99)",
 )
 @click.option(
     "--sort",
     type=click.Choice(ITEM_SORT_KEYS, case_sensitive=False),
     default="rating",
     show_default=True,
-    help="Sort output by the provided column.",
-)
-@click.option(
-    "--max-time",
-    type=int,
-    help="Output only board games/expansions that fit the provided play time (Min).",
-)
-@click.option(
-    "--weight",
-    type=click.Choice(["1", "2", "3", "4"]),
-    help="Output only board games/expansions that match the provided relative weight. (Ex: 2 = 2.00-2.99)",
+    help="Sort items by the provided value.",
 )
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
