@@ -15,8 +15,9 @@ from meeple.util.message_util import (
 @click.argument("from_collection", shell_complete=complete_collections)
 @click.argument("to_collection", shell_complete=complete_collections)
 @click.argument("bgg_id", type=int)
+@click.option("--update", is_flag=True, help="Update collection data.")
 @click.help_option("-h", "--help")
-def move(from_collection: str, to_collection: str, bgg_id: int) -> None:
+def move(from_collection: str, to_collection: str, bgg_id: int, update: bool) -> None:
     """Move an item from one collection to another.
 
     - FROM_COLLECTION is the name of the intended source collection.
@@ -73,8 +74,13 @@ def move(from_collection: str, to_collection: str, bgg_id: int) -> None:
         )
 
     # persist changes
-    update_collection(from_collection)
-    update_collection(to_collection)
-    info_msg(
-        f"Moved [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
-    )
+    update_collection(from_collection, update_data=update)
+    update_collection(to_collection, update_data=update)
+    if update:
+        info_msg(
+            f"Moved [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta] and updated collections."
+        )
+    else:
+        info_msg(
+            f"Moved [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
+        )

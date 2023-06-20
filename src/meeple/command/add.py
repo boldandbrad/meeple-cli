@@ -14,8 +14,9 @@ from meeple.util.message_util import (
 @click.command()
 @click.argument("collection_name", shell_complete=complete_collections)
 @click.argument("bgg_id", type=int)
+@click.option("--update", is_flag=True, help="Update collection data.")
 @click.help_option("-h", "--help")
-def add(collection_name: str, bgg_id: int) -> None:
+def add(collection_name: str, bgg_id: int, update: bool) -> None:
     """Add an item to a collection.
 
     - COLLECTION_NAME is the name of the intended destination collection.
@@ -47,7 +48,12 @@ def add(collection_name: str, bgg_id: int) -> None:
         )
 
     # persist changes
-    update_collection(collection)
-    info_msg(
-        f"Added [i blue]{bgg_item.name}[/i blue] to collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
-    )
+    update_collection(collection, update_data=update)
+    if update:
+        info_msg(
+            f"Added [i blue]{bgg_item.name}[/i blue] to collection [u magenta]{collection.name}[/u magenta] and updated collection."
+        )
+    else:
+        info_msg(
+            f"Added [i blue]{bgg_item.name}[/i blue] to collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
+        )
