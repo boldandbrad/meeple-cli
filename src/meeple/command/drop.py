@@ -33,17 +33,14 @@ def drop(collection_name: str, bgg_id: int, update: bool) -> None:
     if not collection:
         invalid_collection_error(collection.name)
 
-    # get collection item ids
-    item_ids, to_add_ids, to_drop_ids = collection.get_state()
-
     # if the given id is slated to be added, simply undo that
-    if to_add_ids and bgg_id in to_add_ids:
-        to_add_ids.remove(bgg_id)
+    if bgg_id in collection.state.to_add_ids:
+        collection.state.to_add_ids.remove(bgg_id)
     # if the given id exists in the collection, drop the id
-    elif item_ids and bgg_id in item_ids:
-        item_ids.remove(bgg_id)
-        to_drop_ids.append(bgg_id)
-        to_drop_ids.sort()
+    elif bgg_id in collection.state.active_ids:
+        collection.state.active_ids.remove(bgg_id)
+        collection.state.to_drop_ids.append(bgg_id)
+        collection.state.to_drop_ids.sort()
     else:
         error_msg(
             f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{collection.name}[/u magenta]."

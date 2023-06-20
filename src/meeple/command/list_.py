@@ -25,7 +25,7 @@ from meeple.util.table_util import ItemHeader, print_table
     "item_type",
     is_flag=True,
     flag_value="bg",
-    help="Output only board games.",
+    help="List only board games.",
 )
 @click.option(
     "-e",
@@ -33,14 +33,14 @@ from meeple.util.table_util import ItemHeader, print_table
     "item_type",
     is_flag=True,
     flag_value="ex",
-    help="Output only expansions.",
+    help="List only expansions.",
 )
 @click.option(
     "--sort",
     type=click.Choice(ITEM_SORT_KEYS, case_sensitive=False),
     default="rating",
     show_default=True,
-    help="Sort output by the provided column.",
+    help="Sort items by the provided value.",
 )
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")

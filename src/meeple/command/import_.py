@@ -66,7 +66,6 @@ def import_(bgg_user: str, import_method: bool, dry_run: bool, verbose: bool) ->
 
     - BGG_USER is a BoardGameGeek username.
     """
-    # TODO: update this entire function
     # check that the given BoardGameGeek username is a valid
     user = get_bgg_user(bgg_user)
     if not user.user_id:
