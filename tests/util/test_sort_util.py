@@ -68,14 +68,10 @@ test_collections = [
     Collection(
         "abc",
         test_items,
-        test_items,
-        "2020-01-01",
     ),
     Collection(
         "bcd",
         test_items_short,
-        test_items_short,
-        "2000-01-01",
     ),
 ]
 

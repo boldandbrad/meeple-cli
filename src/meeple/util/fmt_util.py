@@ -1,7 +1,7 @@
 import numbers
 
+from meeple.type.collection import Collection
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
-from meeple.util.collection_util import is_pending_updates
 
 NA_VALUE = "[dim]NA[/dim]"
 
@@ -9,10 +9,10 @@ SORT_ASC_SYMBOL = "[blue]˄[/blue]"
 SORT_DESC_SYMBOL = "[blue]˅[/blue]"
 
 
-def fmt_collection_name(name: str) -> str:
-    if is_pending_updates(name):
-        return f"{name} ([red]*[/red])"
-    return name
+def fmt_collection_name(collection: Collection) -> str:
+    if collection.is_pending_updates():
+        return f"{collection.name} ([red]*[/red])"
+    return collection.name
 
 
 def fmt_date(date: str) -> str:
