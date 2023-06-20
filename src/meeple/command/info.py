@@ -14,16 +14,15 @@ from meeple.util.table_util import print_table
 
 
 @click.command()
-@click.argument("id", type=int)
+@click.argument("bgg_id", type=int)
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
-def info(id: int, verbose: bool) -> None:
+def info(bgg_id: int, verbose: bool) -> None:
     """View detailed information of an item.
 
-    - ID is the BoardGameGeek ID of the board game/expansion to be detailed.
+    - BGG_ID is the BoardGameGeek ID of the board game/expansion to be detailed.
     """
     # check that the given id is a valid one
-    bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
         invalid_id_error(bgg_id)

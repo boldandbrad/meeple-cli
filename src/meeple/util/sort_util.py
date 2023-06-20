@@ -41,7 +41,7 @@ def sort_collections(collection_list: [Collection], sort_key: str) -> [Collectio
     return (
         sorted(
             collection_list,
-            key=lambda collection: collection.last_updated,
+            key=lambda collection: str(collection.data.last_updated),
             reverse=True,
         ),
         SORT_DESC_SYMBOL,

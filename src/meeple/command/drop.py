@@ -1,11 +1,7 @@
 import click
 
 from meeple.util.api_util import get_bgg_item
-from meeple.util.collection_util import (
-    is_collection,
-    read_collection,
-    update_collection,
-)
+from meeple.util.collection_util import get_collection, update_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.message_util import (
     error_msg,
@@ -16,28 +12,28 @@ from meeple.util.message_util import (
 
 
 @click.command()
-@click.argument("collection", shell_complete=complete_collections)
-@click.argument("id", type=int)
+@click.argument("collection_name", shell_complete=complete_collections)
+@click.argument("bgg_id", type=int)
 @click.help_option("-h", "--help")
-def drop(collection: str, id: int) -> None:
+def drop(collection_name: str, bgg_id: int) -> None:
     """Remove an item from a collection.
 
-    - COLLECTION is the name of the collection to be modified.
+    - COLLECTION_NAME is the name of the collection to be modified.
 
-    - ID is the BoardGameGeek ID of the board game/expansion to be removed.
+    - BGG_ID is the BoardGameGeek ID of the board game/expansion to be removed.
     """
     # check that the given id is a valid BoardGameGeek ID
-    bgg_id = id
     bgg_item = get_bgg_item(bgg_id)
     if not bgg_item:
         invalid_id_error(bgg_id)
 
+    collection = get_collection(collection_name)
     # check that the given collection is a valid collection
-    if not is_collection(collection):
-        invalid_collection_error(collection)
+    if not collection:
+        invalid_collection_error(collection.name)
 
     # get collection item ids
-    item_ids, to_add_ids, to_drop_ids = read_collection(collection)
+    item_ids, to_add_ids, to_drop_ids = collection.get_state()
 
     # if the given id is slated to be added, simply undo that
     if to_add_ids and bgg_id in to_add_ids:
@@ -49,11 +45,11 @@ def drop(collection: str, id: int) -> None:
         to_drop_ids.sort()
     else:
         error_msg(
-            f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{collection}[/u magenta]."
+            f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{collection.name}[/u magenta]."
         )
 
     # persist changes
-    update_collection(collection, item_ids, to_add_ids, to_drop_ids)
+    update_collection(collection)
     info_msg(
-        f"Dropped [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update[/green]"
+        f"Dropped [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
     )

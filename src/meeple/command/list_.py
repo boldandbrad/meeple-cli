@@ -1,9 +1,7 @@
 import click
 
-from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
-from meeple.util.collection_util import is_collection, is_pending_updates
+from meeple.util.collection_util import get_collection
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import get_collection_items
 from meeple.util.fmt_util import (
     fmt_headers,
     fmt_item_type,
@@ -20,7 +18,7 @@ from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command(name="list")
-@click.argument("collection", shell_complete=complete_collections)
+@click.argument("collection_name", shell_complete=complete_collections)
 @click.option(
     "-b",
     "--boardgames",
@@ -47,45 +45,40 @@ from meeple.util.table_util import ItemHeader, print_table
 @click.option("-v", "--verbose", is_flag=True, help="Output additional details.")
 @click.help_option("-h", "--help")
 # TODO: add option to show grid lines or not in the table
-def list_(collection: str, item_type: str, sort: str, verbose: bool) -> None:
+def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> None:
     """List contents of a collection.
 
-    - COLLECTION is the name of the collection to be listed.
+    - COLLECTION_NAME is the name of the collection to be listed.
     """
     # check that the given collection is a valid collection
-    if not is_collection(collection):
-        invalid_collection_error(collection)
-
-    collection_items = get_collection_items(collection)
+    collection = get_collection(collection_name)
+    if not collection:
+        invalid_collection_error(collection.name)
 
     # check that local data exists for the given collection
-    if not collection_items:
+    if not collection.data.items:
         error_msg(
-            f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
+            f"Data not found for collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update {collection.name}[/green]"
         )
 
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        result_items = [
-            item for item in collection_items if item.type == BOARDGAME_TYPE
-        ]
+        result_items = collection.get_board_games()
     elif item_type == "ex":
-        result_items = [
-            item for item in collection_items if item.type == EXPANSION_TYPE
-        ]
+        result_items = collection.get_expansions()
     else:
-        result_items = collection_items
+        result_items = collection.data.items
 
     # check that data exists after applied filters
     if not result_items:
         error_msg(
-            f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
+            f"No items found matching provided filters for collection [u magenta]{collection.name}[/u magenta]."
         )
 
     # check if the collection is pending updates
-    if is_pending_updates(collection):
+    if collection.is_pending_updates():
         warn_msg(
-            f"Collection [u magenta]{collection}[/u magenta] has pending changes. To apply, run [green]meeple update {collection}[/green]"
+            f"Collection [u magenta]{collection.name}[/u magenta] has pending changes. To apply, run [green]meeple update {collection.name}[/green]"
         )
 
     # sort output

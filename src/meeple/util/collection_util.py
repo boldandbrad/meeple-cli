@@ -1,42 +1,37 @@
 import re
-from os import walk
-from os.path import join, splitext
-from pathlib import Path
+from datetime import date
+from os.path import splitext
 from typing import List
 
-from meeple.util.fs_util import get_collection_dir, read_yaml_file, write_yaml_file
+from meeple.type.collection import Collection
+from meeple.type.collection_data import CollectionData
+from meeple.type.collection_state import CollectionState
+from meeple.util.api_util import get_bgg_items
+from meeple.util.fs_util import (
+    delete_file,
+    get_data_file,
+    get_state_file,
+    get_state_files,
+    read_json_file,
+    read_yaml_file,
+    rename_file,
+    write_json_file,
+    write_yaml_file,
+)
+from meeple.util.sort_util import sort_items
 
-COLLECTION_DIR = get_collection_dir()
 
-_ITEM_LIST_KEY = "items"
-_OLD_ITEM_LIST_KEY = "bgg-ids"  # TODO: deprecated - eventually remove
-_TO_ADD_LIST_KEY = "to_add"
-_TO_DROP_LIST_KEY = "to_drop"
+def is_active_collection(collection_name: str) -> bool:
+    return collection_name in get_collection_names()
 
 
-def _collection_file(collection_name: str) -> str:
-    return join(COLLECTION_DIR, f"{collection_name}.yml")
-
-
-def _get_ids(data: dict, list_key: str) -> List[int]:
-    if list_key in data:
-        ids = data[list_key]
-        if not ids:
-            return []
-    # remove non int values from list
-    for bgg_id in ids:
-        if not isinstance(bgg_id, int):
-            ids.remove(bgg_id)
-    return ids
+def are_active_collections(collection_names: [str]) -> bool:
+    return set(collection_names) <= set(get_collection_names())
 
 
 def get_collection_names() -> List[str]:
-    # create in_path dir and exit if it does not exist
-    if not Path(COLLECTION_DIR).exists():
-        Path(COLLECTION_DIR).mkdir(parents=True)
-
-    # retrieve collection source files from in_path
-    collection_files = next(walk(COLLECTION_DIR))[2]
+    # retrieve collection state files from collection_dir
+    collection_files = get_state_files()
     collection_names = []
     for collection_file in collection_files:
         collection_name, ext = splitext(collection_file)
@@ -45,72 +40,79 @@ def get_collection_names() -> List[str]:
     return collection_names
 
 
-def is_collection(collection_name: str) -> bool:
-    return collection_name in get_collection_names()
+def get_collection(collection_name: str) -> Collection:
+    # check that the collection exists
+    if not is_active_collection(collection_name):
+        return None
+
+    # get collection state
+    state_dict = read_yaml_file(get_state_file(collection_name))
+    state = CollectionState.from_dict(state_dict)
+
+    # get collection data
+    # TODO: handle absent data file/reading from old data location
+    data_dict = read_json_file(get_data_file(collection_name))
+    data = CollectionData.from_dict(data_dict)
+
+    return Collection(collection_name, state=state, data=data)
 
 
-def is_pending_updates(collection_name: str) -> bool:
-    _, to_add_ids, to_drop_ids = read_collection(collection_name)
-    return len(to_add_ids) > 0 or len(to_drop_ids) > 0
-
-
-def are_collections(collection_names: [str]) -> bool:
-    return set(collection_names) <= set(get_collection_names())
-
-
-def read_collection(collection_name: str) -> (List[int], List[int], List[int]):
-    data = read_yaml_file(_collection_file(collection_name))
-
-    # check if data is in old format
-    # TODO: deprecated - eventually remove
-    if data and _OLD_ITEM_LIST_KEY in data:
-        bgg_ids = data[_OLD_ITEM_LIST_KEY]
-        if not bgg_ids:
-            return [], [], []
-
-        # remove non int values from list
-        for bgg_id in bgg_ids:
-            if not isinstance(bgg_id, int):
-                bgg_ids.remove(bgg_id)
-        return bgg_ids, [], []
-
-    if data:
-        return (
-            _get_ids(data, _ITEM_LIST_KEY),
-            _get_ids(data, _TO_ADD_LIST_KEY),
-            _get_ids(data, _TO_DROP_LIST_KEY),
-        )
-    return [], [], []
+def get_collections() -> List[Collection]:
+    return [
+        get_collection(collection_name) for collection_name in get_collection_names()
+    ]
 
 
 def create_collection(collection_name: str, to_add_ids: List[int] = []) -> None:
-    # TODO: create a class for this Collection object
-    data = {_ITEM_LIST_KEY: [], _TO_ADD_LIST_KEY: to_add_ids, _TO_DROP_LIST_KEY: []}
-    write_yaml_file(_collection_file(collection_name), data)
+    collection = Collection(collection_name)
+    if to_add_ids:
+        collection.state.to_add_ids = to_add_ids
+    write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
+    write_json_file(get_data_file(collection.name), collection.data.to_dict())
 
 
-def update_collection(
-    collection_name: str, item_ids: list, to_add_ids: list, to_drop_ids: list
-) -> None:
-    data = {
-        _ITEM_LIST_KEY: item_ids,
-        _TO_ADD_LIST_KEY: to_add_ids,
-        _TO_DROP_LIST_KEY: to_drop_ids,
-    }
-    write_yaml_file(_collection_file(collection_name), data)
+def update_collection(collection: Collection, update_data: bool = False) -> None:
+    # update collection state and return, if not updating collection data
+    if not update_data:
+        write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
+        return
+
+    # resolve pending state adds
+    if collection.state.to_add_ids:
+        collection.state.active_ids.extend(collection.state.to_add_ids)
+        collection.state.active_ids.sort()
+        collection.state.to_add_ids = []
+    # resolve pending state drops. (just dump the pending update indicator)
+    if collection.state.to_drop_ids:
+        collection.state.to_drop_ids = []
+
+    # update collection state
+    write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
+
+    # update collection data from BoardGameGeek
+    collection.data.items = get_bgg_items(collection.state.active_ids)
+    sort_items(collection.data.items, "id")
+    collection.data.last_updated = str(date.today())
+    write_json_file(get_data_file(collection.name), collection.data.to_dict())
 
 
-def rename_collection(current_name: str, new_name: str) -> None:
-    Path(_collection_file(current_name)).rename(join(COLLECTION_DIR, f"{new_name}.yml"))
+def rename_collection(collection: Collection, new_name: str) -> None:
+    # rename collection state file
+    rename_file(get_state_file(collection.name), get_state_file(new_name))
+    # rename collection data file
+    rename_file(get_data_file(collection.name), get_data_file(new_name))
 
 
-def delete_collection(collection_name: str) -> None:
-    Path(_collection_file(collection_name)).unlink()
+def delete_collection(collection: Collection) -> None:
+    # delete collection state file
+    delete_file(get_state_file(collection.name))
+    # delete collection data file
+    delete_file(get_data_file(collection.name))
 
 
 def unique_collection_name(collection_name: str) -> str:
     first_iteration = True
-    while is_collection(collection_name):
+    while is_active_collection(collection_name):
         if first_iteration:
             collection_name += "-1"
             first_iteration = False

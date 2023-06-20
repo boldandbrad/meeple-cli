@@ -1,16 +1,14 @@
 import click
 
-from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
-from meeple.util.collection_util import is_collection, is_pending_updates
+from meeple.util.collection_util import get_collection
 from meeple.util.completion_util import complete_collections
-from meeple.util.data_util import get_collection_items
 from meeple.util.fmt_util import fmt_avg_rank, fmt_rating, fmt_weight
 from meeple.util.message_util import error_msg, invalid_collection_error, warn_msg
 from meeple.util.table_util import print_table
 
 
 @click.command()
-@click.argument("collection", shell_complete=complete_collections)
+@click.argument("collection_name", shell_complete=complete_collections)
 @click.option(
     "-b",
     "--boardgames",
@@ -28,36 +26,34 @@ from meeple.util.table_util import print_table
     help="Output only expansions.",
 )
 @click.help_option("-h", "--help")
-def stats(collection: str, item_type: str) -> None:
+def stats(collection_name: str, item_type: str) -> None:
     """View collection statistics.
 
-    - COLLECTION is the name of the collection to be detailed.
+    - COLLECTION_NAME is the name of the collection to be detailed.
     """
     # check that the given collection is a valid collection
-    if not is_collection(collection):
+    collection = get_collection(collection_name)
+    if not collection:
         invalid_collection_error(collection)
 
-    collection_items = get_collection_items(collection)
     # check that data exists for the given collection
-    if not collection_items:
+    if not collection.data.items:
         error_msg(
-            f"Local data not found for [u magenta]{collection}[/u magenta]. To update, run: [green]meeple update {collection}[/green]"
+            f"Data not found for collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update {collection.name}[/green]"
         )
 
-    board_games = [item for item in collection_items if item.type == BOARDGAME_TYPE]
-    expansions = [item for item in collection_items if item.type == EXPANSION_TYPE]
     # determine what to include in results depending on given flags
     if item_type == "bg":
-        result_items = board_games
+        result_items = collection.get_board_games()
     elif item_type == "ex":
-        result_items = expansions
+        result_items = collection.get_expansions()
     else:
-        result_items = collection_items
+        result_items = collection.data.items
 
     # check that data exists after applied filters
     if not result_items:
         error_msg(
-            f"No items found matching provided filters for collection [u magenta]{collection}[/u magenta]."
+            f"No items found matching provided filters for collection [u magenta]{collection.name}[/u magenta]."
         )
 
     # calculate stats
@@ -95,21 +91,21 @@ def stats(collection: str, item_type: str) -> None:
     avg_max_players = round(sum_players / len(result_items), 2)
 
     # format output
-    num_bgs_tag = f"{len(board_games)} Board Game(s)"
-    num_exps_tag = f"{len(expansions)} Expansion(s)"
+    num_bgs_tag = f"{len(collection.get_board_games())} Board Game(s)"
+    num_exps_tag = f"{len(collection.get_expansions())} Expansion(s)"
     if item_type == "bg":
-        header = [f"[u magenta]{collection}[/u magenta]", num_bgs_tag]
+        header = [f"[u magenta]{collection.name}[/u magenta]", num_bgs_tag]
     elif item_type == "ex":
-        header = [f"[u magenta]{collection}[/u magenta]", num_exps_tag]
+        header = [f"[u magenta]{collection.name}[/u magenta]", num_exps_tag]
     else:
         header = [
-            f"[u magenta]{collection}[/u magenta]",
+            f"[u magenta]{collection.name}[/u magenta]",
             f"{num_bgs_tag} | {num_exps_tag}",
         ]
 
-    if is_pending_updates(collection):
+    if collection.is_pending_updates():
         warn_msg(
-            f"Collection [u magenta]{collection}[/u magenta] has pending changes. To apply, run [green]meeple update {collection}[/green]"
+            f"Collection [u magenta]{collection.name}[/u magenta] has pending changes. To apply, run [green]meeple update {collection.name}[/green]"
         )
 
     print_table([header])

@@ -1,8 +1,6 @@
 import click
 
-from meeple.type.collection import Collection
-from meeple.util.collection_util import get_collection_names, is_pending_updates
-from meeple.util.data_util import get_collection_items, last_updated
+from meeple.util.collection_util import get_collections
 from meeple.util.fmt_util import fmt_collection_name, fmt_date, fmt_headers
 from meeple.util.message_util import no_collections_exist_error, warn_msg
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
@@ -21,25 +19,15 @@ from meeple.util.table_util import CollectionHeader, print_table
 @click.help_option("-h", "--help")
 def collections(sort: str, verbose: bool) -> None:
     """List all collections."""
-    # attempt to retrieve collection names
-    collection_names = get_collection_names()
-
-    # check that local collections exist
-    if not collection_names:
+    # attempt to retrieve collections
+    collections = get_collections()
+    if not collections:
         no_collections_exist_error()
 
-    collections = []
+    # check if any collections are pending changes
     pending_changes = False
-    for collection_name in collection_names:
-        collection_items = get_collection_items(collection_name)
-        collections.append(
-            Collection(
-                collection_name,
-                collection_items,
-                fmt_date(last_updated(collection_name)),
-            )
-        )
-        if is_pending_updates(collection_name):
+    for collection in collections:
+        if collection.is_pending_updates():
             pending_changes = True
 
     # sort output
@@ -61,14 +49,14 @@ def collections(sort: str, verbose: bool) -> None:
 
     rows = []
     for collection in collections:
-        cols = [fmt_collection_name(collection.name)]
+        cols = [fmt_collection_name(collection)]
         # include additional data if the user chose verbose output
         if verbose:
             cols.extend(
                 [
                     str(len(collection.get_board_games())),
                     str(len(collection.get_expansions())),
-                    collection.last_updated,
+                    fmt_date(collection.data.last_updated),
                 ]
             )
 
