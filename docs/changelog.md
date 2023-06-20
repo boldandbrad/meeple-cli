@@ -9,6 +9,29 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `meeple add`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
+- `meeple drop`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
+- `meeple move`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
+
+### Changed
+
+- `DATA` - **BREAKING**
+  - Collection state
+    - Add `version` attribute to allow for more seamless data changes in the future.
+    - Rename `bgg-ids` attribute to `active`.
+  - Collection data
+    - Remove ability to store historical data. Flatten `./meeple/data` directory structure.
+      - Note: Historical data storage _may_ return in the future, but at this time it only increases complexity without benefit.
+    - Add `version` attribute to allow for more seamless data changes in the future.
+    - Add `date` attribute.
+    - Replace `boardgames` and `expansions` attributes with a single `items` attribute.
+    - Add `type` attribute to `items` objects.
+- `GENERAL`
+  - Rename `COLLECTION/S` argument `--help` references to `COLLECTION_NAME/S`
+  - Rename `ID` argument `--help` references to `BGG_ID`
+
 ## [v0.2.0] - 2023-05-22
 
 ### Added
