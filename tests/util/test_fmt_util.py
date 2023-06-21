@@ -1,3 +1,5 @@
+from meeple.type.collection import Collection
+from meeple.type.collection_state import CollectionState
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.fmt_util import (
     NA_VALUE,
@@ -14,13 +16,14 @@ from meeple.util.fmt_util import (
 
 
 def test_fmt_collection_name(mocker):
-    mocker.patch("meeple.util.fmt_util.is_pending_updates", side_effect=[True, False])
+    clean_collection = Collection("name")
+    clean_fmt = fmt_collection_name(clean_collection)
+    assert clean_fmt == "name"
 
-    pending_output = fmt_collection_name("collection")
-    assert pending_output == "collection ([red]*[/red])"
-
-    no_pending_output = fmt_collection_name("collection")
-    assert no_pending_output == "collection"
+    collection_state = CollectionState(to_add_ids=[12345])
+    dirty_collection = Collection("name", state=collection_state)
+    dirty_fmt = fmt_collection_name(dirty_collection)
+    assert dirty_fmt == "name ([red]*[/red])"
 
 
 def test_fmt_players():
@@ -51,13 +54,10 @@ def test_fmt_avg_rank():
 
 
 def test_fmt_rank():
-    na_output = fmt_rank("NA")
+    na_output = fmt_rank(0)
     assert na_output == NA_VALUE
 
-    na_output_2 = fmt_rank("Not Ranked")
-    assert na_output_2 == NA_VALUE
-
-    output = fmt_rank("50")
+    output = fmt_rank(50)
     assert output == "50"
 
 

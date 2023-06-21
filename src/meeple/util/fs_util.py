@@ -24,32 +24,32 @@ def _get_config_dir() -> str:
     return f"{CONFIG_DIR_ROOT}"
 
 
-def _get_collection_dir() -> str:
+def get_collection_dir(create: bool = True) -> str:
     collection_dir = join(_get_config_dir(), "collections")
     # create collection_dir if it does not exist
-    if not Path(collection_dir).exists():
+    if create and not Path(collection_dir).exists():
         Path(collection_dir).mkdir(parents=True)
     return collection_dir
 
 
-def _get_data_dir() -> str:
+def get_data_dir(create: bool = True) -> str:
     data_dir = join(_get_config_dir(), "data")
     # create data_dir if it does not exist
-    if not Path(data_dir).exists():
+    if create and not Path(data_dir).exists():
         Path(data_dir).mkdir(parents=True)
     return data_dir
 
 
 def get_state_file(collection_name: str) -> str:
-    return join(_get_collection_dir(), f"{collection_name}.yml")
+    return join(get_collection_dir(), f"{collection_name}.yml")
 
 
 def get_state_files() -> List[str]:
-    return next(walk(_get_collection_dir()))[2]
+    return next(walk(get_collection_dir()))[2]
 
 
 def get_data_file(collection_name: str) -> str:
-    return join(_get_data_dir(), f"{collection_name}.json")
+    return join(get_data_dir(), f"{collection_name}.json")
 
 
 def rename_file(old_path: str, new_path: str) -> None:
