@@ -15,6 +15,7 @@ def test_collection():
     assert len(collection.state.active_ids) == 0
     assert len(collection.state.to_add_ids) == 0
     assert len(collection.state.to_drop_ids) == 0
+    assert not collection.state
     assert isinstance(collection.state.to_dict(), dict)
 
     # test collection data
