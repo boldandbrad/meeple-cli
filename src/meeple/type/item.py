@@ -1,5 +1,4 @@
 import html
-import json
 
 
 def _parse_sub_dict(key_dict: dict) -> str:
@@ -36,7 +35,6 @@ class Item:
         name,
         item_type,
         year,
-        description,
         rating,
         weight,
         rank,
@@ -44,12 +42,12 @@ class Item:
         maxplayers,
         playtime,
         minage,
+        description: str = "",
     ):
         self.id = id
         self.name = name
         self.type = item_type
         self.year = year
-        self.description = description
         self.rating = rating
         self.weight = weight
         self.rank = rank
@@ -57,59 +55,13 @@ class Item:
         self.maxplayers = maxplayers
         self.playtime = playtime
         self.minage = minage
-
-    def __iter__(self):
-        yield from {
-            "id": self.id,
-            "name": self.name,
-            "type": self.type,
-            "year": self.year,
-            # don't serialize description to json
-            "rating": self.rating,
-            "weight": self.weight,
-            "rank": self.rank,
-            "minplayers": self.minplayers,
-            "maxplayers": self.maxplayers,
-            "playtime": self.playtime,
-            "minage": self.minage,
-        }.items()
-
-    def __str__(self) -> str:
-        return json.dumps(dict(self), ensure_ascii=False)
-
-    def __repr__(self) -> str:
-        return self.__str__()
+        self.description = description
 
     def __eq__(self, other) -> bool:
         return self.id == other.id
 
     def __hash__(self):
         return hash(("id", self.id))
-
-    @staticmethod
-    def from_json(json_dict: dict):
-        """Parse a json dict into an Item.
-
-        Args:
-            json_dict (dict): dictionary to parse.
-
-        Returns:
-            Item: Item
-        """
-        return Item(
-            json_dict["id"],
-            json_dict["name"],
-            json_dict["type"],
-            json_dict["year"],
-            "",  # don't attempt to read description from json
-            json_dict["rating"],
-            json_dict["weight"],
-            json_dict["rank"],
-            json_dict["minplayers"],
-            json_dict["maxplayers"],
-            json_dict["playtime"],
-            json_dict["minage"],
-        )
 
     @staticmethod
     def from_bgg_dict(bgg_dict: dict):
@@ -162,7 +114,6 @@ class Item:
             name,
             item_type,
             year,
-            description,
             rating,
             weight,
             rank,
@@ -170,4 +121,44 @@ class Item:
             maxplayers,
             playtime,
             minage,
+            description,
+        )
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+            "year": self.year,
+            "rating": self.rating,
+            "weight": self.weight,
+            "rank": self.rank,
+            "minplayers": self.minplayers,
+            "maxplayers": self.maxplayers,
+            "playtime": self.playtime,
+            "minage": self.minage,
+        }
+
+    @staticmethod
+    def from_dict(data_dict: dict):
+        """Parse a data dictionary into an Item.
+
+        Args:
+            data_dict (dict): dictionary to parse.
+
+        Returns:
+            Item: Item
+        """
+        return Item(
+            id=data_dict["id"],
+            name=data_dict["name"],
+            item_type=data_dict["type"],
+            year=data_dict["year"],
+            rating=data_dict["rating"],
+            weight=data_dict["weight"],
+            rank=data_dict["rank"],
+            minplayers=data_dict["minplayers"],
+            maxplayers=data_dict["maxplayers"],
+            playtime=data_dict["playtime"],
+            minage=data_dict["minage"],
         )

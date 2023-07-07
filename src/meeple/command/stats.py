@@ -34,7 +34,7 @@ def stats(collection_name: str, item_type: str) -> None:
     # check that the given collection is a valid collection
     collection = get_collection(collection_name)
     if not collection:
-        invalid_collection_error(collection)
+        invalid_collection_error(collection_name)
 
     # check that data exists for the given collection
     if not collection.data.items:

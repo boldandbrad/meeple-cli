@@ -3,6 +3,7 @@ from typing import List
 
 import click
 
+from meeple.type.collection import Collection
 from meeple.util.collection_util import (
     get_collection,
     get_collections,
@@ -30,19 +31,23 @@ def update(collection_names: List[str], force: bool) -> None:
 
     - COLLECTIONS (optional) are names of collections to update. [default: all]
     """
-    # update the given collection(s)
-    collections = []
+    # attempt to get the given collection(s)
     if collection_names:
-        for collection_name in collection_names:
-            collections.append(get_collection(collection_name))
-    # otherwise, attempt to update all active collections
+        collections = [
+            get_collection(collection_name)
+            if is_active_collection(collection_name)
+            else Collection(collection_name)
+            for collection_name in collection_names
+        ]
+    # otherwise, attempt to get all active collections
     else:
         collections = get_collections()
 
-    # check that local collections exist
+    # check that collections exist
     if not collections:
         no_collections_exist_error()
 
+    # attempt to update multiple collections
     if len(collections) > 1:
         info_msg("Updating collection data...")
 
@@ -78,6 +83,7 @@ def update(collection_names: List[str], force: bool) -> None:
 
         info_msg("Updated collection data.")
 
+    # update just one collection
     else:
         # check if collection exists
         collection = collections[0]

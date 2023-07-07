@@ -53,7 +53,7 @@ def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> Non
     # check that the given collection is a valid collection
     collection = get_collection(collection_name)
     if not collection:
-        invalid_collection_error(collection.name)
+        invalid_collection_error(collection_name)
 
     # check that local data exists for the given collection
     if not collection.data.items:
