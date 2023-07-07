@@ -31,7 +31,7 @@ def add(collection_name: str, bgg_id: int, update: bool) -> None:
     # check that the given collection is a valid collection
     collection = get_collection(collection_name)
     if not collection:
-        invalid_collection_error(collection.name)
+        invalid_collection_error(collection_name)
 
     # if the given id is slated to be dropped, simply undo that
     if bgg_id in collection.state.to_drop_ids:

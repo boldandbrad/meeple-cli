@@ -1,4 +1,3 @@
-import json
 from typing import List
 
 from meeple.type.item import Item
@@ -25,7 +24,7 @@ class CollectionData:
         return {
             DATA_VERSION_KEY: "v1.0",  # TODO: make this dynamic
             DATA_DATE_KEY: self.last_updated,
-            DATA_ITEMS_KEY: [item.__dict__ for item in self.items],
+            DATA_ITEMS_KEY: [item.to_dict() for item in self.items],
         }
 
     @staticmethod
@@ -34,7 +33,8 @@ class CollectionData:
         return CollectionData(
             last_updated=data_dict[DATA_DATE_KEY],
             items=[
-                json.loads(json.dumps(item_dict), object_hook=Item.from_json)
+                Item.from_dict(item_dict)
                 for item_dict in data_dict[DATA_ITEMS_KEY]
+                if item_dict
             ],
         )

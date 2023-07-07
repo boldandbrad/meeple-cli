@@ -12,17 +12,19 @@ from meeple.util.message_util import (
 
 
 @click.command()
-@click.argument("from_collection", shell_complete=complete_collections)
-@click.argument("to_collection", shell_complete=complete_collections)
+@click.argument("from_collection_name", shell_complete=complete_collections)
+@click.argument("to_collection_name", shell_complete=complete_collections)
 @click.argument("bgg_id", type=int)
 @click.option("--update", is_flag=True, help="Update collection data.")
 @click.help_option("-h", "--help")
-def move(from_collection: str, to_collection: str, bgg_id: int, update: bool) -> None:
+def move(
+    from_collection_name: str, to_collection_name: str, bgg_id: int, update: bool
+) -> None:
     """Move an item from one collection to another.
 
-    - FROM_COLLECTION is the name of the intended source collection.
+    - FROM_COLLECTION_NAME is the name of the intended source collection.
 
-    - TO_COLLECTION is the name of the intended destination collection.
+    - TO_COLLECTION_NAME is the name of the intended destination collection.
 
     - BGG_ID is the BoardGameGeek ID of the board game/expansion to be moved.
     """
@@ -32,15 +34,15 @@ def move(from_collection: str, to_collection: str, bgg_id: int, update: bool) ->
         invalid_id_error(bgg_id)
 
     # check that the given from collection is a valid collection
-    from_collection = get_collection(from_collection)
+    from_collection = get_collection(from_collection_name)
     if not from_collection:
-        invalid_collection_error(from_collection.name)
+        invalid_collection_error(from_collection_name)
 
     # check that the given to collection is a valid collection
-    to_collection = get_collection(to_collection)
+    to_collection = get_collection(to_collection_name)
     if not to_collection:
         # TODO: prompt to create the dest collection
-        invalid_collection_error(to_collection.name)
+        invalid_collection_error(to_collection_name)
 
     # drop the id from the from collection
     # if the given id is slated to be added, simply undo that

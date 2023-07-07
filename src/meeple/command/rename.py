@@ -22,7 +22,7 @@ def rename(collection_name: str, new_name: str) -> None:
     # check that the given collection is a valid collection
     collection = get_collection(collection_name)
     if not collection:
-        invalid_collection_error(collection)
+        invalid_collection_error(collection_name)
 
     # check that the given collection new name doesn't already exist
     if is_active_collection(new_name):
