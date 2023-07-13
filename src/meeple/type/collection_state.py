@@ -29,7 +29,7 @@ class CollectionState:
 
     def to_dict(self) -> dict:
         return {
-            STATE_VERSION_KEY: "v1.0",  # TODO: make this dynamic
+            STATE_VERSION_KEY: "1.0",  # TODO: make this dynamic
             STATE_ACTIVE_KEY: self.active_ids,
             STATE_TO_ADD_KEY: self.to_add_ids,
             STATE_TO_DROP_KEY: self.to_drop_ids,

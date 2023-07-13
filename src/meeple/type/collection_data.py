@@ -22,7 +22,7 @@ class CollectionData:
 
     def to_dict(self) -> dict:
         return {
-            DATA_VERSION_KEY: "v1.0",  # TODO: make this dynamic
+            DATA_VERSION_KEY: "1.0",  # TODO: make this dynamic
             DATA_DATE_KEY: self.last_updated,
             DATA_ITEMS_KEY: [item.to_dict() for item in self.items],
         }

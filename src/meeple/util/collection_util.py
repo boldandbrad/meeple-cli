@@ -50,9 +50,14 @@ def get_collection(collection_name: str) -> Collection:
     state = CollectionState.from_dict(state_dict)
 
     # get collection data
-    # TODO: handle absent data file/reading from old data location
-    data_dict = read_json_file(get_data_file(collection_name))
-    data = CollectionData.from_dict(data_dict)
+    # TODO: handle reading from old data location?
+    data_file = get_data_file(collection_name)
+    data_dict = read_json_file(data_file)
+    if data_dict:
+        data = CollectionData.from_dict(data_dict)
+    else:
+        data = CollectionData()
+        write_json_file(data_file, data.to_dict())
 
     return Collection(collection_name, state=state, data=data)
 
