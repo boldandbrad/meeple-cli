@@ -28,4 +28,8 @@ class Collection:
         return [item for item in self.data.items if item.type == EXPANSION_TYPE]
 
     def is_pending_updates(self) -> bool:
-        return len(self.state.to_add_ids) > 0 or len(self.state.to_drop_ids) > 0
+        return (
+            len(self.state.to_add_ids) > 0
+            or len(self.state.to_drop_ids) > 0
+            or (len(self.state.active_ids) != len(self.data.items))
+        )
