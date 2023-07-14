@@ -20,6 +20,7 @@ from meeple.command import (
     update,
 )
 from meeple.util.cmd_util import SectionedHelpGroup
+from meeple.util.fs_util import check_fs
 
 commands = {
     "Collection Commands": [
@@ -54,7 +55,7 @@ commands = {
 )
 def cli() -> None:
     """Main 'meeple' command."""
-    pass
+    check_fs()
 
 
 for section, cmds in commands.items():

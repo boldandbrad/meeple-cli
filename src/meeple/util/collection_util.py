@@ -9,9 +9,9 @@ from meeple.type.collection_state import CollectionState
 from meeple.util.api_util import get_bgg_items
 from meeple.util.fs_util import (
     delete_file,
-    get_data_file,
-    get_state_file,
-    get_state_files,
+    get_collection_data_file,
+    get_collection_state_file,
+    get_collection_state_files,
     read_json_file,
     read_yaml_file,
     rename_file,
@@ -31,7 +31,7 @@ def are_active_collections(collection_names: [str]) -> bool:
 
 def get_collection_names() -> List[str]:
     # retrieve collection state files from collection_dir
-    collection_files = get_state_files()
+    collection_files = get_collection_state_files()
     collection_names = []
     for collection_file in collection_files:
         collection_name, ext = splitext(collection_file)
@@ -46,12 +46,11 @@ def get_collection(collection_name: str) -> Collection:
         return None
 
     # get collection state
-    state_dict = read_yaml_file(get_state_file(collection_name))
+    state_dict = read_yaml_file(get_collection_state_file(collection_name))
     state = CollectionState.from_dict(state_dict)
 
     # get collection data
-    # TODO: handle reading from old data location?
-    data_file = get_data_file(collection_name)
+    data_file = get_collection_data_file(collection_name)
     data_dict = read_json_file(data_file)
     if data_dict:
         data = CollectionData.from_dict(data_dict)
@@ -72,14 +71,20 @@ def create_collection(collection_name: str, to_add_ids: List[int] = []) -> None:
     collection = Collection(collection_name)
     if to_add_ids:
         collection.state.to_add_ids = to_add_ids
-    write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
-    write_json_file(get_data_file(collection.name), collection.data.to_dict())
+    write_yaml_file(
+        get_collection_state_file(collection.name), collection.state.to_dict()
+    )
+    write_json_file(
+        get_collection_data_file(collection.name), collection.data.to_dict()
+    )
 
 
 def update_collection(collection: Collection, update_data: bool = False) -> None:
     # update collection state and return, if not updating collection data
     if not update_data:
-        write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
+        write_yaml_file(
+            get_collection_state_file(collection.name), collection.state.to_dict()
+        )
         return
 
     # resolve pending state adds
@@ -92,27 +97,35 @@ def update_collection(collection: Collection, update_data: bool = False) -> None
         collection.state.to_drop_ids = []
 
     # update collection state
-    write_yaml_file(get_state_file(collection.name), collection.state.to_dict())
+    write_yaml_file(
+        get_collection_state_file(collection.name), collection.state.to_dict()
+    )
 
     # update collection data from BoardGameGeek
     collection.data.items = get_bgg_items(collection.state.active_ids)
     sort_items(collection.data.items, "id")
     collection.data.last_updated = str(date.today())
-    write_json_file(get_data_file(collection.name), collection.data.to_dict())
+    write_json_file(
+        get_collection_data_file(collection.name), collection.data.to_dict()
+    )
 
 
 def rename_collection(collection: Collection, new_name: str) -> None:
     # rename collection state file
-    rename_file(get_state_file(collection.name), get_state_file(new_name))
+    rename_file(
+        get_collection_state_file(collection.name), get_collection_state_file(new_name)
+    )
     # rename collection data file
-    rename_file(get_data_file(collection.name), get_data_file(new_name))
+    rename_file(
+        get_collection_data_file(collection.name), get_collection_data_file(new_name)
+    )
 
 
 def delete_collection(collection: Collection) -> None:
     # delete collection state file
-    delete_file(get_state_file(collection.name))
+    delete_file(get_collection_state_file(collection.name))
     # delete collection data file
-    delete_file(get_data_file(collection.name))
+    delete_file(get_collection_data_file(collection.name))
 
 
 def unique_collection_name(collection_name: str) -> str:

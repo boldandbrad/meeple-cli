@@ -6,9 +6,6 @@ DATA_VERSION_KEY = "version"
 DATA_DATE_KEY = "date"
 DATA_ITEMS_KEY = "items"
 
-OLD_DATA_BG_KEY = "boardgames"  # TODO: deprecated - remove old key
-OLD_DATA_EX_KEY = "expansions"  # TODO: deprecated - remove old key
-
 
 class CollectionData:
     """Collection data record."""
@@ -29,7 +26,7 @@ class CollectionData:
 
     @staticmethod
     def from_dict(data_dict: dict):
-        # TODO: handle reading old data format
+        # TODO: handle reading v0 data formats?
         return CollectionData(
             last_updated=data_dict[DATA_DATE_KEY],
             items=[
