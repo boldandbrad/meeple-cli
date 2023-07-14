@@ -17,12 +17,15 @@ and this project adheres to
 
 ### Changed
 
-- `DATA` - **BREAKING**
-  - Collection state
+- `DATA`
+  - Migrate collection state files to new location and format (NON-BREAKING - these migrations happen automatically)
+    - Move location of collection state files from `.meeple/collections/` to `.meeple/collections/state/`. Automatically migrate existing files.
     - Add `version` attribute to allow for more seamless data changes in the future.
-    - Rename `bgg-ids` attribute to `active`.
-  - Collection data
-    - Remove ability to store historical data. Flatten `./meeple/data` directory structure.
+    - Rename `bgg_ids` attribute to `active`.
+  - Update collection data storage pattern (**BREAKING** - historical data is no longer tracked)
+    - Move _existing_ collection data files from `.meeple/data/` to `.meeple/archives/v0/`
+    - Move location of _new_ collection data files from `.meeple/data/` to `.meeple/collections/data/`
+    - Only store data for the most recent update
       - Note: Historical data storage _may_ return in the future, but at this time it only increases complexity without benefit.
     - Add `version` attribute to allow for more seamless data changes in the future.
     - Add `date` attribute.

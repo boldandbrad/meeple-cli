@@ -2,7 +2,7 @@ from typing import List
 
 STATE_VERSION_KEY = "version"
 STATE_ACTIVE_KEY = "active"
-OLD_STATE_ACTIVE_KEY = "bgg-ids"  # TODO: deprecated, remove old key
+V0_STATE_ACTIVE_KEY = "bgg_ids"  # TODO: deprecated, remove in v2
 STATE_TO_ADD_KEY = "to_add"
 STATE_TO_DROP_KEY = "to_drop"
 
@@ -37,9 +37,9 @@ class CollectionState:
 
     @staticmethod
     def from_dict(state_dict: dict):
-        # TODO: deprecated - remove old key check
-        if OLD_STATE_ACTIVE_KEY in state_dict:
-            active_ids = state_dict[OLD_STATE_ACTIVE_KEY]
+        # TODO: deprecated - remove v0 key check in v2
+        if V0_STATE_ACTIVE_KEY in state_dict:
+            active_ids = state_dict[V0_STATE_ACTIVE_KEY]
         else:
             active_ids = state_dict[STATE_ACTIVE_KEY]
         return CollectionState(

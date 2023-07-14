@@ -26,7 +26,7 @@ def test_are_active_collections(mocker):
 
 def test_get_collection_names(mocker):
     mocker.patch(
-        "meeple.util.collection_util.get_state_files",
+        "meeple.util.collection_util.get_collection_state_files",
         side_effect=[["one.yml", "two.yml"]],
     )
     collection_names = get_collection_names()
