@@ -14,6 +14,8 @@ and this project adheres to
 - `meeple add`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
 - `meeple drop`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
 - `meeple move`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
+- `meeple list`: `--verbose` - Summarize output above table. ([#40](https://github.com/boldandbrad/meeple-cli/issues/40))
+- `meeple find`: `--verbose` - Summarize output above table. ([#40](https://github.com/boldandbrad/meeple-cli/issues/40))
 
 ### Changed
 

@@ -12,7 +12,12 @@ from meeple.util.fmt_util import (
     fmt_weight,
     fmt_year,
 )
-from meeple.util.message_util import error_msg, invalid_collection_error, warn_msg
+from meeple.util.message_util import (
+    error_msg,
+    info_msg,
+    invalid_collection_error,
+    warn_msg,
+)
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 from meeple.util.table_util import ItemHeader, print_table
 
@@ -125,4 +130,8 @@ def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> Non
 
         rows.append(cols)
 
+    if verbose:
+        info_msg(
+            f"Showing {len(result_items)} of {len(collection.data.items)} items from collection [u magenta]{collection.name}[/u magenta]."
+        )
     print_table(rows, headers)

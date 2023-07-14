@@ -17,7 +17,7 @@ from meeple.util.fmt_util import (
     fmt_weight,
     fmt_year,
 )
-from meeple.util.message_util import error_msg, no_collections_exist_error
+from meeple.util.message_util import error_msg, info_msg, no_collections_exist_error
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 from meeple.util.table_util import ItemHeader, print_table
 
@@ -92,6 +92,7 @@ def find(
 
     # get collection items
     result_items = []
+    total_unique_items = []
     collection_list = []
     for collection in collections:
         collection_list.append(collection)
@@ -102,10 +103,13 @@ def find(
         elif item_type == "ex":
             result_items.extend(collection.get_expansions())
         else:
-            result_items = collection.data.items
+            result_items.extend(collection.data.items)
+
+        total_unique_items.extend(collection.data.items)
 
     # remove duplicates
     result_items = list(set(result_items))
+    total_unique_items = list(set(total_unique_items))
 
     # apply provided filters
     if players:
@@ -180,4 +184,8 @@ def find(
             )
         rows.append(cols)
 
+    if verbose:
+        info_msg(
+            f"Showing {len(result_items)} of {len(total_unique_items)} unique items from collection(s) [u magenta]{'[/u magenta], [u magenta]'.join([collection.name for collection in collections])}[/u magenta]."
+        )
     print_table(rows, headers)
