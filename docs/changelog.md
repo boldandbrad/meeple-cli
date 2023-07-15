@@ -46,6 +46,7 @@ and this project adheres to
   - Update `-e/--expansions` option help text.
   - Update `--sort` option help text.
 - `meeple stats`
+  - Update output summary message and table format.
   - Update `-b/--boardgames` option help text.
   - Update `-e/--expansions` option help text.
 - `GENERAL`
