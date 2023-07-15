@@ -32,6 +32,7 @@ jobs:
       - name: Build package via flit
         run: flit build
       - name: Publish package to pypi
+        # nosemgrep
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
