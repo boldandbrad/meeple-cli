@@ -3,7 +3,12 @@ import click
 from meeple.util.collection_util import get_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.fmt_util import fmt_avg_rank, fmt_rating, fmt_weight
-from meeple.util.message_util import error_msg, invalid_collection_error, warn_msg
+from meeple.util.message_util import (
+    error_msg,
+    info_msg,
+    invalid_collection_error,
+    warn_msg,
+)
 from meeple.util.table_util import print_table
 
 
@@ -90,35 +95,21 @@ def stats(collection_name: str, item_type: str) -> None:
         avg_weight = 0
     avg_max_players = round(sum_players / len(result_items), 2)
 
-    # format output
-    num_bgs_tag = f"{len(collection.get_board_games())} Board Game(s)"
-    num_exps_tag = f"{len(collection.get_expansions())} Expansion(s)"
-    if item_type == "bg":
-        header = [f"[u magenta]{collection.name}[/u magenta]", num_bgs_tag]
-    elif item_type == "ex":
-        header = [f"[u magenta]{collection.name}[/u magenta]", num_exps_tag]
-    else:
-        header = [
-            f"[u magenta]{collection.name}[/u magenta]",
-            f"{num_bgs_tag} | {num_exps_tag}",
-        ]
-
     if collection.is_pending_updates():
         warn_msg(
             f"Collection [u magenta]{collection.name}[/u magenta] has pending changes. To apply, run [green]meeple update {collection.name}[/green]"
         )
 
-    print_table([header])
-    print_table(
-        [
-            [
-                f"Avg. Rating: {fmt_rating(avg_rating)}",
-                f"Avg. Max Players: {avg_max_players}",
-            ],
-            [
-                f"Avg. Rank: {fmt_avg_rank(avg_rank)}",
-                f"Avg. Weight: {fmt_weight(avg_weight)}",
-            ],
-        ],
-        row_lines=True,
+    info_msg(
+        f"Showing average stats for {len(result_items)} of {len(collection.data.items)} items from collection [u magenta]{collection.name}[/u magenta]."
     )
+    headers = ["Rank", "Rating", "Weight", "Max Players"]
+    rows = [
+        [
+            f"{fmt_avg_rank(avg_rank)}",
+            f"{fmt_rating(avg_rating)}",
+            f"{fmt_weight(avg_weight)}",
+            f"{avg_max_players}",
+        ],
+    ]
+    print_table(rows, headers)
