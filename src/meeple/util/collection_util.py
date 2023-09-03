@@ -1,6 +1,5 @@
 import re
 from datetime import date
-from os.path import splitext
 from typing import List
 
 from meeple.type.collection import Collection
@@ -30,14 +29,7 @@ def are_active_collections(collection_names: [str]) -> bool:
 
 
 def get_collection_names() -> List[str]:
-    # retrieve collection state files from collection_dir
-    collection_files = get_collection_state_files()
-    collection_names = []
-    for collection_file in collection_files:
-        collection_name, ext = splitext(collection_file)
-        if ext == ".yml":
-            collection_names.append(collection_name)
-    return collection_names
+    return [f.stem for f in get_collection_state_files()]
 
 
 def get_collection(collection_name: str) -> Collection:
@@ -62,9 +54,7 @@ def get_collection(collection_name: str) -> Collection:
 
 
 def get_collections() -> List[Collection]:
-    return [
-        get_collection(collection_name) for collection_name in get_collection_names()
-    ]
+    return [get_collection(n) for n in get_collection_names()]
 
 
 def create_collection(collection_name: str, to_add_ids: List[int] = []) -> None:

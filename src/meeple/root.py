@@ -53,9 +53,11 @@ commands = {
     package_name="meeple-cli",
     message="%(prog)s-cli, v%(version)s",
 )
-def cli() -> None:
+@click.pass_context
+def cli(ctx) -> None:
     """Main 'meeple' command."""
-    check_fs()
+    if check_fs():
+        ctx.invoke(update, collection_names=[], force=True)
 
 
 for section, cmds in commands.items():
