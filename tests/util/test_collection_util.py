@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from meeple.util.collection_util import (
     are_active_collections,
     get_collection_names,
@@ -27,7 +29,7 @@ def test_are_active_collections(mocker):
 def test_get_collection_names(mocker):
     mocker.patch(
         "meeple.util.collection_util.get_collection_state_files",
-        side_effect=[["one.yml", "two.yml"]],
+        side_effect=[[Path("one.yml"), Path("two.yml")]],
     )
     collection_names = get_collection_names()
     assert collection_names == ["one", "two"]
