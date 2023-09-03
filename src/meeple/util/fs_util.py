@@ -2,8 +2,6 @@ import getpass
 import json
 import platform
 import shutil
-from os import walk
-from os.path import join
 from pathlib import Path
 from typing import List
 
@@ -12,121 +10,121 @@ import yaml
 # STATIC LOCATIONS
 
 
-def _get_meeple_dir() -> str:
+def _get_meeple_dir() -> Path:
     meeple_root_dir = ".meeple/test"
     usrname = getpass.getuser()
     system = platform.system()
     if system == "Linux":
-        return f"/home/{usrname}/{meeple_root_dir}"
+        return Path(f"/home/{usrname}/{meeple_root_dir}")
     elif system == "Darwin":
-        return f"/Users/{usrname}/{meeple_root_dir}"
+        return Path(f"/Users/{usrname}/{meeple_root_dir}")
     elif system == "Windows":
-        return f"C:\\Users\\{usrname}\\{meeple_root_dir}"
-    return f"{meeple_root_dir}"
+        return Path(f"C:\\Users\\{usrname}\\{meeple_root_dir}")
+    return Path(f"{meeple_root_dir}")
 
 
-MEEPLE_STATE_FILE = join(_get_meeple_dir(), "state.yml")
+MEEPLE_DIR = _get_meeple_dir()
 
-COLLECTIONS_DIR = join(_get_meeple_dir(), "collections")
-COLLECTIONS_STATE_DIR = join(COLLECTIONS_DIR, "state")
-COLLECTIONS_DATA_DIR = join(COLLECTIONS_DIR, "data")
+MEEPLE_STATE_FILE = MEEPLE_DIR.joinpath("state.yml")
+
+COLLECTIONS_DIR = MEEPLE_DIR.joinpath("collections")
+COLLECTIONS_STATE_DIR = COLLECTIONS_DIR.joinpath("state")
+COLLECTIONS_DATA_DIR = COLLECTIONS_DIR.joinpath("data")
 
 V0_COLLECTIONS_STATE_DIR = COLLECTIONS_DIR
-V0_COLLECTIONS_DATA_DIR = join(_get_meeple_dir(), "data")
+V0_COLLECTIONS_DATA_DIR = MEEPLE_DIR.joinpath("data")
 
-ARCHIVES_DIR = join(_get_meeple_dir(), "archives")
-V0_ARCHIVE_DIR = join(ARCHIVES_DIR, "v0")
+ARCHIVES_DIR = MEEPLE_DIR.joinpath("archives")
+V0_ARCHIVE_DIR = ARCHIVES_DIR.joinpath("v0")
 
 
 def _migrate_v0_data() -> None:
-    # migrate v0.x data
     # if ymls exist directly in .meeple/collections/, move them to ./meeple/collections/state/
-    for file_path in next(walk(V0_COLLECTIONS_STATE_DIR))[2]:
-        if file_path.endswith(".yml"):
-            Path(join(V0_COLLECTIONS_STATE_DIR), file_path).rename(
-                join(COLLECTIONS_STATE_DIR, file_path)
-            )
+    for file_path in list(V0_COLLECTIONS_STATE_DIR.glob("*.yml")):
+        file_path.rename(COLLECTIONS_STATE_DIR.joinpath(file_path.name))
 
     # if dirs exist in .meeple/data/, move them to .meeple/archives/v0/ and delete .meeple/data/
-    if Path(V0_COLLECTIONS_DATA_DIR).exists():
-        data_dirs = next(walk(V0_COLLECTIONS_DATA_DIR))[1]
-        if data_dirs:
-            Path(join(ARCHIVES_DIR, "v0")).mkdir(parents=True, exist_ok=True)
-            for dir_path in next(walk(V0_COLLECTIONS_DATA_DIR))[1]:
-                Path(join(V0_COLLECTIONS_DATA_DIR, dir_path)).rename(
-                    join(ARCHIVES_DIR, "v0", dir_path)
-                )
+    if V0_COLLECTIONS_DATA_DIR.exists():
+        V0_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+        for dir_path in [d for d in V0_COLLECTIONS_DATA_DIR.iterdir() if d.is_dir()]:
+            dir_path.rename(V0_ARCHIVE_DIR.joinpath(dir_path.name))
         delete_dir(V0_COLLECTIONS_DATA_DIR)
+
+    # add migration indicator to state file
     write_yaml_file(MEEPLE_STATE_FILE, {"migrated_v0": True}, append=True)
 
 
-def check_fs() -> None:
-    # check that meeple root dir exists
-    Path(_get_meeple_dir()).mkdir(parents=True, exist_ok=True)
+def check_fs() -> bool:
+    # check that meeple root dir and state file exist
+    MEEPLE_DIR.mkdir(parents=True, exist_ok=True)
+    MEEPLE_STATE_FILE.touch(exist_ok=True)
 
     # check that collection dirs exist
-    Path(COLLECTIONS_STATE_DIR).mkdir(parents=True, exist_ok=True)
-    Path(COLLECTIONS_DATA_DIR).mkdir(parents=True, exist_ok=True)
+    COLLECTIONS_STATE_DIR.mkdir(parents=True, exist_ok=True)
+    COLLECTIONS_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     # migrate v0.x data
     meeple_state = read_yaml_file(MEEPLE_STATE_FILE)
     if "migrated_v0" not in meeple_state:
         _migrate_v0_data()
+        return True
+    return False
 
 
 # COLLECTION FILE PATHS
 
 
-def get_collection_state_file(collection_name: str) -> str:
-    return join(COLLECTIONS_STATE_DIR, f"{collection_name}.yml")
+def get_collection_state_file(collection_name: str) -> Path:
+    return COLLECTIONS_STATE_DIR.joinpath(f"{collection_name}.yml")
 
 
-def get_collection_state_files() -> List[str]:
-    return next(walk(COLLECTIONS_STATE_DIR))[2]
+def get_collection_state_files() -> List[Path]:
+    return list(COLLECTIONS_STATE_DIR.glob("*.yml"))
 
 
-def get_collection_data_file(collection_name: str) -> str:
-    return join(COLLECTIONS_DATA_DIR, f"{collection_name}.json")
+def get_collection_data_file(collection_name: str) -> Path:
+    return COLLECTIONS_DATA_DIR.joinpath(f"{collection_name}.json")
 
 
 # GENERAL FILE UTILITIES
 
 
-def rename_file(old_path: str, new_path: str) -> None:
-    old_path = Path(old_path)
+def rename_file(old_path: Path, new_path: Path) -> None:
     if old_path.is_file():
         old_path.rename(new_path)
 
 
-def read_json_file(file_path: str) -> dict:
-    if Path(file_path).is_file():
-        with open(file_path, "r") as f:
+def read_json_file(file_path: Path) -> dict:
+    if file_path.is_file():
+        with file_path.open("r") as f:
             return json.load(f)
     return {}
 
 
-def write_json_file(file_path: str, data: dict) -> None:
-    with open(file_path, "w") as f:
+def write_json_file(file_path: Path, data: dict) -> None:
+    with file_path.open("w") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 
-def read_yaml_file(file_path: str) -> dict:
-    if Path(file_path).is_file():
-        with open(file_path, "r") as f:
-            return yaml.load(f, Loader=yaml.FullLoader)
+def read_yaml_file(file_path: Path) -> dict:
+    if file_path.is_file():
+        with file_path.open("r") as f:
+            contents = yaml.load(f, Loader=yaml.FullLoader)
+            if contents:
+                return contents
     return {}
 
 
-def write_yaml_file(file_path: str, data: dict, append: bool = False) -> None:
+def write_yaml_file(file_path: Path, data: dict, append: bool = False) -> None:
     mode = "a" if append else "w"
-    with open(file_path, mode) as f:
+    with file_path.open(mode) as f:
         yaml.dump(data, f)
 
 
-def delete_file(file_path: str) -> None:
-    Path(file_path).unlink(missing_ok=True)
+def delete_file(file_path: Path) -> None:
+    file_path.unlink(missing_ok=True)
 
 
-def delete_dir(dir_path: str) -> None:
-    if Path(dir_path).exists():
+def delete_dir(dir_path: Path) -> None:
+    if dir_path.exists():
         shutil.rmtree(dir_path)
