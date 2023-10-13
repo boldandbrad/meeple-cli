@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v1.0.0] - 2023-10-13
+
 ### Added
 
 - `meeple add`: `--update` - Automatically update collection data. ([#26](https://github.com/boldandbrad/meeple-cli/issues/26))
