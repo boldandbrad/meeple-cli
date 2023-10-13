@@ -11,7 +11,7 @@ import yaml
 
 
 def _get_meeple_dir() -> Path:
-    meeple_root_dir = ".meeple/test"
+    meeple_root_dir = ".meeple"
     usrname = getpass.getuser()
     system = platform.system()
     if system == "Linux":
@@ -51,7 +51,7 @@ def _migrate_v0_data() -> None:
         delete_dir(V0_COLLECTIONS_DATA_DIR)
 
     # add migration indicator to state file
-    write_yaml_file(MEEPLE_STATE_FILE, {"migrated_v0": True}, append=True)
+    write_yaml_file(MEEPLE_STATE_FILE, {"data_version": "1.0"}, append=True)
 
 
 def check_fs() -> bool:
@@ -65,7 +65,7 @@ def check_fs() -> bool:
 
     # migrate v0.x data
     meeple_state = read_yaml_file(MEEPLE_STATE_FILE)
-    if "migrated_v0" not in meeple_state:
+    if "data_version" not in meeple_state:
         _migrate_v0_data()
         return True
     return False
