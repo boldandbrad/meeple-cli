@@ -9,6 +9,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v1.0.1] - 2023-10-13
+
+### Changed
+
+- `DEPENDENCY` - Update `pyyaml` to v6.0.1.
+
+### Fixed
+
+- Fix homebrew install dependency crash.
+
 ## [v1.0.0] - 2023-10-13
 
 ### Added
