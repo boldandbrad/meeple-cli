@@ -24,6 +24,8 @@ and this project adheres to
 
 - `meeple add` - Prevent adding duplicate items in collections when collection
   data has not yet been updated.
+- `meeple list`/`meeple find` - Order items with NA rank values last when
+  sorting by rank. ([#81](https://github.com/boldandbrad/meeple-cli/issues/81))
 
 ## [v1.0.1] - 2023-10-13
 
