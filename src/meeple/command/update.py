@@ -56,14 +56,14 @@ def update(collection_names: List[str], force: bool) -> None:
             # check if collection exists
             if not is_active_collection(collection.name):
                 under_msg(
-                    f"[dim]Skipped collection [u magenta]{collection.name}[/u magenta]. It does not exist.[/dim]"
+                    f"[dim]Skipped collection {collection.fmt_name()}. It does not exist.[/dim]"
                 )
                 continue
 
             # print warning and skip if collection is empty
             if not collection.state:
                 under_msg(
-                    f"[yellow]Warning[/yellow]: Could not update collection [u magenta]{collection.name}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
+                    f"[yellow]Warning[/yellow]: Could not update collection {collection.fmt_name()} because it is empty. To add to it, run: [green]meeple add[/green]"
                 )
                 continue
 
@@ -74,12 +74,12 @@ def update(collection_names: List[str], force: bool) -> None:
                 and collection.data.last_updated == str(date.today())
             ):
                 under_msg(
-                    f"[dim]Skipped collection [u magenta]{collection.name}[/u magenta]. Already up to date.[/dim]"
+                    f"[dim]Skipped collection {collection.fmt_name()}. Already up to date.[/dim]"
                 )
                 continue
 
             update_collection(collection, update_data=True)
-            under_msg(f"Updated collection [u magenta]{collection.name}[/u magenta].")
+            under_msg(f"Updated collection {collection.fmt_name()}.")
 
         info_msg("Updated collection data.")
 
@@ -93,7 +93,7 @@ def update(collection_names: List[str], force: bool) -> None:
         # check if collection state is empty
         if not collection.state:
             error_msg(
-                f"Could not update collection [u magenta]{collection.name}[/u magenta] because it is empty. To add to it, run: [green]meeple add[/green]"
+                f"Could not update collection {collection.fmt_name()} because it is empty. To add to it, run: [green]meeple add[/green]"
             )
 
         # skip if collection not pending updates, has been updated today, and force flag not provided
@@ -103,8 +103,8 @@ def update(collection_names: List[str], force: bool) -> None:
             and collection.data.last_updated == str(date.today())
         ):
             error_msg(
-                f"Could not update collection [u magenta]{collection.name}[/u magenta]. Already up to date."
+                f"Could not update collection {collection.fmt_name()}. Already up to date."
             )
 
         update_collection(collection, update_data=True)
-        info_msg(f"Updated collection [u magenta]{collection.name}[/u magenta].")
+        info_msg(f"Updated collection {collection.fmt_name()}.")

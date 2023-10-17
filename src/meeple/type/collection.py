@@ -33,3 +33,11 @@ class Collection:
             or len(self.state.to_drop_ids) > 0
             or (len(self.state.active_ids) != len(self.data.items))
         )
+
+    def fmt_name(self, styled: bool = True, state: bool = False) -> str:
+        fmt_name = self.name
+        if styled:
+            fmt_name = f"[u magenta]{self.name}[/u magenta]"
+        if state and self.is_pending_updates():
+            return f"{fmt_name} ([red]*[/red])"
+        return fmt_name

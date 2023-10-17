@@ -56,7 +56,7 @@ def move(
     else:
         # TODO: prompt to just add to the destination collection anyway
         error_msg(
-            f"[i blue]{bgg_item.name}[/i blue] already doesn't exist in collection [u magenta]{from_collection.name}[/u magenta]."
+            f"{bgg_item.fmt_name()} already doesn't exist in collection [u magenta]{from_collection.name}[/u magenta]."
         )
 
     # add the id to the destination collection
@@ -72,7 +72,7 @@ def move(
     else:
         # TODO: prompt to just remove from the from collection anyway
         error_msg(
-            f"[i blue]{bgg_item.name}[/i blue] already exists in collection [u magenta]{to_collection.name}[/u magenta]."
+            f"{bgg_item.fmt_name()} already exists in collection [u magenta]{to_collection.name}[/u magenta]."
         )
 
     # persist changes
@@ -80,9 +80,9 @@ def move(
     update_collection(to_collection, update_data=update)
     if update:
         info_msg(
-            f"Moved [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta] and updated collections."
+            f"Moved {bgg_item.fmt_name()} from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta] and updated collections."
         )
     else:
         info_msg(
-            f"Moved [i blue]{bgg_item.name}[/i blue] from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
+            f"Moved {bgg_item.fmt_name()} from collection [u magenta]{from_collection.name}[/u magenta] to collection [u magenta]{to_collection.name}[/u magenta]. To update, run: [green]meeple update[/green]"
         )

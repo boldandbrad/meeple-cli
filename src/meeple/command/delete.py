@@ -35,12 +35,10 @@ def delete(collection_names: List[str], yes: bool) -> None:
                 if collection:
                     # delete collection
                     delete_collection(collection)
-                    under_msg(
-                        f"Deleted collection [u magenta]{collection_name}[/u magenta]."
-                    )
+                    under_msg(f"Deleted collection {collection.fmt_name()}.")
                 else:
                     under_msg(
-                        f"[dim]Skipped collection [u magenta]{collection_name}[/u magenta]. It already does not exist.[/dim]"
+                        f"[dim]Skipped collection {collection.fmt_name()}. It already does not exist.[/dim]"
                     )
             info_msg("Deleted collection(s).")
         else:
@@ -49,8 +47,6 @@ def delete(collection_names: List[str], yes: bool) -> None:
             collection = get_collection(collection_name)
             if collection:
                 delete_collection(collection)
-                info_msg(
-                    f"Deleted collection [u magenta]{collection_name}[/u magenta]."
-                )
+                info_msg(f"Deleted collection {collection.fmt_name()}.")
             else:
                 invalid_collection_error(collection_name)

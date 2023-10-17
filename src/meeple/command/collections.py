@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.collection_util import get_collections, update_collection
-from meeple.util.fmt_util import fmt_collection_name, fmt_date, fmt_headers
+from meeple.util.fmt_util import fmt_cmd, fmt_date, fmt_headers
 from meeple.util.message_util import info_msg, no_collections_exist_error, warn_msg
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
 from meeple.util.table_util import CollectionHeader, print_table
@@ -26,19 +26,19 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
         no_collections_exist_error()
 
     # update collection data if requested
-    pending_changes = False
+    pending_updates = False
     if update:
         for collection in collections:
             update_collection(collection, update_data=True)
         info_msg("Collection data updated.")
     else:
-        # check if any collections are pending changes
+        # check if any collections are pending updates
         for collection in collections:
             if collection.is_pending_updates():
-                pending_changes = True
-                if pending_changes:
+                pending_updates = True
+                if pending_updates:
                     warn_msg(
-                        "Some collections ([red]*[/red]) are pending changes. To apply, run [green]meeple update[/green]"
+                        f"([red]*[/red]) Some collections are pending updates. To apply, run {fmt_cmd('meeple update')}"
                     )
 
     # sort output
@@ -60,7 +60,7 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
 
     rows = []
     for collection in collections:
-        cols = [fmt_collection_name(collection)]
+        cols = [collection.fmt_name(styled=False, state=True)]
         # include additional data if the user chose verbose output
         if verbose:
             cols.extend(

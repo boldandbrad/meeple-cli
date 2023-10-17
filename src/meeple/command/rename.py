@@ -31,5 +31,5 @@ def rename(collection_name: str, new_name: str) -> None:
     # create new collection
     rename_collection(collection, new_name)
     info_msg(
-        f"Renamed collection [u magenta]{collection.name}[/u magenta] to [u magenta]{new_name}[/u magenta]."
+        f"Renamed collection {collection.fmt_name()} to [u magenta]{new_name}[/u magenta]."
     )
