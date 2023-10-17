@@ -1,10 +1,7 @@
-from meeple.type.collection import Collection
-from meeple.type.collection_state import CollectionState
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 from meeple.util.fmt_util import (
     NA_VALUE,
     fmt_avg_rank,
-    fmt_collection_name,
     fmt_item_type,
     fmt_players,
     fmt_playtime,
@@ -13,17 +10,6 @@ from meeple.util.fmt_util import (
     fmt_weight,
     fmt_year,
 )
-
-
-def test_fmt_collection_name(mocker):
-    clean_collection = Collection("name")
-    clean_fmt = fmt_collection_name(clean_collection)
-    assert clean_fmt == "name"
-
-    collection_state = CollectionState(to_add_ids=[12345])
-    dirty_collection = Collection("name", state=collection_state)
-    dirty_fmt = fmt_collection_name(dirty_collection)
-    assert dirty_fmt == "name ([red]*[/red])"
 
 
 def test_fmt_players():

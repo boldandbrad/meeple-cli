@@ -1,4 +1,5 @@
 from meeple.type.collection import Collection
+from meeple.type.collection_state import CollectionState
 
 
 def test_collection():
@@ -23,3 +24,16 @@ def test_collection():
     assert len(collection.data.items) == 0
     assert not collection.data
     assert isinstance(collection.data.to_dict(), dict)
+
+
+def test_fmt_name(mocker):
+    clean_collection = Collection("name")
+    styled_fmt = clean_collection.fmt_name()
+    assert styled_fmt == "[u magenta]name[/u magenta]"
+    unstyled_fmt = clean_collection.fmt_name(styled=False)
+    assert unstyled_fmt == "name"
+
+    collection_state = CollectionState(to_add_ids=[12345])
+    dirty_collection = Collection("name", state=collection_state)
+    dirty_fmt = dirty_collection.fmt_name(styled=False, state=True)
+    assert dirty_fmt == "name ([red]*[/red])"

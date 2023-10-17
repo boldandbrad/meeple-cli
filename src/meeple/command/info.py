@@ -44,7 +44,7 @@ def info(bgg_id: int, verbose: bool) -> None:
         [
             [
                 f"{bgg_item.id}",
-                f"[i blue]{bgg_item.name}[/i blue] ({fmt_year(bgg_item.year)})",
+                f"{bgg_item.fmt_name()} ({fmt_year(bgg_item.year)})",
             ]
         ]
     )

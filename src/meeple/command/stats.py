@@ -44,7 +44,7 @@ def stats(collection_name: str, item_type: str) -> None:
     # check that data exists for the given collection
     if not collection.data.items:
         error_msg(
-            f"Data not found for collection [u magenta]{collection.name}[/u magenta]. To update, run: [green]meeple update {collection.name}[/green]"
+            f"Data not found for collection {collection.fmt_name()}. To update, run: [green]meeple update {collection.name}[/green]"
         )
 
     # determine what to include in results depending on given flags
@@ -58,7 +58,7 @@ def stats(collection_name: str, item_type: str) -> None:
     # check that data exists after applied filters
     if not result_items:
         error_msg(
-            f"No items found matching provided filters for collection [u magenta]{collection.name}[/u magenta]."
+            f"No items found matching provided filters for collection {collection.fmt_name()}."
         )
 
     # calculate stats
@@ -97,11 +97,11 @@ def stats(collection_name: str, item_type: str) -> None:
 
     if collection.is_pending_updates():
         warn_msg(
-            f"Collection [u magenta]{collection.name}[/u magenta] has pending changes. To apply, run [green]meeple update {collection.name}[/green]"
+            f"Collection {collection.fmt_name()} has pending updates. To apply, run [green]meeple update {collection.name}[/green]"
         )
 
     info_msg(
-        f"Showing average stats for {len(result_items)} of {len(collection.data.items)} items from collection [u magenta]{collection.name}[/u magenta]."
+        f"Showing average stats for {len(result_items)} of {len(collection.data.items)} items from collection {collection.fmt_name()}."
     )
     headers = ["Rank", "Rating", "Weight", "Max Players"]
     rows = [

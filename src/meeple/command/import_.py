@@ -35,7 +35,7 @@ def _import_collection(
     if verbose:
         for item in collection_items:
             under_msg(
-                f"[i blue]{item.name}[/i blue] ([dim]{item.bgg_id}[/dim])",
+                f"{item.fmt_name()} ([dim]{item.bgg_id}[/dim])",
                 indents=2,
             )
 
