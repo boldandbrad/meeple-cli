@@ -63,6 +63,9 @@ class Item:
     def __hash__(self):
         return hash(("id", self.id))
 
+    def __repr__(self):
+        return f"Item({self.id}, {self.name}, {self.type})"
+
     def fmt_name(self) -> str:
         return f"[i blue]{self.name}[/i blue]"
 
