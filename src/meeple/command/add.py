@@ -20,11 +20,11 @@ from meeple.util.message_util import (
 @click.option("--update", is_flag=True, help="Update collection data.")
 @click.help_option("-h", "--help")
 def add(collection_name: str, bgg_ids: [int], update: bool) -> None:
-    """Add an item to a collection.
+    """Add items to a collection.
 
-    - COLLECTION_NAME is the name of the intended destination collection.
+    - COLLECTION_NAME is the name of the collection to be modified.
 
-    - BGG_IDS is the BoardGameGeek ID(s) of the board game/expansion(s) to be added.
+    - BGG_IDS are BoardGameGeek ID(s) of the item(s) to be added.
     """
     multi_add = len(bgg_ids) > 1
 
