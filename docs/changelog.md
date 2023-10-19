@@ -9,15 +9,18 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v1.1.0] - 2023-10-18
+
 ### Changed
 
 - `meeple add`
   - Add multiple items to a collection at once. ([#77](https://github.com/boldandbrad/meeple-cli/issues/77))
-  - Dim already added message.
+  - Update help text wording to be consistent with action.
+  - Dim 'already added' message text.
 - `meeple drop`
   - Drop multiple items from a collection at once. ([#78](https://github.com/boldandbrad/meeple-cli/issues/78))
   - Update help text wording to be consistent with action.
-  - Dim already dropped message.
+  - Dim 'already dropped' message text.
 - `meeple collections` - Update 'pending update' warning message text.
 
 ### Fixed
