@@ -51,22 +51,22 @@ Options:
   -v, --version  Show the version and exit.
 
 Collection Commands:
-  add          Add an item to a collection.
+  add          Add items to a collection.
   collections  List all collections.
   delete       Delete collections.
-  drop         Remove an item from a collection.
+  drop         Drop items from a collection.
   find         Search collections for items.
   list         List contents of a collection.
   move         Move an item from one collection to another.
   new          Create new collections.
   rename       Rename a collection.
-  stats        Print out the details of a collection.
+  stats        View collection statistics.
   update       Update collection data.
 
 BoardGameGeek Commands:
   hot     List current BoardGameGeek trending items.
   import  Import BoardGameGeek user collections.
-  info    Print out the details of an item.
+  info    View item details.
   open    Open an item on BoardGameGeek.
   search  Search BoardGameGeek for items.
 
