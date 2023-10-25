@@ -29,12 +29,12 @@ def _bgg_api_get(endpoint: str, params: dict) -> List[Item]:
     while True:
         response = requests.get(f"{API2_BASE_URL}/{endpoint}", params=params)
         match response.status_code:
-            case 202:
-                # wait and ping again for response
-                time.sleep(12)
             case 200:
                 # successful return
                 return xmltodict.parse(response.content)
+            case 202:
+                # wait and ping again for response
+                time.sleep(12)
             case 429:
                 # rate limit reached
                 error_msg(
