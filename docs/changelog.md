@@ -23,6 +23,7 @@ and this project adheres to
 ### Fixed
 
 - Fix crash on `meeple import -v`.
+- Fix `meeple collections` update warning message from printing more than once.
 - Print a more elegant error message when BGG API rate limit is exceeded.
 
 ## [v1.1.0] - 2023-10-18
