@@ -9,7 +9,7 @@ from meeple.util.message_util import (
     invalid_collection_error,
     warn_msg,
 )
-from meeple.util.table_util import print_table
+from meeple.util.output_util import print_table
 
 
 @click.command()

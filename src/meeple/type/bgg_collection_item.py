@@ -50,6 +50,9 @@ class BGGCollectionItem:
     def __hash__(self):
         return hash(("bgg_id", self.bgg_id))
 
+    def fmt_name(self) -> str:
+        return f"[i blue]{self.name}[/i blue]"
+
     @staticmethod
     def from_bgg_dict(bgg_dict: dict):
         """Parse a BGG API dict into an BGGCollectionItem.

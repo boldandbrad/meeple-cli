@@ -1,4 +1,3 @@
-import sys
 import time
 from typing import List
 
@@ -7,6 +6,8 @@ import xmltodict
 
 from meeple.type import BGGCollectionItem, BGGUser
 from meeple.type.item import Item
+from meeple.util.message_util import error_msg
+from meeple.util.output_util import CustomProgress
 
 BGG_DOMAIN = "boardgamegeek.com"
 API2_BASE_URL = f"https://{BGG_DOMAIN}/xmlapi2"
@@ -27,14 +28,24 @@ def _bgg_api_get(endpoint: str, params: dict) -> List[Item]:
     """
     while True:
         response = requests.get(f"{API2_BASE_URL}/{endpoint}", params=params)
-        if response.status_code == 202:
-            time.sleep(0.25)
-            continue
-        elif response.status_code == 200:
-            return xmltodict.parse(response.content)
-        else:
-            # TODO: log this error and print out a friendly message to the user
-            sys.exit(f"Error: HTTP {response.status_code}: {response.content}")
+        match response.status_code:
+            case 202:
+                # wait and ping again for response
+                time.sleep(12)
+            case 200:
+                # successful return
+                return xmltodict.parse(response.content)
+            case 429:
+                # rate limit reached
+                error_msg(
+                    "BoardGameGeek API rate limit exceeded. Please try again later."
+                )
+            case _:
+                # unknown api error
+                # TODO: log this error and print out a friendlier message to the user
+                error_msg(
+                    f"Unknown API Error | HTTP {response.status_code} | {response.content}"
+                )
 
 
 def _serialize_resp_dict(resp_dict: dict, obj_class) -> List:
@@ -126,5 +137,7 @@ def get_bgg_user_collection(username: str):
         List[BGGCollectionItem]: List[BGGCollectionItem].
     """
     params = {"username": username, "brief": 1}
-    resp_dict = _bgg_api_get(endpoint="collection", params=params)
+    with CustomProgress() as progress:
+        progress.add_task("Fetching collection", start=False, total=None)
+        resp_dict = _bgg_api_get(endpoint="collection", params=params)
     return _serialize_resp_dict(resp_dict, BGGCollectionItem)

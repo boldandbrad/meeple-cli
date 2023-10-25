@@ -2,7 +2,7 @@ import sys
 
 from rich.console import Console
 
-from meeple.util.table_util import print_table
+from meeple.util.output_util import print_table
 
 
 def print_msg(message: str) -> None:

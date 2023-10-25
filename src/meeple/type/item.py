@@ -1,5 +1,7 @@
 import html
 
+from meeple.type.item_credits import ItemCredits
+
 
 def _parse_sub_dict(key_dict: dict) -> str:
     if isinstance(key_dict, list):
@@ -42,6 +44,7 @@ class Item:
         maxplayers,
         playtime,
         minage,
+        credits: ItemCredits = {},
         description: str = "",
     ):
         self.id = id
@@ -55,6 +58,7 @@ class Item:
         self.maxplayers = maxplayers
         self.playtime = playtime
         self.minage = minage
+        self.credits = credits
         self.description = description
 
     def __eq__(self, other) -> bool:
@@ -98,6 +102,10 @@ class Item:
             year = bgg_dict["yearpublished"]["@value"]
         else:
             year = 0
+        if bgg_dict.get("link"):
+            credits = ItemCredits.from_bgg_dict(bgg_dict.get("link"))
+        else:
+            credits = {}
         if bgg_dict.get("description"):
             description = html.unescape(bgg_dict["description"]).rstrip()
         else:
@@ -127,6 +135,7 @@ class Item:
             maxplayers,
             playtime,
             minage,
+            credits,
             description,
         )
 
