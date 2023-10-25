@@ -18,8 +18,8 @@ from meeple.util.fmt_util import (
     fmt_year,
 )
 from meeple.util.message_util import error_msg, info_msg, no_collections_exist_error
+from meeple.util.output_util import ItemHeader, print_table
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
-from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command()

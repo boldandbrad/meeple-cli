@@ -2,7 +2,11 @@ from enum import Enum
 
 from rich import box
 from rich.console import Console
+from rich.panel import Panel
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.table import Table
+
+# tables
 
 
 class ItemHeader(Enum):
@@ -54,3 +58,28 @@ def print_table(
 
     console = Console()
     console.print(table)
+
+
+# progress bars
+
+
+class CustomProgress(Progress):
+    def __init__(self, outlined: bool = True):
+        self.outlined = outlined
+        super().__init__(
+            TextColumn("{task.description}"),
+            BarColumn(pulse_style="magenta"),
+            SpinnerColumn(),
+            transient=True,
+        )
+
+    def get_renderables(self):
+        if self.outlined:
+            yield Panel(
+                self.make_tasks_table(self.tasks),
+                box=box.ROUNDED,
+                expand=False,
+                border_style="dim",
+            )
+        else:
+            yield super().get_renderables()

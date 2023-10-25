@@ -3,8 +3,8 @@ import click
 from meeple.util.collection_util import get_collections, update_collection
 from meeple.util.fmt_util import fmt_cmd, fmt_date, fmt_headers
 from meeple.util.message_util import info_msg, no_collections_exist_error, warn_msg
+from meeple.util.output_util import CollectionHeader, print_table
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
-from meeple.util.table_util import CollectionHeader, print_table
 
 
 @click.command()

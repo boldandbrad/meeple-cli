@@ -9,6 +9,20 @@ and this project adheres to
 
 ## [Unreleased]
 
+- `README`: `FAQ` - Add faq statement about slow collection imports.
+
+### Changed
+
+- `meeple import` - Add progress bar to indicate status of collection fetch from BGG.
+- `meeple info`
+  - Show a list of collections the item is contained in. ([#56](https://github.com/boldandbrad/meeple-cli/issues/56))
+  - Add designers, artists, and publishers to `-v`/`--verbose` output.
+
+### Fixed
+
+- Fix crash on `meeple import -v`.
+- Print a more elegant error message when BGG API rate limit is exceeded.
+
 ## [v1.1.0] - 2023-10-18
 
 ### Changed

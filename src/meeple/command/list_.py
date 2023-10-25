@@ -18,8 +18,8 @@ from meeple.util.message_util import (
     invalid_collection_error,
     warn_msg,
 )
+from meeple.util.output_util import ItemHeader, print_table
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
-from meeple.util.table_util import ItemHeader, print_table
 
 
 @click.command(name="list")

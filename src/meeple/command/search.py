@@ -3,7 +3,7 @@ import click
 from meeple.util.api_util import search_bgg
 from meeple.util.fmt_util import fmt_headers, fmt_year
 from meeple.util.message_util import error_msg
-from meeple.util.table_util import ItemHeader, print_table
+from meeple.util.output_util import ItemHeader, print_table
 
 
 @click.command()
