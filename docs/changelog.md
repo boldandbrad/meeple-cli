@@ -15,10 +15,13 @@ and this project adheres to
 
 ### Changed
 
-- `meeple import` - Add progress bar to indicate status of collection fetch from BGG.
+- `meeple import` - Add progress bar to indicate status of collection fetch from
+  BGG.
 - `meeple info`
   - Show a list of collections the item is contained in. ([#56](https://github.com/boldandbrad/meeple-cli/issues/56))
   - Add designers, artists, and publishers to `-v`/`--verbose` output.
+- `README`: `Usage` - Update usage documentation to reflect current help message
+  text.
 
 ### Fixed
 
