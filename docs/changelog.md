@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
 - `README`: `FAQ` - Add faq statement about slow collection imports.
 
 ### Changed
