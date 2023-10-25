@@ -36,10 +36,10 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
         for collection in collections:
             if collection.is_pending_updates():
                 pending_updates = True
-                if pending_updates:
-                    warn_msg(
-                        f"([red]*[/red]) Some collections are pending updates. To apply, run {fmt_cmd('meeple update')}"
-                    )
+        if pending_updates:
+            warn_msg(
+                f"([red]*[/red]) Some collections are pending updates. To apply, run {fmt_cmd('meeple update')}"
+            )
 
     # sort output
     collections, sort_direction = sort_collections(collections, sort)
