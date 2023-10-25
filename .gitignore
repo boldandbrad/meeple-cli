@@ -31,3 +31,6 @@ coverage.xml
 
 # homebrew
 formula.rb
+
+# example api responses
+api-responses/
