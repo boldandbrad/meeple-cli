@@ -12,6 +12,7 @@ and this project adheres to
 ### Added
 
 - `README`: `FAQ` - Add faq statement about slow collection imports.
+- Python 3.12 support. ([#90](https://github.com/boldandbrad/meeple-cli/issues/90))
 
 ### Changed
 
