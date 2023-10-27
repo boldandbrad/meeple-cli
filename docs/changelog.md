@@ -12,7 +12,7 @@ and this project adheres to
 ### Added
 
 - `README`: `FAQ` - Add faq statement about slow collection imports.
-- Python 3.12 support. ([#90](https://github.com/boldandbrad/meeple-cli/issues/90))
+- `CI` - Add Python 3.12 support. ([#90](https://github.com/boldandbrad/meeple-cli/issues/90))
 
 ### Changed
 
@@ -23,6 +23,7 @@ and this project adheres to
   - Add designers, artists, and publishers to `-v`/`--verbose` output.
 - `README`: `Usage` - Update usage documentation to reflect current help message
   text.
+- `CI` - Update `pre-commit` linters.
 
 ### Fixed
 
