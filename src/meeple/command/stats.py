@@ -9,7 +9,7 @@ from meeple.util.message_util import (
     invalid_collection_error,
     warn_msg,
 )
-from meeple.util.output_util import print_table
+from meeple.util.output_util import ItemHeader, print_table
 
 
 @click.command()
@@ -103,7 +103,12 @@ def stats(collection_name: str, item_type: str) -> None:
     info_msg(
         f"Showing average stats for {len(result_items)} of {len(collection.data.items)} items from collection {collection.fmt_name()}."
     )
-    headers = ["Rank", "Rating", "Weight", "Max Players"]
+    headers = [
+        ItemHeader.RANK,
+        ItemHeader.RATING,
+        ItemHeader.WEIGHT,
+        ItemHeader.MAX_PLAYERS,
+    ]
     rows = [
         [
             f"{fmt_avg_rank(avg_rank)}",
