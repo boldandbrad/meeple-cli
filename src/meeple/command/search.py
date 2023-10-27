@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.api_util import search_bgg
-from meeple.util.fmt_util import fmt_headers, fmt_year
+from meeple.util.fmt_util import fmt_year
 from meeple.util.message_util import error_msg
 from meeple.util.output_util import ItemHeader, print_table
 
@@ -27,7 +27,6 @@ def search(query: str) -> None:
 
     # prepare table data
     headers = [ItemHeader.ID, ItemHeader.NAME, ItemHeader.YEAR]
-    headers = fmt_headers(headers, None, None)
 
     rows = []
     for item in result_items:

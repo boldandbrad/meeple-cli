@@ -27,9 +27,11 @@ and this project adheres to
 
 ### Fixed
 
-- Fix crash on `meeple import -v`.
-- Fix `meeple collections` update warning message from printing more than once.
-- Print a more elegant error message when BGG API rate limit is exceeded.
+- `meeple import --verbose` - Fix crash.
+- `meeple collections` - Prevent update warning message from printing more than once.
+- `meeple collections` - Fix sort order of NA Last Updated values.
+- `GENERAL` - Fix justification of numeric values in tables. ([#83](https://github.com/boldandbrad/meeple-cli/issues/83))
+- `GENERAL` - Print a more elegant error message when BGG API rate limit is exceeded.
 
 ## [v1.1.0] - 2023-10-18
 

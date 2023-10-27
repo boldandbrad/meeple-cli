@@ -9,30 +9,36 @@ from rich.table import Table
 # tables
 
 
+def _fmt_header(header, sort_direction: str):
+    return f"{header.value[0]} {sort_direction}"
+
+
 class ItemHeader(Enum):
-    COUNT = ("#", "count")
-    ID = ("ID", "id")
-    NAME = ("Name", "name")
-    TYPE = ("Type", "type")
-    COLLECTION = ("Collection(s)", "collection")
-    YEAR = ("Year", "year")
-    RANK = ("Rank", "rank")
-    RATING = ("Rating", "rating")
-    WEIGHT = ("Weight", "weight")
-    PLAYERS = ("Players", "players")
-    TIME = ("Play Time", "time")
+    COUNT = ("#", "count", "right")
+    ID = ("ID", "id", "right")
+    NAME = ("Name", "name", "left")
+    TYPE = ("Type", "type", "left")
+    COLLECTION = ("Collection(s)", "collection", "left")
+    YEAR = ("Year", "year", "right")
+    RANK = ("Rank", "rank", "right")
+    RATING = ("Rating", "rating", "right")
+    WEIGHT = ("Weight", "weight", "right")
+    PLAYERS = ("Players", "players", "right")
+    TIME = ("Play Time", "time", "right")
 
 
 class CollectionHeader(Enum):
-    NAME = ("Name", "name")
-    BOARDGAMES = ("Board Games", "boardgames")
-    EXPANSIONS = ("Expansions", "expansions")
-    UPDATED = ("Last Updated", "updated")
+    NAME = ("Name", "name", "left")
+    BOARDGAMES = ("Board Games", "boardgames", "right")
+    EXPANSIONS = ("Expansions", "expansions", "right")
+    UPDATED = ("Last Updated", "updated", "left")
 
 
 def print_table(
     rows: list,
     headers: list = [],
+    sort_key: str = None,
+    sort_direction: str = None,
     dim_border: bool = False,
     zebra_rows: bool = False,
     row_lines: bool = False,
@@ -50,9 +56,11 @@ def print_table(
         border_style=border_styles,
         show_lines=row_lines,
     )
-
     for header in headers:
-        table.add_column(header)
+        header_title = header.value[0]
+        if sort_key and sort_direction and header.value[1] == sort_key:
+            header_title = f"{header_title} {sort_direction}"
+        table.add_column(header_title, justify=header.value[2])
     for row in rows:
         table.add_row(*row)
 

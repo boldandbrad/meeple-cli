@@ -1,3 +1,5 @@
+import re
+from datetime import datetime
 from sys import maxsize as MAXINT
 
 from meeple.type.collection import Collection
@@ -6,6 +8,12 @@ from meeple.util.fmt_util import SORT_ASC_SYMBOL, SORT_DESC_SYMBOL
 
 COLLECTION_SORT_KEYS = ["name", "boardgames", "expansions", "updated"]
 ITEM_SORT_KEYS = ["rank", "rating", "weight", "year", "name", "id", "time"]
+
+
+def _sort_date(date_str: str):
+    if not date_str:
+        return datetime.min
+    return datetime.strptime(re.sub("[-]", "/", date_str), "%Y/%m/%d")
 
 
 def sort_collections(collection_list: [Collection], sort_key: str) -> [Collection]:
@@ -36,14 +44,14 @@ def sort_collections(collection_list: [Collection], sort_key: str) -> [Collectio
     return (
         sorted(
             collection_list,
-            key=lambda collection: str(collection.data.last_updated),
+            key=lambda collection: _sort_date(collection.data.last_updated),
             reverse=True,
         ),
         SORT_DESC_SYMBOL,
     )
 
 
-def _handle_item_rank(item: Item) -> int:
+def _sort_rank(item: Item) -> int:
     if item.rank == 0:
         return MAXINT
     return item.rank
@@ -61,7 +69,7 @@ def sort_items(item_list: [Item], sort_key: str) -> [Item]:
     """
     match sort_key:
         case "rank":
-            return sorted(item_list, key=_handle_item_rank), SORT_ASC_SYMBOL
+            return sorted(item_list, key=_sort_rank), SORT_ASC_SYMBOL
         case "weight":
             return (
                 sorted(item_list, key=lambda item: item.weight, reverse=True),

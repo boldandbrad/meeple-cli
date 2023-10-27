@@ -12,23 +12,6 @@ def fmt_cmd(command: str) -> str:
     return f"[green]{command}[/green]"
 
 
-def fmt_date(date: str) -> str:
-    if date:
-        return date
-    return NA_VALUE
-
-
-def fmt_headers(headers, sort_key: str, sort_direction: str):
-    header_strs = []
-    for header in headers:
-        if sort_key and header.value[1] == sort_key:
-            header_strs.append(f"{header.value[0]} {sort_direction}")
-            continue
-        header_strs.append(header.value[0])
-
-    return header_strs
-
-
 def fmt_players(minplayers: str, maxplayers: str) -> str:
     if int(minplayers) == int(maxplayers) == 0:
         return NA_VALUE

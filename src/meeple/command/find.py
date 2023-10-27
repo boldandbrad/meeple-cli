@@ -8,7 +8,6 @@ from meeple.util.collection_util import (
 from meeple.util.completion_util import complete_collections
 from meeple.util.filter_util import filterby_players, filterby_playtime, filterby_weight
 from meeple.util.fmt_util import (
-    fmt_headers,
     fmt_item_type,
     fmt_players,
     fmt_playtime,
@@ -149,9 +148,6 @@ def find(
             ]
         )
 
-    # format headers
-    headers = fmt_headers(headers, sort, sort_direction)
-
     # prepare table data
     rows = []
     for item in result_items:
@@ -188,4 +184,4 @@ def find(
         info_msg(
             f"Showing {len(result_items)} of {len(total_unique_items)} unique items from collection(s) [u magenta]{'[/u magenta], [u magenta]'.join([collection.name for collection in collections])}[/u magenta]."
         )
-    print_table(rows, headers)
+    print_table(rows, headers, sort_key=sort, sort_direction=sort_direction)

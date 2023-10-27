@@ -3,7 +3,6 @@ import click
 from meeple.util.collection_util import get_collection
 from meeple.util.completion_util import complete_collections
 from meeple.util.fmt_util import (
-    fmt_headers,
     fmt_item_type,
     fmt_players,
     fmt_playtime,
@@ -106,9 +105,6 @@ def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> Non
             ]
         )
 
-    # format headers
-    headers = fmt_headers(headers, sort, sort_direction)
-
     rows = []
     for item in result_items:
         cols = [str(item.id), item.name]
@@ -134,4 +130,4 @@ def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> Non
         info_msg(
             f"Showing {len(result_items)} of {len(collection.data.items)} items from collection {collection.fmt_name()}."
         )
-    print_table(rows, headers)
+    print_table(rows, headers, sort_key=sort, sort_direction=sort_direction)
