@@ -24,6 +24,7 @@ class ItemHeader(Enum):
     RATING = ("Rating", "rating", "right")
     WEIGHT = ("Weight", "weight", "right")
     PLAYERS = ("Players", "players", "right")
+    MAX_PLAYERS = ("Max Players", "maxplayers", "right")
     TIME = ("Play Time", "time", "right")
 
 
