@@ -1,7 +1,6 @@
 import click
 
 from meeple.util.api_util import get_bgg_hot
-from meeple.util.fmt_util import fmt_headers
 from meeple.util.output_util import ItemHeader, print_table
 
 
@@ -14,7 +13,6 @@ def hot() -> None:
 
     # prepare table data
     headers = [ItemHeader.COUNT, ItemHeader.ID, ItemHeader.NAME]
-    headers = fmt_headers(headers, None, None)
 
     rows = []
     for idx, item in enumerate(api_result):

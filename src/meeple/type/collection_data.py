@@ -1,6 +1,7 @@
 from typing import List
 
 from meeple.type.item import Item
+from meeple.util.fmt_util import NA_VALUE
 
 DATA_VERSION_KEY = "version"
 DATA_DATE_KEY = "date"
@@ -16,6 +17,11 @@ class CollectionData:
 
     def __bool__(self) -> bool:
         return self.last_updated or len(self.items) > 0
+
+    def fmt_last_updated(self):
+        if self.last_updated:
+            return self.last_updated
+        return NA_VALUE
 
     def to_dict(self) -> dict:
         return {

@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.collection_util import get_collections, update_collection
-from meeple.util.fmt_util import fmt_cmd, fmt_date, fmt_headers
+from meeple.util.fmt_util import fmt_cmd
 from meeple.util.message_util import info_msg, no_collections_exist_error, warn_msg
 from meeple.util.output_util import CollectionHeader, print_table
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
@@ -55,9 +55,6 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
             ]
         )
 
-    # format headers
-    headers = fmt_headers(headers, sort, sort_direction)
-
     rows = []
     for collection in collections:
         cols = [collection.fmt_name(styled=False, state=True)]
@@ -67,10 +64,10 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
                 [
                     str(len(collection.get_board_games())),
                     str(len(collection.get_expansions())),
-                    fmt_date(collection.data.last_updated),
+                    collection.data.fmt_last_updated(),
                 ]
             )
 
         rows.append(cols)
 
-    print_table(rows, headers)
+    print_table(rows, headers, sort_key=sort, sort_direction=sort_direction)
