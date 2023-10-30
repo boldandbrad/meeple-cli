@@ -9,6 +9,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `CONTRIBUTING` - Add basic contribution guide. ([#62](https://github.com/boldandbrad/meeple-cli/issues/62))
+
+### Changed
+
+- `FAQ` - Move faq from readme to docs.
+
 ## [v1.2.0] - 2023-10-27
 
 ### Added
