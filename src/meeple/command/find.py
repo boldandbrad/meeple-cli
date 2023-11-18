@@ -17,7 +17,7 @@ from meeple.util.fmt_util import (
     fmt_year,
 )
 from meeple.util.message_util import error_msg, info_msg, no_collections_exist_error
-from meeple.util.output_util import ItemHeader, print_table
+from meeple.util.output_util import TableHeader, print_table
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
 
@@ -128,23 +128,23 @@ def find(
     result_items, sort_direction = sort_items(result_items, sort)
 
     # prepare table headers
-    headers = [ItemHeader.ID, ItemHeader.NAME]
+    headers = [TableHeader.ID, TableHeader.NAME]
     # include type column if neither type is ommitted
     if item_type not in ("bg", "ex"):
-        headers.append(ItemHeader.TYPE)
+        headers.append(TableHeader.TYPE)
     # include collections column if more than one collection was included
     if len(collections) > 1:
-        headers.append(ItemHeader.COLLECTION)
+        headers.append(TableHeader.COLLECTION)
     # include additional columns if verbose flag present
     if verbose:
         headers.extend(
             [
-                ItemHeader.YEAR,
-                ItemHeader.RANK,
-                ItemHeader.RATING,
-                ItemHeader.WEIGHT,
-                ItemHeader.PLAYERS,
-                ItemHeader.TIME,
+                TableHeader.YEAR,
+                TableHeader.RANK,
+                TableHeader.RATING,
+                TableHeader.WEIGHT,
+                TableHeader.PLAYERS,
+                TableHeader.TIME,
             ]
         )
 

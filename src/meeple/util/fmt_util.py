@@ -1,5 +1,7 @@
 import numbers
 
+import arrow
+
 from meeple.util.api_util import BOARDGAME_TYPE, EXPANSION_TYPE
 
 NA_VALUE = "[dim]NA[/dim]"
@@ -10,6 +12,22 @@ SORT_DESC_SYMBOL = "[blue]˅[/blue]"
 
 def fmt_cmd(command: str) -> str:
     return f"[green]{command}[/green]"
+
+
+def fmt_ending_date(date: str) -> str:
+    date_obj = arrow.get(date)
+    friendly_date = date_obj.humanize()
+    if "hour" in friendly_date:
+        return f"[red]{friendly_date}[/red]"
+    elif "day" in friendly_date:
+        return f"[yellow]{date_obj.format('MMM D')}[/yellow]"
+    return date_obj.format("MMM D")
+
+
+def fmt_funded(progress: int) -> str:
+    if progress >= 100:
+        return f"[green]{progress}%[/green]"
+    return f"{progress}%"
 
 
 def fmt_players(minplayers: str, maxplayers: str) -> str:

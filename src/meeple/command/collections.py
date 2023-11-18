@@ -3,7 +3,7 @@ import click
 from meeple.util.collection_util import get_collections, update_collection
 from meeple.util.fmt_util import fmt_cmd
 from meeple.util.message_util import info_msg, no_collections_exist_error, warn_msg
-from meeple.util.output_util import CollectionHeader, print_table
+from meeple.util.output_util import TableHeader, print_table
 from meeple.util.sort_util import COLLECTION_SORT_KEYS, sort_collections
 
 
@@ -45,13 +45,13 @@ def collections(sort: str, update: bool, verbose: bool) -> None:
     collections, sort_direction = sort_collections(collections, sort)
 
     # prepare table data
-    headers = [CollectionHeader.NAME]
+    headers = [TableHeader.NAME]
     if verbose:
         headers.extend(
             [
-                CollectionHeader.BOARDGAMES,
-                CollectionHeader.EXPANSIONS,
-                CollectionHeader.UPDATED,
+                TableHeader.BOARDGAMES,
+                TableHeader.EXPANSIONS,
+                TableHeader.UPDATED,
             ]
         )
 

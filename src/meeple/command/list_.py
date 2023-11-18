@@ -17,7 +17,7 @@ from meeple.util.message_util import (
     invalid_collection_error,
     warn_msg,
 )
-from meeple.util.output_util import ItemHeader, print_table
+from meeple.util.output_util import TableHeader, print_table
 from meeple.util.sort_util import ITEM_SORT_KEYS, sort_items
 
 
@@ -89,19 +89,19 @@ def list_(collection_name: str, item_type: str, sort: str, verbose: bool) -> Non
     result_items, sort_direction = sort_items(result_items, sort)
 
     # prepare table data
-    headers = [ItemHeader.ID, ItemHeader.NAME]
+    headers = [TableHeader.ID, TableHeader.NAME]
     # include type column if neither type is ommitted
     if item_type not in ("bg", "ex"):
-        headers.append(ItemHeader.TYPE)
+        headers.append(TableHeader.TYPE)
     if verbose:
         headers.extend(
             [
-                ItemHeader.YEAR,
-                ItemHeader.RANK,
-                ItemHeader.RATING,
-                ItemHeader.WEIGHT,
-                ItemHeader.PLAYERS,
-                ItemHeader.TIME,
+                TableHeader.YEAR,
+                TableHeader.RANK,
+                TableHeader.RATING,
+                TableHeader.WEIGHT,
+                TableHeader.PLAYERS,
+                TableHeader.TIME,
             ]
         )
 

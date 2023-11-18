@@ -1,24 +1,6 @@
 import click
 
-from meeple.command import (
-    add,
-    collections,
-    completions,
-    delete,
-    drop,
-    find,
-    hot,
-    import_,
-    info,
-    list_,
-    move,
-    new,
-    open_,
-    rename,
-    search,
-    stats,
-    update,
-)
+from meeple.command import *
 from meeple.util.cmd_util import SectionedHelpGroup
 from meeple.util.fs_util import check_fs
 
@@ -36,7 +18,7 @@ commands = {
         stats,
         update,
     ],
-    "BoardGameGeek Commands": [hot, import_, info, open_, search],
+    "BoardGameGeek Commands": [campaigns, hot, import_, info, open_, search],
     "Other Commands": [completions],
 }
 

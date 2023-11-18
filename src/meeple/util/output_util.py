@@ -13,10 +13,13 @@ def _fmt_header(header, sort_direction: str):
     return f"{header.value[0]} {sort_direction}"
 
 
-class ItemHeader(Enum):
+class TableHeader(Enum):
+    # general
     COUNT = ("#", "count", "right")
     ID = ("ID", "id", "right")
     NAME = ("Name", "name", "left")
+
+    # items
     TYPE = ("Type", "type", "left")
     COLLECTION = ("Collection(s)", "collection", "left")
     YEAR = ("Year", "year", "right")
@@ -27,12 +30,15 @@ class ItemHeader(Enum):
     MAX_PLAYERS = ("Max Players", "maxplayers", "right")
     TIME = ("Play Time", "time", "right")
 
-
-class CollectionHeader(Enum):
-    NAME = ("Name", "name", "left")
+    # collections
     BOARDGAMES = ("Board Games", "boardgames", "right")
     EXPANSIONS = ("Expansions", "expansions", "right")
     UPDATED = ("Last Updated", "updated", "left")
+
+    # campaigns
+    BACKERS = ("Backers", "backers", "right")
+    PROGRESS = ("Progress", "progress", "right")
+    ENDING = ("Ending", "ending", "left")
 
 
 def print_table(
