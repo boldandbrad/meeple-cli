@@ -1,4 +1,5 @@
 from .add import add
+from .campaigns import campaigns
 from .collections import collections
 from .completions import completions
 from .delete import delete
@@ -17,21 +18,22 @@ from .stats import stats
 from .update import update
 
 __all__ = (
-    add,
-    collections,
-    completions,
-    delete,
-    drop,
-    find,
-    hot,
-    import_,
-    info,
-    list_,
-    move,
-    new,
-    open_,
-    rename,
-    search,
-    stats,
-    update,
+    "add",
+    "campaigns",
+    "collections",
+    "completions",
+    "delete",
+    "drop",
+    "find",
+    "hot",
+    "import_",
+    "info",
+    "list_",
+    "move",
+    "new",
+    "open_",
+    "rename",
+    "search",
+    "stats",
+    "update",
 )

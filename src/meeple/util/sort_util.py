@@ -1,6 +1,7 @@
 import re
-from datetime import datetime
 from sys import maxsize as MAXINT
+
+import arrow
 
 from meeple.type.collection import Collection
 from meeple.type.item import Item
@@ -12,8 +13,8 @@ ITEM_SORT_KEYS = ["rank", "rating", "weight", "year", "name", "id", "time"]
 
 def _sort_date(date_str: str):
     if not date_str:
-        return datetime.min
-    return datetime.strptime(re.sub("[-]", "/", date_str), "%Y/%m/%d")
+        return arrow.get("0001-01-01")
+    return arrow.get(date_str)
 
 
 def sort_collections(collection_list: [Collection], sort_key: str) -> [Collection]:
@@ -89,4 +90,11 @@ def sort_items(item_list: [Item], sort_key: str) -> [Item]:
     return (
         sorted(item_list, key=lambda item: item.rating, reverse=True),
         SORT_DESC_SYMBOL,
+    )
+
+
+def sort_campaigns(campaign_list: [dict], sort_key: str) -> [dict]:
+    return (
+        sorted(campaign_list, key=lambda campaign: _sort_date(campaign["endDate"])),
+        SORT_ASC_SYMBOL,
     )

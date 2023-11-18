@@ -3,7 +3,7 @@ import click
 from meeple.util.api_util import search_bgg
 from meeple.util.fmt_util import fmt_year
 from meeple.util.message_util import error_msg
-from meeple.util.output_util import ItemHeader, print_table
+from meeple.util.output_util import TableHeader, print_table
 
 
 @click.command()
@@ -26,7 +26,7 @@ def search(query: str) -> None:
     result_items.sort(key=lambda x: x.id)
 
     # prepare table data
-    headers = [ItemHeader.ID, ItemHeader.NAME, ItemHeader.YEAR]
+    headers = [TableHeader.ID, TableHeader.NAME, TableHeader.YEAR]
 
     rows = []
     for item in result_items:

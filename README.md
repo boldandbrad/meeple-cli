@@ -64,11 +64,12 @@ Collection Commands:
   update       Update collection data.
 
 BoardGameGeek Commands:
-  hot     List current BoardGameGeek trending items.
-  import  Import BoardGameGeek user collections.
-  info    View item details.
-  open    Open an item on BoardGameGeek.
-  search  Search BoardGameGeek for items.
+  campaigns  List active crowdfunding campaigns.
+  hot        List current BoardGameGeek trending items.
+  import     Import BoardGameGeek user collections.
+  info       View item details.
+  open       Open items in the browser.
+  search     Search BoardGameGeek for items.
 
 Other Commands:
   completions  Setup meeple shell completions.

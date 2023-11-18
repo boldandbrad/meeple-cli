@@ -1,7 +1,7 @@
 import click
 
 from meeple.util.api_util import get_bgg_hot
-from meeple.util.output_util import ItemHeader, print_table
+from meeple.util.output_util import TableHeader, print_table
 
 
 @click.command()
@@ -12,7 +12,7 @@ def hot() -> None:
     api_result = get_bgg_hot()
 
     # prepare table data
-    headers = [ItemHeader.COUNT, ItemHeader.ID, ItemHeader.NAME]
+    headers = [TableHeader.COUNT, TableHeader.ID, TableHeader.NAME]
 
     rows = []
     for idx, item in enumerate(api_result):

@@ -9,6 +9,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `meeple campaigns` - List active crowdfunding campaigns.
+- `meeple open`: `--campaign` - Open an item's crowdfunding campaign page.
+
 ## [v1.2.0] - 2023-10-27
 
 ### Added
