@@ -1,6 +1,25 @@
 import click
 
-from meeple.command import *
+from meeple.command import (
+    add,
+    collections,
+    delete,
+    drop,
+    find,
+    list_,
+    move,
+    new,
+    rename,
+    stats,
+    update,
+    campaigns,
+    hot,
+    import_,
+    info,
+    open_,
+    search,
+    completions,
+)
 from meeple.util.cmd_util import SectionedHelpGroup
 from meeple.util.fs_util import check_fs
 
