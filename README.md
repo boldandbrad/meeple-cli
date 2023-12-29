@@ -8,11 +8,17 @@
 
 <!-- [![Docs](https://img.shields.io/website?down_message=down&label=docs&up_message=online&url=https%3A%2F%2Fboldandbrad.github.io%2Fmeeple-cli%2F)](https://boldandbrad.github.io/meeple-cli/) -->
 
-**Local board game collection manager. Powered by
-[BoardGameGeek](https://boardgamegeek.com).**
+**meeple-cli** is a local board game collection manager. Powered by
+[BoardGameGeek](https://boardgamegeek.com).
 
-> Disclaimer: Neither `meeple-cli` nor its maintainers are affiliated with
-> [BoardGameGeek](https://boardgamegeek.com).
+**Jump to:**
+[Installation](#install) |
+[Usage](#usage) |
+[Completions](#completions) |
+[Changelog](#changelog) |
+[Roadmap](#roadmap) |
+[FAQ](#faq) |
+[Legal](#legal)
 
 ## Install
 
@@ -170,7 +176,20 @@ displaying the last known value by default, if there is one.
 `meeple-cli` stores collection data in `~/.meeple` and only makes network
 connections to retrieve data from the BoardGameGeek API.
 
-## License
+## Legal
+
+### Disclaimers
+
+- Neither `meeple-cli` nor its maintainers are affiliated with
+  [BoardGameGeek](https://boardgamegeek.com).
+- Neither `meeple-cli` nor its maintainers are affiliated with
+  [Kickstarter](https://www.kickstarter.com/),
+  [Gamefound](https://gamefound.com/en), or any other crowdfunding site or
+  campaign. Links to crowdfunding campaigns surfaced by `meeple-cli` are
+  sourced from Boardgamegeek and are provided for convenience purposes only.
+  Back campaigns at your own risk.
+
+### License
 
 Copyright (c) 2023 Bradley Wojcik. Released under the MIT License. See
 [LICENSE](LICENSE) for details.
