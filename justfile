@@ -32,7 +32,8 @@ build:
     flit build
 
 # generate homebrew formula
-brew: install
+brew:
+    pip install -q ."[dev]"
     poet -f meeple-cli >> formula.rb
 
 # remove artifacts
