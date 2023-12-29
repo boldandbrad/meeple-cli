@@ -9,6 +9,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v1.3.0] - 2023-12-29
+
 ### Added
 
 - `meeple campaigns` - List active crowdfunding campaigns.
