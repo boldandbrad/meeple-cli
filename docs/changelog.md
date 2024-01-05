@@ -9,6 +9,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v1.3.1] - 2024-01-05
+
+### Fixed
+
+- `API` - More gracefully handle BGG API 503 response
+
 ## [v1.3.0] - 2023-12-29
 
 ### Added
