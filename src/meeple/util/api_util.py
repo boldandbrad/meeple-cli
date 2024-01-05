@@ -64,6 +64,11 @@ def _bgg_xml2_api_get(endpoint: str, params: dict = {}) -> List[Item]:
                 error_msg(
                     "BoardGameGeek API rate limit exceeded. Please try again later."
                 )
+            case 503:
+                # api unavailable/undergoing maintanence
+                error_msg(
+                    "BoardGameGeek API is currently down for maintenance. Please try again later."
+                )
             case _:
                 # unknown api error
                 # TODO: log this error and print out a friendlier message to the user
